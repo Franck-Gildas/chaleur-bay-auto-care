@@ -84,7 +84,8 @@ function Hero() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        padding: "120px 32px 80px",
+        paddingTop: "120px",
+        paddingBottom: "80px",
         gap: 0,
       }}>
         <div style={{
@@ -540,7 +541,7 @@ function Testimonials() {
           </div>
         </div>
 
-        <div className="reveal" style={{
+        <div className="reveal testi-card" style={{
           position: "relative",
           background: "var(--bg-card)",
           border: "1px solid var(--line)",
@@ -608,6 +609,12 @@ function Testimonials() {
           </div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 720px) {
+          .testi-card { padding: 32px 24px !important; min-height: 0 !important; }
+          .testi-card p { font-size: 19px !important; }
+        }
+      `}</style>
     </section>
   );
 }

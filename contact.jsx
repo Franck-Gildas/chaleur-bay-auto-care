@@ -66,6 +66,7 @@ function ContactBands() {
               fontFamily: "var(--f-display)", fontSize: 30,
               textTransform: "uppercase", letterSpacing: "0.01em",
               lineHeight: 1.05,
+              wordBreak: "break-word", overflowWrap: "break-word",
             }}>{b.title}</div>
             <div style={{color: "var(--text-dim)", fontSize: 14}}>{b.sub}</div>
             <div style={{marginTop: "auto", paddingTop: 18, display: "flex", justifyContent: "space-between", alignItems: "center"}}>
@@ -137,7 +138,7 @@ function BookingFlow() {
           background: "var(--bg-card)",
         }}>
           {/* Stepper */}
-          <div style={{
+          <div className="booking-stepper" style={{
             display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
             borderBottom: "1px solid var(--line)",
           }}>
@@ -162,11 +163,11 @@ function BookingFlow() {
                     fontFamily: "var(--f-mono)", fontSize: 12, fontWeight: 700,
                   }}>{done ? "✓" : n}</div>
                   <div>
-                    <div style={{
-                      fontFamily: "var(--f-mono)", fontSize: 10,
-                      letterSpacing: "0.16em", textTransform: "uppercase",
-                      color: "var(--text-mute)",
-                    }}>Step 0{n}</div>
+                  <div className="step-sublabel" style={{
+                    fontFamily: "var(--f-mono)", fontSize: 10,
+                    letterSpacing: "0.16em", textTransform: "uppercase",
+                    color: "var(--text-mute)",
+                  }}>Step 0{n}</div>
                     <div style={{
                       fontSize: 14, fontWeight: 600,
                       color: active ? "var(--text)" : "var(--text-dim)",
@@ -331,6 +332,12 @@ function BookingFlow() {
           )}
         </div>
       </div>
+      <style>{`
+        @media (max-width: 540px) {
+          .booking-stepper > div { padding: 12px 8px !important; gap: 6px !important; }
+          .step-sublabel { display: none; }
+        }
+      `}</style>
     </section>
   );
 }

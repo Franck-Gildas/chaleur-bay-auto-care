@@ -233,7 +233,7 @@ function Numbers() {
             <div key={i} className="reveal" style={{
               padding: "32px 0", borderTop: "1px solid var(--line)",
             }}>
-              <div className="display" style={{fontSize: 88, lineHeight: 0.85, marginBottom: 12}}>{n}</div>
+              <div className="display" style={{fontSize: "clamp(48px, 12vw, 88px)", lineHeight: 0.85, marginBottom: 12}}>{n}</div>
               <div style={{color: "var(--text-dim)", fontSize: 14}}>{l}</div>
             </div>
           ))}

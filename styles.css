@@ -266,6 +266,11 @@ img { display: block; max-width: 100%; }
 @media (max-width: 980px) {
   .nav__menu, .nav__phone { display: none; }
   .nav__burger { display: flex; }
+  .nav__cta { display: none; }
+}
+
+@media (max-width: 480px) {
+  .nav__inner { padding: 0 16px; gap: 12px; }
 }
 
 /* Section header common */

@@ -275,7 +275,7 @@ function ReasonBlock({
         <style>{`
           @media (max-width: 980px) {
             .reason-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-            .reason-img { min-height: 380px !important; order: 1 !important; }
+            .reason-img { min-height: 380px !important; order: 1 !important; overflow: hidden !important; }
             .reason-detail { order: 2 !important; }
           }
         `}</style>
@@ -499,7 +499,7 @@ function PromiseBand() {
 /* ---------- Final CTA ---------- */
 function FinalCTA() {
   return (
-    <section style={{
+    <section className="final-cta-sec" style={{
       background: "var(--bg)",
       padding: "140px 0",
       position: "relative",
@@ -572,6 +572,11 @@ function FinalCTA() {
           <span>✓ Mobile service available</span>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 720px) {
+          .final-cta-sec { padding: 80px 0 !important; }
+        }
+      `}</style>
     </section>
   );
 }

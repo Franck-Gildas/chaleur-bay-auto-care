@@ -927,11 +927,12 @@ async function fetchLeads() {
   }
 }
 
-function parseGvizDate(val) {
-  if (typeof val !== 'string' || !val.startsWith('Date(')) return val;
+function parseGvizDate(val, { raw = false } = {}) {
+  if (typeof val !== 'string' || !val.startsWith('Date(')) return raw ? null : val;
   const parts = val.slice(5, -1).split(',').map(Number);
   const [yr, mo, day, hr = 0, min = 0, sec = 0] = parts;
   const d = new Date(yr, mo, day, hr, min, sec);
+  if (raw) return d;
   const hasTime = parts.length > 3 && (hr || min || sec);
   const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   if (!hasTime) return datePart;
@@ -989,8 +990,9 @@ function processSheet(json) {
       service:   get(row,'service'),
       prefdate:  parseGvizDate(get(row,'prefdate')),
       status:    overStatus || get(row,'status') || 'New',
-      notes:     get(row,'notes'),
-      submitted: parseGvizDate(get(row,'submitted')),
+      notes:        get(row,'notes'),
+      submitted:    parseGvizDate(get(row,'submitted')),
+      submittedRaw: parseGvizDate(get(row,'submitted'), { raw: true }),
     };
   });
 
@@ -1051,8 +1053,14 @@ function populateServiceFilter() {
    SUMMARY CARDS
 ────────────────────────────────────────────── */
 function updateCards() {
-  const today    = new Date().toISOString().slice(0,10);
-  const todayCt  = allLeads.filter(l => (l.submitted||'').slice(0,10) === today).length;
+  const now      = new Date();
+  const todayCt  = allLeads.filter(l => {
+    const d = l.submittedRaw;
+    return d instanceof Date
+      && d.getFullYear() === now.getFullYear()
+      && d.getMonth()    === now.getMonth()
+      && d.getDate()     === now.getDate();
+  }).length;
   const followup = allLeads.filter(l => ['New','No Answer','Contacted'].includes(l.status)).length;
   const booked   = allLeads.filter(l => l.status === 'Booked').length;
   const total    = allLeads.length;

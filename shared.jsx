@@ -198,6 +198,7 @@ function Footer() {
             <a href="#">Privacy</a>
             <a href="#">Warranty</a>
             <a href="#">Careers</a>
+            <a href="admin.html" style={{color: "var(--text-mute)"}}>Admin</a>
           </div>
         </div>
       </div>

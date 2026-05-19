@@ -501,6 +501,20 @@
     .cta-sms  { background: var(--bg-card); border: 1px solid var(--line); color: var(--text-dim); }
     .cta-sms:hover { border-color: var(--orange); color: var(--orange); }
     @media (hover: hover) { .cta-sms { display: none; } }
+    .cta-email { background: #3B82F6; color: #fff; }
+    .cta-email:hover { background: #60A5FA; transform: scale(1.02); }
+    .cta-email.no-email {
+      background: var(--bg-card); border: 1px solid var(--line);
+      color: var(--text-mute); cursor: not-allowed;
+      pointer-events: none; opacity: 0.55;
+    }
+    @keyframes ctaReveal {
+      from { opacity: 0; transform: scale(.95) translateY(4px); }
+      to   { opacity: 1; transform: scale(1)   translateY(0); }
+    }
+    .modal-panel.open .cta-a:nth-child(1) { animation: ctaReveal .3s cubic-bezier(.16,1,.3,1) .05s both; }
+    .modal-panel.open .cta-a:nth-child(2) { animation: ctaReveal .3s cubic-bezier(.16,1,.3,1) .10s both; }
+    .modal-panel.open .cta-a:nth-child(3) { animation: ctaReveal .3s cubic-bezier(.16,1,.3,1) .15s both; }
 
     /* Modal body */
     .modal-body { flex: 1; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 22px; }
@@ -799,11 +813,15 @@
     </button>
   </div>
 
-  <!-- Call / SMS -->
+  <!-- Call / Email / SMS -->
   <div class="modal-cta">
     <a class="cta-a cta-call" id="m-call" href="#">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       Call Now
+    </a>
+    <a class="cta-a cta-email" id="m-email" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+      Email Customer
     </a>
     <a class="cta-a cta-sms" id="m-sms" href="#">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -1406,6 +1424,20 @@ function openModal(idx) {
   const sms    = digits ? `sms:+1${digits}` : '#';
   document.getElementById('m-call').href = tel;
   document.getElementById('m-sms').href  = sms;
+
+  /* email link */
+  const emailBtn = document.getElementById('m-email');
+  if (l.email) {
+    const subj = encodeURIComponent('Your Appointment \u2014 Chaleur Bay Auto Care');
+    const body = encodeURIComponent(`Hi ${l.name},`);
+    emailBtn.href = `mailto:${l.email}?subject=${subj}&body=${body}`;
+    emailBtn.classList.remove('no-email');
+    emailBtn.title = '';
+  } else {
+    emailBtn.href = '#';
+    emailBtn.classList.add('no-email');
+    emailBtn.title = 'No email provided';
+  }
 
   /* populate */
   document.getElementById('m-status').value = l.status || 'New';

@@ -1,5 +1,7 @@
-/* global React, Navbar, Footer, FabChat, Icon, useReveal */
+/* global React, Navbar, Footer, FabChat, Icon, useReveal, emailjs */
 const { useState } = React;
+
+emailjs.init({ publicKey: "kx8ejBAxjQ56jwuma" });
 
 function ContactHero() {
   return (
@@ -150,6 +152,13 @@ function BookingFlow() {
       if (res.ok) {
         setData(emptyData);
         setStep(5);
+        emailjs.send("service_kf9g69c", "template_8y4b74q", {
+          name: data.name,
+          email: data.email,
+          vehicle,
+          service: serviceName,
+          preferred_date: data.date,
+        }).catch(err => console.error("EmailJS auto-reply failed:", err));
       } else {
         setSubmitError("Something went wrong. Please call us at (506) 555-1234 or try again.");
       }

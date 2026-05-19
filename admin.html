@@ -927,6 +927,18 @@ async function fetchLeads() {
   }
 }
 
+function parseGvizDate(val) {
+  if (typeof val !== 'string' || !val.startsWith('Date(')) return val;
+  const parts = val.slice(5, -1).split(',').map(Number);
+  const [yr, mo, day, hr = 0, min = 0, sec = 0] = parts;
+  const d = new Date(yr, mo, day, hr, min, sec);
+  const hasTime = parts.length > 3 && (hr || min || sec);
+  const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  if (!hasTime) return datePart;
+  const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  return `${datePart} ${timePart}`;
+}
+
 function processSheet(json) {
   const cols = (json.table && json.table.cols) ? json.table.cols : [];
   const rows = (json.table && json.table.rows) ? json.table.rows : [];
@@ -975,10 +987,10 @@ function processSheet(json) {
       phone:     get(row,'phone'),
       vehicle:   get(row,'vehicle'),
       service:   get(row,'service'),
-      prefdate:  get(row,'prefdate'),
+      prefdate:  parseGvizDate(get(row,'prefdate')),
       status:    overStatus || get(row,'status') || 'New',
       notes:     get(row,'notes'),
-      submitted: get(row,'submitted'),
+      submitted: parseGvizDate(get(row,'submitted')),
     };
   });
 

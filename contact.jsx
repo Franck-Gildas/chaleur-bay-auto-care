@@ -99,6 +99,8 @@ function BookingFlow() {
     email: "",
     note: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const services = [
     { id: "oil",   label: "Oil & filter",        time: "30 min" },
@@ -119,6 +121,44 @@ function BookingFlow() {
     (step === 3 && data.date && data.time) ||
     (step === 4 && data.name && data.phone)
   );
+
+  const emptyData = {
+    service: "", vehicle: { year: "", make: "", model: "" },
+    date: "", time: "", name: "", phone: "", email: "", note: "",
+  };
+
+  async function handleSubmit() {
+    setSubmitting(true);
+    setSubmitError("");
+    const serviceName = services.find(s => s.id === data.service)?.label || data.service;
+    const vehicle = [data.vehicle.year, data.vehicle.make, data.vehicle.model].filter(Boolean).join(" ");
+    try {
+      const res = await fetch("https://formspree.io/f/mgoqvzgw", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          vehicle,
+          service: serviceName,
+          preferred_date: data.date,
+          preferred_time: data.time,
+          notes: data.note,
+        }),
+      });
+      if (res.ok) {
+        setData(emptyData);
+        setStep(5);
+      } else {
+        setSubmitError("Something went wrong. Please call us at (506) 555-1234 or try again.");
+      }
+    } catch (_) {
+      setSubmitError("Something went wrong. Please call us at (506) 555-1234 or try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <section className="section" id="book">
@@ -304,8 +344,7 @@ function BookingFlow() {
                   Request received
                 </h3>
                 <p style={{color: "var(--text-dim)", maxWidth: 480, margin: "0 0 28px", fontSize: 17, lineHeight: 1.6}}>
-                  Thanks, {data.name.split(" ")[0] || "neighbour"}. We'll call you at {data.phone} within the hour
-                  to confirm your <b style={{color: "var(--text)"}}>{services.find(s => s.id === data.service)?.label}</b> appointment.
+                  Your appointment request has been received. We'll confirm by phone within the hour during business hours.
                 </p>
                 <a href="index.html" className="btn btn--ghost">Back to home</a>
               </div>
@@ -315,19 +354,32 @@ function BookingFlow() {
           {step < 5 && (
             <div style={{
               padding: 24, borderTop: "1px solid var(--line)",
-              display: "flex", justifyContent: "space-between", alignItems: "center",
               background: "var(--bg)",
             }}>
-              {step > 1 ? (
-                <button onClick={() => setStep(step - 1)} className="btn btn--ghost">
-                  ← Back
+              {submitError && (
+                <div style={{
+                  marginBottom: 16, padding: "14px 18px",
+                  background: "rgba(220,38,38,0.08)",
+                  border: "1px solid rgba(220,38,38,0.35)",
+                  color: "#f87171", fontSize: 14, lineHeight: 1.55,
+                }}>
+                  {submitError}
+                </div>
+              )}
+              <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                {step > 1 ? (
+                  <button onClick={() => setStep(step - 1)} disabled={submitting} className="btn btn--ghost">
+                    ← Back
+                  </button>
+                ) : <div/>}
+                <button
+                  onClick={() => step === 4 ? handleSubmit() : setStep(step + 1)}
+                  disabled={!canNext || submitting}
+                  className="btn btn--primary"
+                  style={{opacity: (canNext && !submitting) ? 1 : 0.4, pointerEvents: (canNext && !submitting) ? "auto" : "none"}}>
+                  {step === 4 ? (submitting ? "Sending…" : "Send request") : "Continue"} {!submitting && <Icon.arrow width="16" height="16"/>}
                 </button>
-              ) : <div/>}
-              <button onClick={() => setStep(step + 1)} disabled={!canNext}
-                className="btn btn--primary"
-                style={{opacity: canNext ? 1 : 0.4, pointerEvents: canNext ? "auto" : "none"}}>
-                {step === 4 ? "Send request" : "Continue"} <Icon.arrow width="16" height="16"/>
-              </button>
+              </div>
             </div>
           )}
         </div>

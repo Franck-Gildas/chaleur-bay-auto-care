@@ -932,13 +932,18 @@ async function fetchLeads() {
 function parseGvizDate(val, { raw = false } = {}) {
   if (!val || typeof val !== 'string') return raw ? null : (val || '');
 
-  // Standard gviz Date(year,month0,day[,h,m,s]) format
+  // Standard gviz Date(year,month0,day[,h,m,s]) format.
+  // DATETIME values are UTC — construct with Date.UTC and display/compare via local methods.
+  // DATE-only values (3 parts) must use the local constructor to avoid midnight-UTC
+  // rolling back to the previous calendar day in negative-offset timezones.
   if (val.startsWith('Date(')) {
     const parts = val.slice(5, -1).split(',').map(Number);
     const [yr, mo, day, hr = 0, min = 0, sec = 0] = parts;
-    const d = new Date(yr, mo, day, hr, min, sec);
+    const hasTime = parts.length > 3;
+    const d = hasTime
+      ? new Date(Date.UTC(yr, mo, day, hr, min, sec))
+      : new Date(yr, mo, day);
     if (raw) return d;
-    const hasTime = parts.length > 3 && (hr || min || sec);
     const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     if (!hasTime) return datePart;
     const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -948,9 +953,9 @@ function parseGvizDate(val, { raw = false } = {}) {
   // Plain YYYY-MM-DD[ T]HH:MM[:SS] string (e.g. Formspree _date: "2026-05-19 02:07:00").
   // Formspree stores _date in UTC. Normalise to ISO 8601 with an explicit Z suffix so the
   // browser parses it as UTC, then display/compare using local-time methods.
-  const isoLike = val.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}:\d{2}(?::\d{2})?))?/);
+  const isoLike = val.match(/^(\d{4}-\d{2}-\d{2})(?:[T ](\d{2}:\d{2}(?::\d{2})?))?/);
   if (isoLike) {
-    const [, datePortion, , , timePortion] = isoLike;
+    const [, datePortion, timePortion] = isoLike;
     const iso = timePortion
       ? `${datePortion}T${timePortion.length === 5 ? timePortion + ':00' : timePortion}Z`
       : `${datePortion}T00:00:00Z`;
@@ -1020,6 +1025,25 @@ function processSheet(json) {
     return cell != null ? String(cell.v ?? cell.f ?? '').trim() : '';
   };
 
+  /* For time-only columns gviz stores an unhelpful 1899 epoch in cell.v;
+     cell.f already has the formatted "HH:MM" string — prefer that. */
+  const getf = (row, field) => {
+    const i = fi[field];
+    if (i < 0 || !row.c || i >= row.c.length) return '';
+    const cell = row.c[i];
+    return cell != null ? String(cell.f ?? cell.v ?? '').trim() : '';
+  };
+
+  /* Convert "13:00" → "1:00 PM" */
+  const fmtTime = t => {
+    if (!t) return '';
+    const m = t.match(/^(\d{1,2}):(\d{2})/);
+    if (!m) return t;
+    const h = +m[1], min = m[2];
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    return `${h % 12 || 12}:${min} ${ampm}`;
+  };
+
   allLeads = rows.map((row, i) => {
     const overStatus = localStorage.getItem(`cb-crm-status-${i}`);
     if (i < 5) {
@@ -1039,7 +1063,7 @@ function processSheet(json) {
       vehicle:   get(row,'vehicle'),
       service:   get(row,'service'),
       prefdate:  parseGvizDate(get(row,'prefdate')),
-      preftime:  get(row,'preftime'),
+      preftime:  fmtTime(getf(row,'preftime')),
       status:    overStatus || get(row,'status') || 'New',
       notes:        get(row,'notes'),
       submitted:    parseGvizDate(get(row,'submitted')),
@@ -1185,17 +1209,22 @@ function renderLeadView() {
   }
 
   /* Desktop table */
-  const trows = filteredLeads.map((l, i) => `
+  const trows = filteredLeads.map((l, i) => {
+    const prefDT = l.prefdate && l.preftime
+      ? `${esc(l.prefdate)} at ${esc(l.preftime)}`
+      : esc(l.prefdate) || esc(l.preftime) || '—';
+    return `
     <tr onclick="openModal(${l.idx})" style="animation-delay:${Math.min(i*.03,.5)}s">
       <td class="tcell-name">${esc(l.name)}</td>
       <td class="tcell-dim">${esc(l.phone)||'<span class="tcell-mute">—</span>'}</td>
       <td>${esc(l.vehicle)||'<span class="tcell-mute">—</span>'}</td>
       <td>${esc(l.service)||'<span class="tcell-mute">—</span>'}</td>
-      <td class="tcell-mute">${esc(l.prefdate)||'—'}</td>
+      <td class="tcell-mute">${prefDT}</td>
       <td>${statusBadge(l.status)}</td>
       <td class="tcell-mute" style="max-width:160px">${esc(l.notes)||'—'}</td>
       <td class="tcell-mute">${esc(l.submitted)||'—'}</td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 
   /* Mobile cards */
   const mcards = filteredLeads.map((l, i) => `
@@ -1210,7 +1239,7 @@ function renderLeadView() {
       <div class="mob-card-grid">
         <div><div class="mob-field-label">Vehicle</div><div class="mob-field-val">${esc(l.vehicle)||'—'}</div></div>
         <div><div class="mob-field-label">Service</div><div class="mob-field-val">${esc(l.service)||'—'}</div></div>
-        <div><div class="mob-field-label">Pref. Date</div><div class="mob-field-val">${esc(l.prefdate)||'—'}</div></div>
+        <div><div class="mob-field-label">Appt</div><div class="mob-field-val">${l.prefdate && l.preftime ? `${esc(l.prefdate)} at ${esc(l.preftime)}` : esc(l.prefdate)||esc(l.preftime)||'—'}</div></div>
         <div><div class="mob-field-label">Submitted</div><div class="mob-field-val">${esc(l.submitted)||'—'}</div></div>
       </div>
     </div>`).join('');
@@ -1221,7 +1250,7 @@ function renderLeadView() {
         <thead>
           <tr>
             <th>Name</th><th>Phone</th><th>Vehicle</th><th>Service</th>
-            <th>Pref. Date</th><th>Status</th><th>Notes</th><th>Submitted</th>
+            <th>Pref Date &amp; Time</th><th>Status</th><th>Notes</th><th>Submitted</th>
           </tr>
         </thead>
         <tbody>${trows}</tbody>
@@ -1241,7 +1270,7 @@ function renderSkeleton() {
   c.innerHTML = `
     <div class="tbl-wrap">
       <table class="leads-tbl">
-        <thead><tr><th>Name</th><th>Phone</th><th>Vehicle</th><th>Service</th><th>Pref. Date</th><th>Status</th><th>Notes</th><th>Submitted</th></tr></thead>
+        <thead><tr><th>Name</th><th>Phone</th><th>Vehicle</th><th>Service</th><th>Pref Date &amp; Time</th><th>Status</th><th>Notes</th><th>Submitted</th></tr></thead>
         <tbody>${[1,2,3,4,5].map(srow).join('')}</tbody>
       </table>
     </div>`;
@@ -1422,8 +1451,7 @@ function renderDetailGrid(l) {
   document.getElementById('m-detail').innerHTML = `
     <div class="det-item"><div class="det-lbl">Vehicle</div><div class="det-val">${esc(l.vehicle)||'—'}</div></div>
     <div class="det-item"><div class="det-lbl">Service Requested</div><div class="det-val">${esc(l.service)||'—'}</div></div>
-    <div class="det-item"><div class="det-lbl">Preferred Date</div><div class="det-val">${esc(l.prefdate)||'—'}</div></div>
-    <div class="det-item"><div class="det-lbl">Preferred Time</div><div class="det-val">${esc(l.preftime)||'—'}</div></div>
+    <div class="det-item full"><div class="det-lbl">Preferred Appointment</div><div class="det-val">${l.prefdate && l.preftime ? `${esc(l.prefdate)} at ${esc(l.preftime)}` : esc(l.prefdate)||esc(l.preftime)||'—'}</div></div>
     <div class="det-item"><div class="det-lbl">Email</div><div class="det-val">${l.email ? `<a href="mailto:${esc(l.email)}" style="color:var(--orange)">${esc(l.email)}</a>` : '—'}</div></div>
     <div class="det-item"><div class="det-lbl">Date Submitted</div><div class="det-val">${esc(l.submitted)||'—'}</div></div>
     <div class="det-item"><div class="det-lbl">Current Status</div><div class="det-val">${statusBadge(l.status)}</div></div>
@@ -1505,9 +1533,11 @@ function saveNote() {
 ────────────────────────────────────────────── */
 function exportCSV() {
   const src  = filteredLeads.length ? filteredLeads : allLeads;
-  const cols = ['Name','Email','Phone','Vehicle','Service','Preferred Date','Preferred Time','Status','Sheet Notes','Date Submitted'];
+  const cols = ['Name','Email','Phone','Vehicle','Service','Preferred Date & Time','Status','Sheet Notes','Date Submitted'];
   const rows = src.map(l =>
-    [l.name,l.email,l.phone,l.vehicle,l.service,l.prefdate,l.preftime,l.status,l.notes,l.submitted]
+    [l.name,l.email,l.phone,l.vehicle,l.service,
+     l.prefdate && l.preftime ? `${l.prefdate} at ${l.preftime}` : l.prefdate||l.preftime||'',
+     l.status,l.notes,l.submitted]
       .map(v => `"${(v||'').replace(/"/g,'""')}"`)
       .join(',')
   );

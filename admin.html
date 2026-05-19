@@ -972,13 +972,15 @@ function processSheet(json) {
   /* column resolver */
   const COL = {
     name:      ['name','full name','customer name','customer'],
+    email:     ['email','email address','e-mail'],
     phone:     ['phone','phone number','mobile','cell','telephone'],
     vehicle:   ['vehicle','car','make model','make/model','vehicle make','truck'],
     service:   ['service','service type','service requested','type of service'],
-    prefdate:  ['preferred date','appointment date','preferred appointment','date'],
+    prefdate:  ['preferred_date','preferred date','appointment date','preferred appointment'],
+    preftime:  ['preferred_time','preferred time','appointment time','time'],
     status:    ['status'],
     notes:     ['notes','message','comments','additional notes','details'],
-    submitted: ['date submitted','submitted','timestamp','created at','submission date','submitted at'],
+    submitted: ['_date','date submitted','submitted','timestamp','created at','submission date','submitted at'],
   };
 
   const fi = {};
@@ -1015,10 +1017,12 @@ function processSheet(json) {
     return {
       idx:       i,
       name:      get(row,'name')      || `Lead #${i+1}`,
+      email:     get(row,'email'),
       phone:     get(row,'phone'),
       vehicle:   get(row,'vehicle'),
       service:   get(row,'service'),
       prefdate:  parseGvizDate(get(row,'prefdate')),
+      preftime:  get(row,'preftime'),
       status:    overStatus || get(row,'status') || 'New',
       notes:        get(row,'notes'),
       submitted:    parseGvizDate(get(row,'submitted')),
@@ -1402,6 +1406,8 @@ function renderDetailGrid(l) {
     <div class="det-item"><div class="det-lbl">Vehicle</div><div class="det-val">${esc(l.vehicle)||'—'}</div></div>
     <div class="det-item"><div class="det-lbl">Service Requested</div><div class="det-val">${esc(l.service)||'—'}</div></div>
     <div class="det-item"><div class="det-lbl">Preferred Date</div><div class="det-val">${esc(l.prefdate)||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Preferred Time</div><div class="det-val">${esc(l.preftime)||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Email</div><div class="det-val">${l.email ? `<a href="mailto:${esc(l.email)}" style="color:var(--orange)">${esc(l.email)}</a>` : '—'}</div></div>
     <div class="det-item"><div class="det-lbl">Date Submitted</div><div class="det-val">${esc(l.submitted)||'—'}</div></div>
     <div class="det-item"><div class="det-lbl">Current Status</div><div class="det-val">${statusBadge(l.status)}</div></div>
     <div class="det-item full"><div class="det-lbl">Sheet Notes</div><div class="det-val" style="white-space:pre-wrap">${esc(l.notes)||'—'}</div></div>`;
@@ -1482,9 +1488,9 @@ function saveNote() {
 ────────────────────────────────────────────── */
 function exportCSV() {
   const src  = filteredLeads.length ? filteredLeads : allLeads;
-  const cols = ['Name','Phone','Vehicle','Service','Preferred Date','Status','Sheet Notes','Date Submitted'];
+  const cols = ['Name','Email','Phone','Vehicle','Service','Preferred Date','Preferred Time','Status','Sheet Notes','Date Submitted'];
   const rows = src.map(l =>
-    [l.name,l.phone,l.vehicle,l.service,l.prefdate,l.status,l.notes,l.submitted]
+    [l.name,l.email,l.phone,l.vehicle,l.service,l.prefdate,l.preftime,l.status,l.notes,l.submitted]
       .map(v => `"${(v||'').replace(/"/g,'""')}"`)
       .join(',')
   );

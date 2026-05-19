@@ -945,7 +945,20 @@ function parseGvizDate(val, { raw = false } = {}) {
     return `${datePart} ${timePart}`;
   }
 
-  // Plain date/datetime string fallback (e.g. cell.f value like "5/19/2026 2:30:00 PM")
+  // Plain YYYY-MM-DD[ HH:MM:SS] string (e.g. Formspree _date: "2026-05-19 02:07:00").
+  // Always construct as local time — new Date(string) treats ambiguous strings as UTC
+  // which shifts the date in negative-offset timezones.
+  const isoLike = val.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?)?/);
+  if (isoLike) {
+    const [, yr, mo, day, hr = '0', min = '0', sec = '0'] = isoLike;
+    const d = new Date(+yr, +mo - 1, +day, +hr, +min, +sec);
+    if (raw) return d;
+    const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    return `${datePart} ${timePart}`;
+  }
+
+  // Other plain date string fallback
   const d = new Date(val);
   if (!isNaN(d.getTime())) {
     if (raw) return d;

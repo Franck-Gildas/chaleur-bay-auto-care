@@ -129,12 +129,12 @@ function Navbar({ active }) {
           padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16,
         }}>
           {items.map(it => (
-            <a key={it.id} href={it.href} style={{
+            <a key={it.id} href={it.href} onClick={() => setOpen(false)} style={{
               color: active === it.id ? "var(--orange)" : "var(--text)",
               fontWeight: 500, padding: "8px 0",
             }}>{it.label}</a>
           ))}
-          <a className="btn btn--primary" href="contact.html#book">Book Service</a>
+          <a className="btn btn--primary" href="contact.html#book" onClick={() => setOpen(false)}>Book Service</a>
         </div>
       )}
     </header>

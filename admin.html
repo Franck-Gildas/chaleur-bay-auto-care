@@ -854,7 +854,6 @@
 ────────────────────────────────────────────── */
 const CFG = {
   sheetId:   '1kcO426Kp8BlySa4SDWyNfcvwRtsqENWbt5ooZjpJaus',
-  apiKey:    'AIzaSyARojrJ69gahyxcG-jM6zSTeTUo6I_1NZA',
   sheetName: 'Chaleur Bay Bookings',
   password:  'Admin2024!',
   refresh:   30000,
@@ -916,10 +915,11 @@ function launchDashboard() {
 async function fetchLeads() {
   renderSkeleton();
   try {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${CFG.sheetId}/values/${encodeURIComponent(CFG.sheetName)}?key=${CFG.apiKey}`;
+    const url = `https://docs.google.com/spreadsheets/d/${CFG.sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CFG.sheetName)}`;
     const res  = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
-    const json = await res.json();
+    const text = await res.text();
+    const json = JSON.parse(text.substring(47, text.length - 2));
     processSheet(json);
     lastFetch = Date.now();
   } catch (e) {
@@ -928,14 +928,15 @@ async function fetchLeads() {
 }
 
 function processSheet(json) {
-  const rows = (json.values || []);
-  if (rows.length < 2) {
+  const cols = (json.table && json.table.cols) ? json.table.cols : [];
+  const rows = (json.table && json.table.rows) ? json.table.rows : [];
+  if (cols.length === 0) {
     allLeads = [];
     applyFilters();
     return;
   }
 
-  const headers = rows[0].map(h => (h || '').toLowerCase().trim());
+  const headers = cols.map(c => (c.label || '').toLowerCase().trim());
 
   /* column resolver */
   const COL = {
@@ -961,10 +962,12 @@ function processSheet(json) {
 
   const get = (row, field) => {
     const i = fi[field];
-    return (i >= 0 && i < row.length) ? (row[i] || '').trim() : '';
+    if (i < 0 || !row.c || i >= row.c.length) return '';
+    const cell = row.c[i];
+    return cell != null ? String(cell.v ?? '').trim() : '';
   };
 
-  allLeads = rows.slice(1).map((row, i) => {
+  allLeads = rows.map((row, i) => {
     const overStatus = localStorage.getItem(`cb-crm-status-${i}`);
     return {
       idx:       i,

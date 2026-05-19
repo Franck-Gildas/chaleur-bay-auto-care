@@ -920,6 +920,8 @@ async function fetchLeads() {
     if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
     const text = await res.text();
     const json = JSON.parse(text.substring(47, text.length - 2));
+    console.log('[GVIZ] cols:', json.table?.cols?.map(c => ({ label: c.label, type: c.type })));
+    console.log('[GVIZ] row[0] raw:', JSON.stringify(json.table?.rows?.[0]));
     processSheet(json);
     lastFetch = Date.now();
   } catch (e) {
@@ -928,16 +930,32 @@ async function fetchLeads() {
 }
 
 function parseGvizDate(val, { raw = false } = {}) {
-  if (typeof val !== 'string' || !val.startsWith('Date(')) return raw ? null : val;
-  const parts = val.slice(5, -1).split(',').map(Number);
-  const [yr, mo, day, hr = 0, min = 0, sec = 0] = parts;
-  const d = new Date(yr, mo, day, hr, min, sec);
-  if (raw) return d;
-  const hasTime = parts.length > 3 && (hr || min || sec);
-  const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  if (!hasTime) return datePart;
-  const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-  return `${datePart} ${timePart}`;
+  if (!val || typeof val !== 'string') return raw ? null : (val || '');
+
+  // Standard gviz Date(year,month0,day[,h,m,s]) format
+  if (val.startsWith('Date(')) {
+    const parts = val.slice(5, -1).split(',').map(Number);
+    const [yr, mo, day, hr = 0, min = 0, sec = 0] = parts;
+    const d = new Date(yr, mo, day, hr, min, sec);
+    if (raw) return d;
+    const hasTime = parts.length > 3 && (hr || min || sec);
+    const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    if (!hasTime) return datePart;
+    const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    return `${datePart} ${timePart}`;
+  }
+
+  // Plain date/datetime string fallback (e.g. cell.f value like "5/19/2026 2:30:00 PM")
+  const d = new Date(val);
+  if (!isNaN(d.getTime())) {
+    if (raw) return d;
+    const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    return `${datePart} ${timePart}`;
+  }
+
+  // Unrecognised format — return as-is for display, null for date comparisons
+  return raw ? null : val;
 }
 
 function processSheet(json) {
@@ -973,15 +991,27 @@ function processSheet(json) {
     }
   });
 
+  console.log('[COL] headers:', headers);
+  console.log('[COL] field→index map:', fi);
+
   const get = (row, field) => {
     const i = fi[field];
     if (i < 0 || !row.c || i >= row.c.length) return '';
     const cell = row.c[i];
-    return cell != null ? String(cell.v ?? '').trim() : '';
+    return cell != null ? String(cell.v ?? cell.f ?? '').trim() : '';
   };
 
   allLeads = rows.map((row, i) => {
     const overStatus = localStorage.getItem(`cb-crm-status-${i}`);
+    if (i < 5) {
+      const si = fi.submitted;
+      const rawCell = si >= 0 && row.c ? row.c[si] : undefined;
+      console.log(
+        `[ROW ${i}] submitted cell:`, rawCell,
+        '→ submitted:', parseGvizDate(get(row, 'submitted')),
+        '→ submittedRaw:', parseGvizDate(get(row, 'submitted'), { raw: true })
+      );
+    }
     return {
       idx:       i,
       name:      get(row,'name')      || `Lead #${i+1}`,

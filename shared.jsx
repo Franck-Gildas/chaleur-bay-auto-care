@@ -229,15 +229,20 @@ function FabChat() {
     setMsgs(m => [...m, { role: "user", text }]);
     setThinking(true);
     try {
-      const system = "You are Cap, the friendly virtual service writer for Chaleur Bay Auto Care, a small auto repair shop in Bathurst, New Brunswick. Be warm, honest and direct. Mention winter readiness, Red-Seal certified techs, 2-year warranty, fleet service, and that we serve the Acadian Peninsula. Keep answers under 60 words. Suggest booking by phone (506) 555-1234 or the online form when appropriate.";
-      const reply = await window.claude.complete({
-        messages: [
-          { role: "user", content: system + "\n\nCustomer question: " + text }
-        ]
+      const systemPrompt = "You are Cap, the friendly AI service assistant for Chaleur Bay Auto Care in Bathurst, New Brunswick. You help customers with booking appointments, getting quotes, and answering questions about services. Keep responses short and friendly — 2-3 sentences max. Services include: Oil changes from $69, Brake repair from $189, Diagnostics at $95 flat, Tire swap from $25/wheel, Engine repair, Transmission service, Mobile service available. Hours: Mon-Fri 7:30-17:30, Sat 8:00-14:00. Phone: (506) 555-1234. Address: 418 King Avenue Bathurst NB. If you cannot help, direct them to call (506) 555-1234.";
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: text }],
+          systemPrompt,
+        }),
       });
-      setMsgs(m => [...m, { role: "bot", text: reply }]);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Request failed");
+      setMsgs(m => [...m, { role: "bot", text: data.text }]);
     } catch (err) {
-      setMsgs(m => [...m, { role: "bot", text: "I’m offline for a moment — give the shop a call at (506) 555-1234 and we’ll sort it out." }]);
+      setMsgs(m => [...m, { role: "bot", text: "Sorry, I am having trouble connecting. Please call us at (506) 555-1234." }]);
     } finally {
       setThinking(false);
     }

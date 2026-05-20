@@ -225,6 +225,13 @@ function FabChat() {
   async function send() {
     const text = input.trim();
     if (!text || thinking) return;
+    const apiMessages = [
+      ...msgs.slice(1).map((m) => ({
+        role: m.role === "bot" ? "assistant" : "user",
+        content: m.text,
+      })),
+      { role: "user", content: text },
+    ];
     setInput("");
     setMsgs(m => [...m, { role: "user", text }]);
     setThinking(true);
@@ -234,7 +241,7 @@ function FabChat() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [{ role: "user", content: text }],
+          messages: apiMessages,
           systemPrompt,
         }),
       });

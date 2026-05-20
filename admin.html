@@ -624,7 +624,10 @@
       border-radius: var(--radius-lg); font-weight: 700; font-size: 13px;
       cursor: pointer; transition: background .18s;
     }
-    .note-save-btn:hover { background: var(--orange-2); }
+    .note-save-btn:hover:not(:disabled) { background: var(--orange-2); }
+    .note-save-btn:disabled {
+      opacity: 0.45; cursor: not-allowed; pointer-events: none;
+    }
 
     /* Reminder */
     .reminder-row { display: flex; flex-direction: column; gap: 8px; }
@@ -985,14 +988,14 @@
       <div class="sec-label">Follow-Up Notes</div>
       <div class="notes-list" id="m-notes-list"></div>
       <div class="note-add" id="note-add">
-        <textarea id="note-ta" placeholder="Write a note&hellip;"></textarea>
-        <button class="note-save-btn" onclick="saveNote()">Save Note</button>
+        <textarea id="note-ta" placeholder="Write a note&hellip;" oninput="updateNoteSaveBtn()"></textarea>
+        <button type="button" class="note-save-btn" id="note-save-btn" onclick="saveNote()" disabled>Save Note</button>
       </div>
     </div>
 
-    <!-- Past visits -->
+    <!-- Previous requests -->
     <div>
-      <div class="sec-label">Past Visits</div>
+      <div class="sec-label">Previous Requests</div>
       <div id="m-history"></div>
     </div>
 
@@ -1768,6 +1771,14 @@ function renderNotesList(idx) {
         </div>`).join('')
     : `<p class="notes-empty">No notes yet. Add your first follow-up below.</p>`;
   document.getElementById('note-ta').value = '';
+  updateNoteSaveBtn();
+}
+
+function updateNoteSaveBtn() {
+  const ta  = document.getElementById('note-ta');
+  const btn = document.getElementById('note-save-btn');
+  if (!ta || !btn) return;
+  btn.disabled = !ta.value.trim();
 }
 
 function saveNote() {
@@ -1836,7 +1847,7 @@ function renderPastVisits(l) {
       return tb - ta;
     });
   if (!visits.length) {
-    el.innerHTML = '<p class="history-empty">No previous visits on record</p>';
+    el.innerHTML = '<p class="history-empty">No previous requests from this customer</p>';
     return;
   }
   el.innerHTML = `<div class="history-list">${visits.map(v => `

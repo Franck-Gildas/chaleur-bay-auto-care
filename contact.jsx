@@ -18,7 +18,7 @@ function ContactHero() {
         <h1
           className="display"
           style={{
-            fontSize: "clamp(48px, 7vw, 112px)",
+            fontSize: "clamp(36px, 9vw, 112px)",
             margin: "16px 0 24px",
             maxWidth: 1100,
           }}
@@ -356,6 +356,7 @@ function BookingFlow() {
                       Step 0{n}
                     </div>
                     <div
+                      className="step-label"
                       style={{
                         fontSize: 14,
                         fontWeight: 600,
@@ -370,7 +371,7 @@ function BookingFlow() {
             })}
           </div>
 
-          <div style={{ padding: 40, minHeight: 340 }}>
+          <div className="booking-body" style={{ padding: 40, minHeight: 340 }}>
             {step === 1 && (
               <div>
                 <h3
@@ -761,6 +762,7 @@ function BookingFlow() {
                 </div>
               )}
               <div
+                className="booking-actions"
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -802,9 +804,27 @@ function BookingFlow() {
         </div>
       </div>
       <style>{`
-        @media (max-width: 540px) {
-          .booking-stepper > div { padding: 12px 8px !important; gap: 6px !important; }
-          .step-sublabel { display: none; }
+        @media (max-width: 720px) {
+          .booking-body { padding: 24px 20px !important; }
+        }
+        @media (max-width: 640px) {
+          .booking-stepper { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+          .booking-stepper > div {
+            padding: 10px 4px !important;
+            gap: 0 !important;
+            justify-content: center !important;
+            min-width: 0;
+          }
+          .step-sublabel,
+          .step-label { display: none; }
+        }
+        @media (max-width: 480px) {
+          .booking-actions {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+          }
+          .booking-actions .btn { width: 100%; }
         }
       `}</style>
     </section>
@@ -1189,16 +1209,22 @@ function FAQ() {
                 onClick={() => setOpen(open === i ? -1 : i)}
                 style={{
                   width: "100%",
+                  minWidth: 0,
                   padding: "26px 0",
                   textAlign: "left",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  gap: 12,
                   color: "var(--text)",
                 }}
               >
                 <span
+                  className="faq-q"
                   style={{
+                    flex: 1,
+                    minWidth: 0,
+                    paddingRight: 16,
                     fontFamily: "var(--f-display)",
                     fontSize: 22,
                     textTransform: "uppercase",
@@ -1244,6 +1270,11 @@ function FAQ() {
             </div>
           ))}
         </div>
+        <style>{`
+          @media (max-width: 640px) {
+            .faq-q { font-size: clamp(18px, 5vw, 22px) !important; }
+          }
+        `}</style>
       </div>
     </section>
   );

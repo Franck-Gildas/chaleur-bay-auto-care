@@ -676,11 +676,11 @@ function BeforeAfter() {
           </div>
         </div>
 
-        <div className="reveal" style={{
+        <div className="reveal ba-grid" style={{
           display: "grid",
           gridTemplateColumns: "1fr 320px",
           gap: 24,
-        }} className="ba-grid">
+        }}>
           <div
             ref={trackRef}
             onMouseDown={onDown}
@@ -815,13 +815,13 @@ function ContactBlock() {
           </div>
         </div>
 
-        <div className="reveal" style={{
+        <div className="reveal contact-grid" style={{
           display: "grid",
           gridTemplateColumns: "1.1fr 1fr",
           gap: 1,
           background: "var(--line)",
           border: "1px solid var(--line)",
-        }} className="contact-grid">
+        }}>
           {/* Form */}
           <form onSubmit={submit} style={{
             background: "var(--bg)",

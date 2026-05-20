@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin · Chaleur Bay Auto Care</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="img/logo.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
   <style>
     /* ============================================================
        DESIGN TOKENS
     ============================================================ */
     :root {
-      --navy:        #0A1428;
-      --navy-2:      #0F1B33;
-      --navy-3:      #152545;
-      --navy-line:   #1E2F4F;
-      --steel:       #2A3B5C;
-      --orange:      #FF6200;
-      --orange-2:    #FF7A24;
-      --orange-soft: rgba(255,98,0,.12);
-      --ice:         #C9D6E8;
-      --fog:         #8AA0BF;
-      --text:        #F5F8FC;
-      --text-dim:    #A7B6CC;
-      --text-mute:   #6E7E96;
-      --bg:          #0A1428;
-      --bg-elev:     #0F1B33;
-      --bg-card:     #152545;
-      --line:        #1E2F4F;
-      --radius:      4px;
-      --radius-lg:   8px;
-      --radius-xl:   12px;
-      --f-display:   "Anton", "Archivo Black", Impact, sans-serif;
-      --f-body:      "Inter", system-ui, -apple-system, sans-serif;
-      --f-mono:      ui-monospace, "JetBrains Mono", "SF Mono", monospace;
+      --navy: #0A1428;
+      --navy-2: #0F1B33;
+      --navy-3: #152545;
+      --navy-line: #1E2F4F;
+      --steel: #2A3B5C;
+      --orange: #FF6200;
+      --orange-2: #FF7A24;
+      --orange-soft: rgba(255, 98, 0, .12);
+      --ice: #C9D6E8;
+      --fog: #8AA0BF;
+      --text: #F5F8FC;
+      --text-dim: #A7B6CC;
+      --text-mute: #6E7E96;
+      --bg: #0A1428;
+      --bg-elev: #0F1B33;
+      --bg-card: #152545;
+      --line: #1E2F4F;
+      --radius: 4px;
+      --radius-lg: 8px;
+      --radius-xl: 12px;
+      --f-display: "Anton", "Archivo Black", Impact, sans-serif;
+      --f-body: "Inter", system-ui, -apple-system, sans-serif;
+      --f-mono: ui-monospace, "JetBrains Mono", "SF Mono", monospace;
       /* status palette */
-      --s-new:       #3B82F6;
+      --s-new: #3B82F6;
       --s-contacted: #F59E0B;
-      --s-booked:    #22C55E;
-      --s-noanswer:  #FF6200;
+      --s-booked: #22C55E;
+      --s-noanswer: #FF6200;
       --s-cancelled: #EF4444;
       --s-completed: #9CA3AF;
     }
@@ -47,8 +50,20 @@
     /* ============================================================
        RESET / BASE
     ============================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { scroll-behavior: smooth; overflow-x: hidden; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -58,124 +73,313 @@
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
     }
-    a  { color: inherit; text-decoration: none; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-    ::selection { background: var(--orange); color: #fff; }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--steel); border-radius: 99px; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    ::selection {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--steel);
+      border-radius: 99px;
+    }
 
     /* ============================================================
        LOGIN SCREEN
     ============================================================ */
     #login-screen {
-      position: fixed; inset: 0; z-index: 999;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
       background: radial-gradient(ellipse at 60% 30%, #0f2040 0%, var(--navy) 70%);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
     }
+
     .login-card {
       background: var(--bg-card);
       border: 1px solid var(--navy-line);
       border-radius: 20px;
       padding: 52px 44px;
-      width: 100%; max-width: 420px;
+      width: 100%;
+      max-width: 420px;
       text-align: center;
-      box-shadow: 0 32px 80px rgba(0,0,0,.5);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .5);
     }
+
     .login-brandmark {
-      width: 68px; height: 68px; border-radius: 16px;
-      background: var(--orange); color: #0A1428;
-      font-family: var(--f-display); font-size: 30px;
-      display: grid; place-items: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      background: var(--orange);
+      color: #0A1428;
+      font-family: var(--f-display);
+      font-size: 30px;
+      display: grid;
+      place-items: center;
       margin: 0 auto 24px;
-      box-shadow: 0 8px 24px rgba(255,98,0,.35);
+      box-shadow: 0 8px 24px rgba(255, 98, 0, .35);
     }
+
     .login-title {
-      font-family: var(--f-display); font-size: 34px;
-      text-transform: uppercase; letter-spacing: .02em; margin-bottom: 4px;
+      font-family: var(--f-display);
+      font-size: 34px;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      margin-bottom: 4px;
     }
-    .login-subtitle { color: var(--text-mute); font-size: 13px; margin-bottom: 36px; }
+
+    .login-subtitle {
+      color: var(--text-mute);
+      font-size: 13px;
+      margin-bottom: 36px;
+    }
+
     .login-input {
-      width: 100%; padding: 14px 18px;
-      background: var(--bg-elev); border: 1px solid var(--line);
-      border-radius: var(--radius-lg); color: var(--text);
-      font-size: 15px; font-family: inherit; margin-bottom: 12px;
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      margin-bottom: 12px;
       transition: border-color .2s, box-shadow .2s;
     }
-    .login-input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,98,0,.15); }
+
+    .login-input:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 98, 0, .15);
+    }
+
     .login-btn {
-      width: 100%; padding: 15px; border-radius: var(--radius-lg);
-      background: var(--orange); color: #0A1428;
-      font-weight: 700; font-size: 15px; letter-spacing: .05em;
-      cursor: pointer; transition: background .2s, transform .1s;
+      width: 100%;
+      padding: 15px;
+      border-radius: var(--radius-lg);
+      background: var(--orange);
+      color: #0A1428;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: .05em;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
     }
-    .login-btn:hover { background: var(--orange-2); }
-    .login-btn:active { transform: scale(.98); }
+
+    .login-btn:hover {
+      background: var(--orange-2);
+    }
+
+    .login-btn:active {
+      transform: scale(.98);
+    }
+
     .login-error {
-      color: #EF4444; font-size: 13px; margin-top: 14px;
-      opacity: 0; transition: opacity .2s;
+      color: #EF4444;
+      font-size: 13px;
+      margin-top: 14px;
+      opacity: 0;
+      transition: opacity .2s;
     }
-    .login-error.show { opacity: 1; }
+
+    .login-error.show {
+      opacity: 1;
+    }
+
     @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      20%,60%  { transform: translateX(-8px); }
-      40%,80%  { transform: translateX(8px); }
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20%,
+      60% {
+        transform: translateX(-8px);
+      }
+
+      40%,
+      80% {
+        transform: translateX(8px);
+      }
     }
-    .shake { animation: shake .4s ease; }
+
+    .shake {
+      animation: shake .4s ease;
+    }
 
     /* ============================================================
        DASHBOARD
     ============================================================ */
-    #dashboard { display: none; }
-    #dashboard.visible { display: block; }
+    #dashboard {
+      display: none;
+    }
+
+    #dashboard.visible {
+      display: block;
+    }
 
     /* ---- Header ---- */
     .adm-header {
-      position: sticky; top: 0; z-index: 50;
-      background: var(--bg-elev); border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg-elev);
+      border-bottom: 1px solid var(--line);
     }
+
     .adm-header__inner {
-      max-width: 1440px; margin: 0 auto;
-      padding: 0 24px; height: 68px;
-      display: flex; align-items: center; gap: 12px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .adm-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+    .adm-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
     .adm-brandmark {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--orange); color: #0A1428;
-      font-family: var(--f-display); font-size: 16px;
-      display: grid; place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--orange);
+      color: #0A1428;
+      font-family: var(--f-display);
+      font-size: 16px;
+      display: grid;
+      place-items: center;
     }
-    .adm-brand-text b   { display: block; font-size: 14px; font-weight: 700; line-height: 1.2; }
-    .adm-brand-text small { font-size: 10px; color: var(--text-mute); text-transform: uppercase; letter-spacing: .1em; }
-    .adm-spacer { flex: 1; }
+
+    .adm-brand-text b {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .adm-brand-text small {
+      font-size: 10px;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .adm-spacer {
+      flex: 1;
+    }
+
     .last-upd {
-      display: flex; align-items: center; gap: 7px;
-      font-size: 12px; color: var(--text-mute); font-family: var(--f-mono);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-mute);
+      font-family: var(--f-mono);
       white-space: nowrap;
     }
+
     .last-upd-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: #22C55E;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22C55E;
       animation: blink-dot 2.4s ease-in-out infinite;
     }
-    @keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    @keyframes blink-dot {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
     .hdr-btn {
-      display: flex; align-items: center; gap: 6px;
-      padding: 8px 14px; border-radius: var(--radius-lg);
-      font-size: 13px; font-weight: 600; white-space: nowrap;
-      cursor: pointer; transition: background .18s, transform .1s, border-color .18s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: var(--radius-lg);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background .18s, transform .1s, border-color .18s;
       border: 1px solid var(--line);
     }
-    .hdr-btn:active { transform: scale(.95); }
-    .hdr-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
-    .hdr-btn--ghost { background: var(--bg-card); color: var(--text-dim); }
-    .hdr-btn--ghost:hover { background: var(--steel); color: var(--text); }
-    .hdr-btn--primary { background: var(--orange); color: #0A1428; border-color: var(--orange); }
-    .hdr-btn--primary:hover { background: var(--orange-2); }
+
+    .hdr-btn:active {
+      transform: scale(.95);
+    }
+
+    .hdr-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .hdr-btn--ghost {
+      background: var(--bg-card);
+      color: var(--text-dim);
+    }
+
+    .hdr-btn--ghost:hover {
+      background: var(--steel);
+      color: var(--text);
+    }
+
+    .hdr-btn--primary {
+      background: var(--orange);
+      color: #0A1428;
+      border-color: var(--orange);
+    }
+
+    .hdr-btn--primary:hover {
+      background: var(--orange-2);
+    }
 
     /* ---- Main wrap ---- */
-    .adm-main { max-width: 1440px; margin: 0 auto; padding: 28px 24px 80px; }
+    .adm-main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+    }
 
     /* ============================================================
        SUMMARY CARDS
@@ -183,163 +387,442 @@
     .cards-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px; margin-bottom: 24px;
+      gap: 16px;
+      margin-bottom: 24px;
     }
-    @media(max-width:900px)  { .cards-row { grid-template-columns: repeat(2,1fr); } }
-    @media(max-width:480px)  { .cards-row { grid-template-columns: 1fr; } }
+
+    @media(max-width:900px) {
+      .cards-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width:480px) {
+      .cards-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .sum-card {
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-xl); padding: 22px 24px;
-      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 22px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
       transition: transform .2s, box-shadow .2s, border-color .2s;
     }
+
     .sum-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 14px 36px rgba(0,0,0,.28);
-      border-color: rgba(255,98,0,.3);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, .28);
+      border-color: rgba(255, 98, 0, .3);
     }
+
     .sum-card-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: var(--orange-soft); color: var(--orange);
-      display: grid; place-items: center; flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--orange-soft);
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
     }
-    .sum-card-icon svg { width: 22px; height: 22px; }
+
+    .sum-card-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
     .sum-card-num {
-      font-family: var(--f-display); font-size: 42px; line-height: 1;
+      font-family: var(--f-display);
+      font-size: 42px;
+      line-height: 1;
       margin-bottom: 4px;
     }
+
     .sum-card-lbl {
-      font-size: 11px; color: var(--text-mute);
-      text-transform: uppercase; letter-spacing: .12em; font-weight: 600;
+      font-size: 11px;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 600;
     }
 
     /* ============================================================
        FILTER BAR
     ============================================================ */
     .filter-bar {
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-xl); padding: 14px 18px;
-      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
       margin-bottom: 16px;
     }
-    .filter-search { flex: 1; min-width: 180px; position: relative; }
-    .filter-search svg {
-      position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
-      width: 15px; height: 15px; color: var(--text-mute); pointer-events: none;
+
+    .filter-search {
+      flex: 1;
+      min-width: 180px;
+      position: relative;
     }
-    .fi, .fsel, .fdate {
-      background: var(--bg-elev); border: 1px solid var(--line);
-      border-radius: var(--radius-lg); color: var(--text);
-      font-size: 13px; font-family: inherit;
+
+    .filter-search svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--text-mute);
+      pointer-events: none;
+    }
+
+    .fi,
+    .fsel,
+    .fdate {
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
       transition: border-color .18s;
     }
-    .fi { width: 100%; padding: 9px 10px 9px 34px; }
-    .fsel { padding: 9px 10px; cursor: pointer; }
-    .fdate { padding: 9px 10px; }
-    .fi:focus,.fsel:focus,.fdate:focus { outline: none; border-color: var(--orange); }
-    .fsel option { background: var(--navy-3); }
-    .flabel { font-size: 11px; color: var(--text-mute); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; white-space: nowrap; }
-    .fgrp { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
-    .clear-btn {
-      padding: 9px 14px; border-radius: var(--radius-lg);
-      background: transparent; border: 1px solid var(--line);
-      color: var(--text-mute); font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: border-color .18s, color .18s; white-space: nowrap;
+
+    .fi {
+      width: 100%;
+      padding: 9px 10px 9px 34px;
     }
-    .clear-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+    .fsel {
+      padding: 9px 10px;
+      cursor: pointer;
+    }
+
+    .fdate {
+      padding: 9px 10px;
+    }
+
+    .fi:focus,
+    .fsel:focus,
+    .fdate:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+
+    .fsel option {
+      background: var(--navy-3);
+    }
+
+    .flabel {
+      font-size: 11px;
+      color: var(--text-mute);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      white-space: nowrap;
+    }
+
+    .fgrp {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .clear-btn {
+      padding: 9px 14px;
+      border-radius: var(--radius-lg);
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text-mute);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color .18s, color .18s;
+      white-space: nowrap;
+    }
+
+    .clear-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
 
     /* ============================================================
        VIEW TOOLBAR
     ============================================================ */
     .view-toolbar {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
     }
+
     .view-toggle {
-      display: flex; background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: 10px; padding: 3px; gap: 2px;
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 2px;
     }
+
     .vtbtn {
-      padding: 7px 16px; border-radius: 8px;
-      font-size: 13px; font-weight: 600; color: var(--text-mute);
-      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-mute);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       transition: background .18s, color .18s;
     }
-    .vtbtn svg { width: 14px; height: 14px; }
-    .vtbtn.active { background: var(--orange); color: #0A1428; }
-    .result-count { font-size: 12px; color: var(--text-mute); font-family: var(--f-mono); }
-    .result-count b { color: var(--orange); }
+
+    .vtbtn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .vtbtn.active {
+      background: var(--orange);
+      color: #0A1428;
+    }
+
+    .result-count {
+      font-size: 12px;
+      color: var(--text-mute);
+      font-family: var(--f-mono);
+    }
+
+    .result-count b {
+      color: var(--orange);
+    }
 
     /* ============================================================
        TABLE
     ============================================================ */
     .tbl-wrap {
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-xl); overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
     }
-    .leads-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    .leads-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
     .leads-tbl th {
-      background: var(--bg-elev); color: var(--text-mute);
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .12em;
-      padding: 13px 16px; text-align: left;
-      border-bottom: 1px solid var(--line); white-space: nowrap;
+      background: var(--bg-elev);
+      color: var(--text-mute);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      padding: 13px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
     }
+
     .leads-tbl td {
-      padding: 13px 16px; border-bottom: 1px solid var(--line);
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
       vertical-align: middle;
-      max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .leads-tbl tr:last-child td { border-bottom: none; }
-    .leads-tbl tbody tr:nth-child(even) td { background: rgba(255,255,255,.018); }
+
+    .leads-tbl tr:last-child td {
+      border-bottom: none;
+    }
+
+    .leads-tbl tbody tr:nth-child(even) td {
+      background: rgba(255, 255, 255, .018);
+    }
+
     .leads-tbl tbody tr {
-      cursor: pointer; transition: background .12s;
+      cursor: pointer;
+      transition: background .12s;
       animation: rowIn .28s ease both;
     }
-    .leads-tbl tbody tr:hover td { background: var(--orange-soft); }
-    @keyframes rowIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
-    .tcell-name { font-weight: 600; }
-    .tcell-dim  { color: var(--text-dim); }
-    .tcell-mute { color: var(--text-mute); }
+
+    .leads-tbl tbody tr:hover td {
+      background: var(--orange-soft);
+    }
+
+    @keyframes rowIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .tcell-name {
+      font-weight: 600;
+    }
+
+    .tcell-dim {
+      color: var(--text-dim);
+    }
+
+    .tcell-mute {
+      color: var(--text-mute);
+    }
 
     /* ============================================================
        STATUS BADGE
     ============================================================ */
     .sbadge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 9px; border-radius: 99px;
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .08em; white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      white-space: nowrap;
     }
-    .sbadge::before { content:""; width:5px; height:5px; border-radius:50%; background:currentColor; flex-shrink:0; }
-    .sb-new        { background:rgba(59,130,246,.14);  color:#3B82F6; }
-    .sb-contacted  { background:rgba(245,158,11,.14);  color:#F59E0B; }
-    .sb-booked     { background:rgba(34,197,94,.14);   color:#22C55E; }
-    .sb-no-answer  { background:rgba(255,98,0,.14);    color:#FF6200; }
-    .sb-cancelled  { background:rgba(239,68,68,.14);   color:#EF4444; }
-    .sb-completed  { background:rgba(156,163,175,.14); color:#9CA3AF; }
+
+    .sbadge::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    .sb-new {
+      background: rgba(59, 130, 246, .14);
+      color: #3B82F6;
+    }
+
+    .sb-contacted {
+      background: rgba(245, 158, 11, .14);
+      color: #F59E0B;
+    }
+
+    .sb-booked {
+      background: rgba(34, 197, 94, .14);
+      color: #22C55E;
+    }
+
+    .sb-no-answer {
+      background: rgba(255, 98, 0, .14);
+      color: #FF6200;
+    }
+
+    .sb-cancelled {
+      background: rgba(239, 68, 68, .14);
+      color: #EF4444;
+    }
+
+    .sb-completed {
+      background: rgba(156, 163, 175, .14);
+      color: #9CA3AF;
+    }
 
     /* ============================================================
        MOBILE CARDS
     ============================================================ */
-    .mob-cards { display: none; }
+    .mob-cards {
+      display: none;
+    }
+
     .mob-card {
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-xl); padding: 18px 20px;
-      margin-bottom: 10px; cursor: pointer;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
       transition: border-color .18s, transform .15s;
       animation: rowIn .28s ease both;
     }
-    .mob-card:hover { border-color: var(--orange); transform: translateY(-1px); }
-    .mob-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-    .mob-card-name { font-weight: 700; font-size: 16px; line-height: 1.2; }
-    .mob-card-phone { font-size: 12px; color: var(--text-mute); font-family: var(--f-mono); margin-top: 2px; }
-    .mob-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
-    .mob-field-label { font-size: 10px; color: var(--text-mute); text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
-    .mob-field-val { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
 
-    @media (max-width: 767px)  { .tbl-wrap { display: none; } .mob-cards { display: block; } }
-    @media (min-width: 768px)  { .mob-cards { display: none; } }
+    .mob-card:hover {
+      border-color: var(--orange);
+      transform: translateY(-1px);
+    }
+
+    .mob-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .mob-card-name {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .mob-card-phone {
+      font-size: 12px;
+      color: var(--text-mute);
+      font-family: var(--f-mono);
+      margin-top: 2px;
+    }
+
+    .mob-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+    }
+
+    .mob-field-label {
+      font-size: 10px;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 700;
+    }
+
+    .mob-field-val {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    @media (max-width: 767px) {
+      .tbl-wrap {
+        display: none;
+      }
+
+      .mob-cards {
+        display: block;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .mob-cards {
+        display: none;
+      }
+    }
 
     /* ============================================================
        SKELETON / STATE CARDS
@@ -348,1070 +831,1881 @@
       background: linear-gradient(90deg, var(--bg-elev) 25%, var(--steel) 50%, var(--bg-elev) 75%);
       background-size: 400% 100%;
       animation: shimmer 1.6s infinite;
-      border-radius: 3px; height: 13px;
+      border-radius: 3px;
+      height: 13px;
     }
-    @keyframes shimmer { from{background-position:100% 0} to{background-position:-100% 0} }
+
+    @keyframes shimmer {
+      from {
+        background-position: 100% 0
+      }
+
+      to {
+        background-position: -100% 0
+      }
+    }
 
     .state-box {
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-xl); padding: 56px 32px; text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 56px 32px;
+      text-align: center;
     }
-    .state-emoji { font-size: 42px; margin-bottom: 16px; }
-    .state-title { font-family: var(--f-display); font-size: 26px; text-transform: uppercase; margin-bottom: 8px; }
-    .state-sub { color: var(--text-mute); font-size: 14px; margin-bottom: 24px; }
+
+    .state-emoji {
+      font-size: 42px;
+      margin-bottom: 16px;
+    }
+
+    .state-title {
+      font-family: var(--f-display);
+      font-size: 26px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .state-sub {
+      color: var(--text-mute);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
     .state-cta {
-      display: inline-block; padding: 12px 28px;
-      background: var(--orange); color: #0A1428;
-      border-radius: var(--radius-lg); font-weight: 700; font-size: 14px;
-      cursor: pointer; transition: background .18s; border: none; font-family: inherit;
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--orange);
+      color: #0A1428;
+      border-radius: var(--radius-lg);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background .18s;
+      border: none;
+      font-family: inherit;
     }
-    .state-cta:hover { background: var(--orange-2); }
+
+    .state-cta:hover {
+      background: var(--orange-2);
+    }
 
     /* ============================================================
        CALENDAR
     ============================================================ */
-    .cal-wrap { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-xl); overflow: hidden; }
+    .cal-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
     .cal-hdr {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 24px; border-bottom: 1px solid var(--line);
-    }
-    .cal-month-title { font-family: var(--f-display); font-size: 26px; text-transform: uppercase; }
-    .cal-nav {
-      width: 36px; height: 36px; border-radius: 8px;
-      display: grid; place-items: center;
-      background: var(--bg-elev); border: 1px solid var(--line);
-      cursor: pointer; color: var(--text-dim); transition: all .18s;
-    }
-    .cal-nav:hover { background: var(--orange); color: #0A1428; border-color: var(--orange); }
-    .cal-nav svg { width: 16px; height: 16px; }
-    .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); }
-    .cal-doh {
-      padding: 11px 6px; text-align: center; background: var(--bg-elev);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
       border-bottom: 1px solid var(--line);
-      font-size: 11px; font-weight: 700; color: var(--text-mute);
-      text-transform: uppercase; letter-spacing: .1em;
     }
+
+    .cal-month-title {
+      font-family: var(--f-display);
+      font-size: 26px;
+      text-transform: uppercase;
+    }
+
+    .cal-nav {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      color: var(--text-dim);
+      transition: all .18s;
+    }
+
+    .cal-nav:hover {
+      background: var(--orange);
+      color: #0A1428;
+      border-color: var(--orange);
+    }
+
+    .cal-nav svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .cal-doh {
+      padding: 11px 6px;
+      text-align: center;
+      background: var(--bg-elev);
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
     .cal-day {
-      min-height: 74px; padding: 9px 10px;
-      border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
-      cursor: pointer; transition: background .13s;
+      min-height: 74px;
+      padding: 9px 10px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      transition: background .13s;
     }
-    .cal-day:nth-child(7n) { border-right: none; }
-    .cal-day:hover { background: var(--orange-soft); }
-    .cal-day.other-mo { opacity: .28; cursor: default; pointer-events: none; }
-    .cal-day.is-today .cal-dn { color: var(--orange); font-weight: 700; }
-    .cal-day.is-selected { background: var(--orange-soft); }
-    .cal-dn { font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 5px; }
+
+    .cal-day:nth-child(7n) {
+      border-right: none;
+    }
+
+    .cal-day:hover {
+      background: var(--orange-soft);
+    }
+
+    .cal-day.other-mo {
+      opacity: .28;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .cal-day.is-today .cal-dn {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .cal-day.is-selected {
+      background: var(--orange-soft);
+    }
+
+    .cal-dn {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-bottom: 5px;
+    }
+
     .cal-badge {
-      display: inline-flex; align-items: center; gap: 3px;
-      background: rgba(255,98,0,.18); color: var(--orange);
-      font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 99px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(255, 98, 0, .18);
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 99px;
     }
-    .cal-day-panel { background: var(--bg-elev); border-top: 1px solid var(--line); padding: 16px 20px; }
-    .cal-day-panel-title { font-size: 11px; font-weight: 700; color: var(--text-mute); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 12px; }
+
+    .cal-day-panel {
+      background: var(--bg-elev);
+      border-top: 1px solid var(--line);
+      padding: 16px 20px;
+    }
+
+    .cal-day-panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 12px;
+    }
+
     .cal-lead-row {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 10px 14px; background: var(--bg-card); border-radius: var(--radius-lg);
-      margin-bottom: 8px; cursor: pointer; transition: background .13s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background .13s;
     }
-    .cal-lead-row:hover { background: var(--orange-soft); }
-    .cal-lead-name { font-weight: 600; font-size: 14px; }
-    .cal-lead-meta { font-size: 12px; color: var(--text-mute); margin-top: 1px; }
+
+    .cal-lead-row:hover {
+      background: var(--orange-soft);
+    }
+
+    .cal-lead-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .cal-lead-meta {
+      font-size: 12px;
+      color: var(--text-mute);
+      margin-top: 1px;
+    }
 
     /* ============================================================
        MODAL
     ============================================================ */
     .modal-bd {
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
-      opacity: 0; pointer-events: none; transition: opacity .25s;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, .6);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
     }
-    .modal-bd.open { opacity: 1; pointer-events: all; }
+
+    .modal-bd.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
     .modal-panel {
-      position: fixed; top: 0; right: 0; bottom: 0; z-index: 201;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 201;
       width: min(600px, 100vw);
-      background: var(--bg-elev); border-left: 1px solid var(--line);
+      background: var(--bg-elev);
+      border-left: 1px solid var(--line);
       transform: translateX(100%);
-      transition: transform .32s cubic-bezier(.16,1,.3,1);
-      display: flex; flex-direction: column; overflow: hidden;
+      transition: transform .32s cubic-bezier(.16, 1, .3, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
-    .modal-panel.open { transform: translateX(0); }
+
+    .modal-panel.open {
+      transform: translateX(0);
+    }
 
     /* Modal header */
     .modal-hdr {
-      padding: 20px 22px; border-bottom: 1px solid var(--line);
-      display: flex; align-items: flex-start; gap: 14px;
-      background: linear-gradient(180deg, rgba(255,98,0,.07), transparent);
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: linear-gradient(180deg, rgba(255, 98, 0, .07), transparent);
       flex-shrink: 0;
     }
+
     .modal-avatar {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: var(--orange); color: #0A1428;
-      font-family: var(--f-display); font-size: 22px;
-      display: grid; place-items: center; flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--orange);
+      color: #0A1428;
+      font-family: var(--f-display);
+      font-size: 22px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
     }
-    .modal-hdr-info { flex: 1; min-width: 0; }
-    .modal-lead-name  { font-size: 19px; font-weight: 700; line-height: 1.2; }
+
+    .modal-hdr-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .modal-lead-name {
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
     .modal-phone-row {
-      display: flex; align-items: center; gap: 6px; margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
     }
-    .modal-lead-phone { font-size: 12px; color: var(--text-mute); font-family: var(--f-mono); }
+
+    .modal-lead-phone {
+      font-size: 12px;
+      color: var(--text-mute);
+      font-family: var(--f-mono);
+    }
+
     .copy-phone-btn {
-      width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
-      display: grid; place-items: center;
-      background: var(--bg-card); border: 1px solid var(--line); color: var(--text-mute);
-      cursor: pointer; transition: color .18s, border-color .18s, background .18s;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--text-mute);
+      cursor: pointer;
+      transition: color .18s, border-color .18s, background .18s;
     }
-    .copy-phone-btn:hover { border-color: var(--orange); color: var(--orange); background: var(--orange-soft); }
-    .copy-phone-btn:disabled { opacity: 0.35; pointer-events: none; cursor: default; }
-    .copy-phone-btn svg { width: 13px; height: 13px; }
-    .modal-nav { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+
+    .copy-phone-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: var(--orange-soft);
+    }
+
+    .copy-phone-btn:disabled {
+      opacity: 0.35;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .copy-phone-btn svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .modal-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
     .modal-nav-btn {
-      width: 32px; height: 32px; border-radius: 8px;
-      display: grid; place-items: center;
-      background: var(--bg-card); border: 1px solid var(--line); color: var(--text-dim);
-      cursor: pointer; transition: border-color .18s, color .18s, background .18s;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: border-color .18s, color .18s, background .18s;
     }
-    .modal-nav-btn:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); }
-    .modal-nav-btn:disabled { opacity: 0.35; pointer-events: none; cursor: default; }
-    .modal-nav-btn svg { width: 14px; height: 14px; }
+
+    .modal-nav-btn:hover:not(:disabled) {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .modal-nav-btn:disabled {
+      opacity: 0.35;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .modal-nav-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
     .modal-close-btn {
-      width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
-      display: grid; place-items: center;
-      background: var(--bg-card); border: 1px solid var(--line); color: var(--text-mute);
-      cursor: pointer; transition: background .18s, color .18s, border-color .18s;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--text-mute);
+      cursor: pointer;
+      transition: background .18s, color .18s, border-color .18s;
     }
-    .modal-close-btn:hover { background: #EF4444; color: #fff; border-color: #EF4444; }
-    .modal-close-btn svg { width: 15px; height: 15px; }
+
+    .modal-close-btn:hover {
+      background: #EF4444;
+      color: #fff;
+      border-color: #EF4444;
+    }
+
+    .modal-close-btn svg {
+      width: 15px;
+      height: 15px;
+    }
 
     /* Quick actions */
     .quick-acts {
-      display: flex; gap: 7px; flex-wrap: wrap;
-      padding: 13px 22px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      padding: 13px 22px;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
     }
+
     .qa {
-      display: flex; align-items: center; gap: 5px;
-      padding: 7px 12px; border-radius: var(--radius-lg);
-      font-size: 12px; font-weight: 700; cursor: pointer;
-      transition: all .18s; border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 12px;
+      border-radius: var(--radius-lg);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .18s;
+      border: 1px solid transparent;
     }
-    .qa svg { width: 12px; height: 12px; flex-shrink: 0; }
-    .qa-contacted { background: rgba(245,158,11,.13); color: #F59E0B; border-color: rgba(245,158,11,.28); }
-    .qa-contacted:hover { background: rgba(245,158,11,.28); }
-    .qa-booked { background: rgba(34,197,94,.13); color: #22C55E; border-color: rgba(34,197,94,.28); }
-    .qa-booked:hover { background: rgba(34,197,94,.28); }
-    .qa-note { background: var(--orange-soft); color: var(--orange); border-color: rgba(255,98,0,.28); }
-    .qa-note:hover { background: rgba(255,98,0,.22); }
-    .qa-completed { background: rgba(156,163,175,.13); color: #9CA3AF; border-color: rgba(156,163,175,.28); }
-    .qa-completed:hover { background: rgba(156,163,175,.28); }
+
+    .qa svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .qa-contacted {
+      background: rgba(245, 158, 11, .13);
+      color: #F59E0B;
+      border-color: rgba(245, 158, 11, .28);
+    }
+
+    .qa-contacted:hover {
+      background: rgba(245, 158, 11, .28);
+    }
+
+    .qa-booked {
+      background: rgba(34, 197, 94, .13);
+      color: #22C55E;
+      border-color: rgba(34, 197, 94, .28);
+    }
+
+    .qa-booked:hover {
+      background: rgba(34, 197, 94, .28);
+    }
+
+    .qa-note {
+      background: var(--orange-soft);
+      color: var(--orange);
+      border-color: rgba(255, 98, 0, .28);
+    }
+
+    .qa-note:hover {
+      background: rgba(255, 98, 0, .22);
+    }
+
+    .qa-completed {
+      background: rgba(156, 163, 175, .13);
+      color: #9CA3AF;
+      border-color: rgba(156, 163, 175, .28);
+    }
+
+    .qa-completed:hover {
+      background: rgba(156, 163, 175, .28);
+    }
+
     .modal-print-row {
-      padding: 0 22px 13px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+      padding: 0 22px 13px;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
     }
+
     .btn-print-wo {
-      width: 100%; padding: 10px 14px; border-radius: var(--radius-lg);
-      font-size: 13px; font-weight: 700; cursor: pointer;
-      background: var(--bg-card); border: 1px solid var(--line); color: var(--text-dim);
-      display: flex; align-items: center; justify-content: center; gap: 7px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--radius-lg);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
       transition: border-color .18s, color .18s, background .18s;
     }
-    .btn-print-wo:hover { border-color: var(--orange); color: var(--orange); background: var(--orange-soft); }
-    .btn-print-wo svg { width: 14px; height: 14px; flex-shrink: 0; }
-    @keyframes pulse-pop { 0%{transform:scale(1)} 45%{transform:scale(1.1)} 100%{transform:scale(1)} }
-    .pulse-once { animation: pulse-pop .35s ease; }
+
+    .btn-print-wo:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: var(--orange-soft);
+    }
+
+    .btn-print-wo svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-pop {
+      0% {
+        transform: scale(1)
+      }
+
+      45% {
+        transform: scale(1.1)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    .pulse-once {
+      animation: pulse-pop .35s ease;
+    }
 
     /* CTA row */
     .modal-cta {
-      display: flex; gap: 10px;
-      padding: 13px 22px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+      display: flex;
+      gap: 10px;
+      padding: 13px 22px;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
     }
+
     .cta-a {
-      flex: 1; padding: 11px; border-radius: var(--radius-lg);
-      font-size: 14px; font-weight: 700; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 7px;
-      transition: all .18s; text-decoration: none;
+      flex: 1;
+      padding: 11px;
+      border-radius: var(--radius-lg);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all .18s;
+      text-decoration: none;
     }
-    .cta-a svg { width: 15px; height: 15px; flex-shrink: 0; }
-    .cta-call { background: var(--orange); color: #0A1428; }
-    .cta-call:hover { background: var(--orange-2); }
-    .cta-sms  { background: var(--bg-card); border: 1px solid var(--line); color: var(--text-dim); }
-    .cta-sms:hover { border-color: var(--orange); color: var(--orange); }
-    @media (hover: hover) { .cta-sms { display: none; } }
-    .cta-email { background: #3B82F6; color: #fff; }
-    .cta-email:hover { background: #60A5FA; transform: scale(1.02); }
+
+    .cta-a svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .cta-call {
+      background: var(--orange);
+      color: #0A1428;
+    }
+
+    .cta-call:hover {
+      background: var(--orange-2);
+    }
+
+    .cta-sms {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--text-dim);
+    }
+
+    .cta-sms:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    @media (hover: hover) {
+      .cta-sms {
+        display: none;
+      }
+    }
+
+    .cta-email {
+      background: #3B82F6;
+      color: #fff;
+    }
+
+    .cta-email:hover {
+      background: #60A5FA;
+      transform: scale(1.02);
+    }
+
     .cta-email.no-email {
-      background: var(--bg-card); border: 1px solid var(--line);
-      color: var(--text-mute); cursor: not-allowed;
-      pointer-events: none; opacity: 0.55;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--text-mute);
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.55;
     }
+
     .cta-email.no-email:hover {
-      background: var(--bg-card); transform: none;
+      background: var(--bg-card);
+      transform: none;
     }
+
     @keyframes ctaReveal {
-      from { opacity: 0; transform: scale(.95) translateY(4px); }
-      to   { opacity: 1; transform: scale(1)   translateY(0); }
+      from {
+        opacity: 0;
+        transform: scale(.95) translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
-    .modal-panel.open .cta-a:nth-child(1) { animation: ctaReveal .3s cubic-bezier(.16,1,.3,1) .05s both; }
-    .modal-panel.open .cta-a:nth-child(2) { animation: ctaReveal .3s cubic-bezier(.16,1,.3,1) .10s both; }
-    .modal-panel.open .cta-a:nth-child(3) { animation: ctaReveal .3s cubic-bezier(.16,1,.3,1) .15s both; }
+
+    .modal-panel.open .cta-a:nth-child(1) {
+      animation: ctaReveal .3s cubic-bezier(.16, 1, .3, 1) .05s both;
+    }
+
+    .modal-panel.open .cta-a:nth-child(2) {
+      animation: ctaReveal .3s cubic-bezier(.16, 1, .3, 1) .10s both;
+    }
+
+    .modal-panel.open .cta-a:nth-child(3) {
+      animation: ctaReveal .3s cubic-bezier(.16, 1, .3, 1) .15s both;
+    }
 
     /* Modal body */
-    .modal-body { flex: 1; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 22px; }
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
 
     /* Section label */
-    .sec-label { font-size: 10px; font-weight: 700; color: var(--text-mute); text-transform: uppercase; letter-spacing: .14em; margin-bottom: 11px; }
+    .sec-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-bottom: 11px;
+    }
 
     /* Timeline */
-    .timeline { display: flex; align-items: flex-start; }
-    .tl-step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+    .timeline {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .tl-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
     .tl-step:not(:last-child)::after {
-      content: ""; position: absolute; top: 10px; left: 50%; right: -50%;
-      height: 2px; background: var(--line); z-index: 0;
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      right: -50%;
+      height: 2px;
+      background: var(--line);
+      z-index: 0;
       transition: background .3s;
     }
-    .tl-step.tl-past:not(:last-child)::after { background: var(--orange); }
-    .tl-dot {
-      width: 21px; height: 21px; border-radius: 50%; border: 2px solid var(--line);
-      background: var(--bg-card); z-index: 1; position: relative;
-      display: grid; place-items: center; transition: all .3s;
+
+    .tl-step.tl-past:not(:last-child)::after {
+      background: var(--orange);
     }
-    .tl-dot svg { width: 9px; height: 9px; color: transparent; transition: color .3s; }
-    .tl-step.tl-active .tl-dot { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 0 4px rgba(255,98,0,.22); }
-    .tl-step.tl-active .tl-dot svg, .tl-step.tl-past .tl-dot svg { color: #0A1428; }
-    .tl-step.tl-past .tl-dot { background: var(--orange); border-color: var(--orange); }
-    .tl-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-mute); margin-top: 7px; text-align: center; }
-    .tl-step.tl-active .tl-lbl { color: var(--orange); }
-    .tl-step.tl-past .tl-lbl { color: var(--text-dim); }
+
+    .tl-dot {
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      background: var(--bg-card);
+      z-index: 1;
+      position: relative;
+      display: grid;
+      place-items: center;
+      transition: all .3s;
+    }
+
+    .tl-dot svg {
+      width: 9px;
+      height: 9px;
+      color: transparent;
+      transition: color .3s;
+    }
+
+    .tl-step.tl-active .tl-dot {
+      background: var(--orange);
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 98, 0, .22);
+    }
+
+    .tl-step.tl-active .tl-dot svg,
+    .tl-step.tl-past .tl-dot svg {
+      color: #0A1428;
+    }
+
+    .tl-step.tl-past .tl-dot {
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+
+    .tl-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-mute);
+      margin-top: 7px;
+      text-align: center;
+    }
+
+    .tl-step.tl-active .tl-lbl {
+      color: var(--orange);
+    }
+
+    .tl-step.tl-past .tl-lbl {
+      color: var(--text-dim);
+    }
 
     /* Detail grid */
-    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .det-item { background: var(--bg-card); border-radius: var(--radius-lg); padding: 12px 14px; }
-    .det-item.full { grid-column: 1 / -1; }
-    .det-lbl { font-size: 10px; color: var(--text-mute); text-transform: uppercase; letter-spacing: .1em; font-weight: 700; margin-bottom: 4px; }
-    .det-val { font-size: 13px; color: var(--text); font-weight: 500; }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .det-item {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+    }
+
+    .det-item.full {
+      grid-column: 1 / -1;
+    }
+
+    .det-lbl {
+      font-size: 10px;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .det-val {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
 
     /* Status select */
     .status-sel {
-      width: 100%; padding: 10px 12px;
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-lg); color: var(--text);
-      font-size: 14px; font-family: inherit; cursor: pointer;
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
       transition: border-color .18s;
     }
-    .status-sel:focus { outline: none; border-color: var(--orange); }
-    .status-sel option { background: var(--navy-3); }
+
+    .status-sel:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+
+    .status-sel option {
+      background: var(--navy-3);
+    }
 
     /* Notes */
-    .notes-list { display: flex; flex-direction: column; gap: 8px; }
-    .note-item { background: var(--bg-card); border-radius: var(--radius-lg); padding: 11px 14px; animation: noteIn .25s ease both; }
-    @keyframes noteIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
-    .note-ts   { font-size: 10px; color: var(--text-mute); font-family: var(--f-mono); margin-bottom: 4px; }
-    .note-body { font-size: 13px; line-height: 1.5; }
-    .notes-empty { color: var(--text-mute); font-size: 13px; font-style: italic; padding: 6px 0; }
-    .note-add {
-      margin-top: 10px; display: flex; flex-direction: column; gap: 8px;
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
+
+    .note-item {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 11px 14px;
+      animation: noteIn .25s ease both;
+    }
+
+    @keyframes noteIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .note-ts {
+      font-size: 10px;
+      color: var(--text-mute);
+      font-family: var(--f-mono);
+      margin-bottom: 4px;
+    }
+
+    .note-body {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .notes-empty {
+      color: var(--text-mute);
+      font-size: 13px;
+      font-style: italic;
+      padding: 6px 0;
+    }
+
+    .note-add {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
     .note-add textarea {
-      width: 100%; min-height: 76px; resize: vertical;
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-lg); color: var(--text);
-      padding: 11px 13px; font-size: 13px; font-family: inherit;
+      width: 100%;
+      min-height: 76px;
+      resize: vertical;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      color: var(--text);
+      padding: 11px 13px;
+      font-size: 13px;
+      font-family: inherit;
       transition: border-color .18s;
     }
-    .note-add textarea:focus { outline: none; border-color: var(--orange); }
-    .note-save-btn {
-      align-self: flex-end; padding: 9px 18px;
-      background: var(--orange); color: #0A1428;
-      border-radius: var(--radius-lg); font-weight: 700; font-size: 13px;
-      cursor: pointer; transition: background .18s;
+
+    .note-add textarea:focus {
+      outline: none;
+      border-color: var(--orange);
     }
-    .note-save-btn:hover:not(:disabled) { background: var(--orange-2); }
+
+    .note-save-btn {
+      align-self: flex-end;
+      padding: 9px 18px;
+      background: var(--orange);
+      color: #0A1428;
+      border-radius: var(--radius-lg);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background .18s;
+    }
+
+    .note-save-btn:hover:not(:disabled) {
+      background: var(--orange-2);
+    }
+
     .note-save-btn:disabled {
-      opacity: 0.45; cursor: not-allowed; pointer-events: none;
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     /* Reminder */
-    .reminder-row { display: flex; flex-direction: column; gap: 8px; }
+    .reminder-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
     .reminder-sel {
-      width: 100%; padding: 10px 12px;
-      background: var(--bg-card); border: 1px solid var(--line);
-      border-radius: var(--radius-lg); color: var(--text);
-      font-size: 13px; font-family: inherit; cursor: pointer;
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
       transition: border-color .18s;
     }
-    .reminder-sel:focus { outline: none; border-color: var(--orange); }
-    .reminder-sel option { background: var(--navy-3); }
-    .reminder-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 11px; border-radius: 999px;
-      font-size: 11px; font-weight: 700; color: var(--orange);
-      background: var(--orange-soft); border: 1px solid rgba(255,98,0,.28);
+
+    .reminder-sel:focus {
+      outline: none;
+      border-color: var(--orange);
     }
-    .reminder-tag[hidden] { display: none; }
+
+    .reminder-sel option {
+      background: var(--navy-3);
+    }
+
+    .reminder-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--orange);
+      background: var(--orange-soft);
+      border: 1px solid rgba(255, 98, 0, .28);
+    }
+
+    .reminder-tag[hidden] {
+      display: none;
+    }
 
     /* Past visits */
-    .history-list { display: flex; flex-direction: column; gap: 8px; }
-    .history-item {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
-      background: var(--bg-card); border-radius: var(--radius-lg); padding: 11px 14px;
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .history-date { font-size: 12px; font-family: var(--f-mono); color: var(--text-dim); min-width: 100px; }
-    .history-svc { font-size: 13px; font-weight: 600; flex: 1; min-width: 120px; }
-    .history-empty { color: var(--text-mute); font-size: 13px; font-style: italic; padding: 6px 0; }
+
+    .history-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 11px 14px;
+    }
+
+    .history-date {
+      font-size: 12px;
+      font-family: var(--f-mono);
+      color: var(--text-dim);
+      min-width: 100px;
+    }
+
+    .history-svc {
+      font-size: 13px;
+      font-weight: 600;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .history-empty {
+      color: var(--text-mute);
+      font-size: 13px;
+      font-style: italic;
+      padding: 6px 0;
+    }
 
     /* Toast */
     .crm-toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(12px);
-      z-index: 300; padding: 12px 20px; border-radius: var(--radius-lg);
-      background: var(--bg-card); border: 1px solid var(--line);
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      z-index: 300;
+      padding: 12px 20px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--line);
       border-left: 3px solid var(--orange);
-      color: var(--text); font-size: 13px; font-weight: 600;
-      box-shadow: 0 8px 32px rgba(0,0,0,.45);
-      opacity: 0; pointer-events: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .45);
+      opacity: 0;
+      pointer-events: none;
       transition: opacity .25s ease, transform .25s ease;
     }
+
     .crm-toast.show {
-      opacity: 1; transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* ============================================================
        RESPONSIVE TWEAKS
     ============================================================ */
     @media(max-width:600px) {
-      .adm-header__inner { gap: 8px; }
-      .last-upd, .hdr-btn span { display: none; }
-      .adm-main { padding: 16px 14px 60px; }
-      .filter-bar { gap: 8px; }
-      .fdate { flex: 1; min-width: 0; max-width: 100%; }
-      .fgrp  { max-width: 100%; flex-wrap: wrap; }
+      .adm-header__inner {
+        gap: 8px;
+      }
+
+      .last-upd,
+      .hdr-btn span {
+        display: none;
+      }
+
+      .adm-main {
+        padding: 16px 14px 60px;
+      }
+
+      .filter-bar {
+        gap: 8px;
+      }
+
+      .fdate {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .fgrp {
+        max-width: 100%;
+        flex-wrap: wrap;
+      }
     }
+
     @media(max-width:600px) {
       .crm-toast {
-        left: 16px; right: 16px; transform: translateY(12px);
+        left: 16px;
+        right: 16px;
+        transform: translateY(12px);
         text-align: center;
       }
-      .crm-toast.show { transform: translateY(0); }
+
+      .crm-toast.show {
+        transform: translateY(0);
+      }
     }
+
     @media(max-width:400px) {
-      .modal-panel { width: 100vw; }
-      .detail-grid { grid-template-columns: 1fr; }
-      .modal-nav-btn { width: 36px; height: 36px; }
-      .copy-phone-btn { width: 36px; height: 36px; }
+      .modal-panel {
+        width: 100vw;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-nav-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .copy-phone-btn {
+        width: 36px;
+        height: 36px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- ================================================================
+  <!-- ================================================================
      LOGIN SCREEN
 ================================================================ -->
-<div id="login-screen">
-  <div class="login-card" id="login-card">
-    <div class="login-brandmark">CB</div>
-    <div class="login-title">Admin Access</div>
-    <p class="login-subtitle">Chaleur Bay Auto Care &middot; CRM Dashboard</p>
-    <input
-      id="pw-input" type="password"
-      class="login-input" placeholder="Enter admin password&hellip;"
-      autocomplete="current-password"
-    />
-    <button class="login-btn" onclick="attemptLogin()">Sign In &rarr;</button>
-    <div class="login-error" id="login-error">Incorrect password &mdash; try again.</div>
+  <div id="login-screen">
+    <div class="login-card" id="login-card">
+      <div class="login-brandmark">CB</div>
+      <div class="login-title">Admin Access</div>
+      <p class="login-subtitle">Chaleur Bay Auto Care &middot; CRM Dashboard</p>
+      <input id="pw-input" type="password" class="login-input" placeholder="Enter admin password&hellip;"
+        autocomplete="current-password" />
+      <button class="login-btn" onclick="attemptLogin()">Sign In &rarr;</button>
+      <div class="login-error" id="login-error">Incorrect password &mdash; try again.</div>
+    </div>
   </div>
-</div>
 
-<!-- ================================================================
+  <!-- ================================================================
      DASHBOARD
 ================================================================ -->
-<div id="dashboard">
+  <div id="dashboard">
 
-  <!-- HEADER -->
-  <header class="adm-header">
-    <div class="adm-header__inner">
-      <div class="adm-brand">
-        <div class="adm-brandmark">CB</div>
-        <div class="adm-brand-text">
-          <b>CRM Dashboard</b>
-          <small>Chaleur Bay Auto Care</small>
+    <!-- HEADER -->
+    <header class="adm-header">
+      <div class="adm-header__inner">
+        <div class="adm-brand">
+          <div class="adm-brandmark">CB</div>
+          <div class="adm-brand-text">
+            <b>CRM Dashboard</b>
+            <small>Chaleur Bay Auto Care</small>
+          </div>
         </div>
-      </div>
 
-      <div class="adm-spacer"></div>
+        <div class="adm-spacer"></div>
 
-      <div class="last-upd">
-        <div class="last-upd-dot"></div>
-        <span id="last-upd-text">Loading&hellip;</span>
-      </div>
-
-      <button class="hdr-btn hdr-btn--ghost" onclick="fetchLeads()" title="Refresh">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
-        <span>Refresh</span>
-      </button>
-
-      <button class="hdr-btn hdr-btn--primary" onclick="exportCSV()" title="Export CSV">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        <span>Export</span>
-      </button>
-
-      <a class="hdr-btn hdr-btn--ghost" href="index.html" title="Back to site">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        <span>Site</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- MAIN -->
-  <main class="adm-main">
-
-    <!-- SUMMARY CARDS -->
-    <div class="cards-row">
-      <div class="sum-card">
-        <div class="sum-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="last-upd">
+          <div class="last-upd-dot"></div>
+          <span id="last-upd-text">Loading&hellip;</span>
         </div>
-        <div>
-          <div class="sum-card-num" id="card-today">—</div>
-          <div class="sum-card-lbl">New Leads Today</div>
-        </div>
-      </div>
-      <div class="sum-card">
-        <div class="sum-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <div>
-          <div class="sum-card-num" id="card-followup">—</div>
-          <div class="sum-card-lbl">Needs Follow-Up</div>
-        </div>
-      </div>
-      <div class="sum-card">
-        <div class="sum-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-        </div>
-        <div>
-          <div class="sum-card-num" id="card-booked">—</div>
-          <div class="sum-card-lbl">Total Booked Jobs</div>
-        </div>
-      </div>
-      <div class="sum-card">
-        <div class="sum-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div>
-          <div class="sum-card-num" id="card-total">—</div>
-          <div class="sum-card-lbl">Total Leads All Time</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- FILTER BAR -->
-    <div class="filter-bar">
-      <div class="filter-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input id="fi-search" type="text" class="fi" placeholder="Search name, phone, vehicle, service&hellip;" oninput="applyFilters()"/>
-      </div>
-      <div class="fgrp">
-        <span class="flabel">Status</span>
-        <select id="fi-status" class="fsel" onchange="applyFilters()">
-          <option value="">All</option>
-          <option>New</option><option>Contacted</option><option>Booked</option>
-          <option>No Answer</option><option>Cancelled</option><option>Completed</option>
-        </select>
-      </div>
-      <div class="fgrp">
-        <span class="flabel">Service</span>
-        <select id="fi-service" class="fsel" onchange="applyFilters()">
-          <option value="">All Services</option>
-        </select>
-      </div>
-      <div class="fgrp">
-        <span class="flabel">From</span>
-        <input id="fi-from" type="date" class="fdate" onchange="applyFilters()"/>
-        <span class="flabel">To</span>
-        <input id="fi-to" type="date" class="fdate" onchange="applyFilters()"/>
-      </div>
-      <button class="clear-btn" onclick="clearFilters()">&times; Clear</button>
-    </div>
-
-    <!-- VIEW TOOLBAR -->
-    <div class="view-toolbar">
-      <div class="view-toggle">
-        <button class="vtbtn active" id="btn-tbl" onclick="switchView('table')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Table View
+        <button class="hdr-btn hdr-btn--ghost" onclick="fetchLeads()" title="Refresh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M1 4v6h6M23 20v-6h-6" />
+            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15" />
+          </svg>
+          <span>Refresh</span>
         </button>
-        <button class="vtbtn" id="btn-cal" onclick="switchView('calendar')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Calendar View
+
+        <button class="hdr-btn hdr-btn--primary" onclick="exportCSV()" title="Export CSV">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg>
+          <span>Export</span>
         </button>
+
+        <a class="hdr-btn hdr-btn--ghost" href="index.html" title="Back to site">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span>Site</span>
+        </a>
       </div>
-      <div class="result-count" id="result-count"></div>
-    </div>
+    </header>
 
-    <!-- TABLE VIEW -->
-    <div id="view-table">
-      <!-- Injected by renderLeadView() -->
-    </div>
+    <!-- MAIN -->
+    <main class="adm-main">
 
-    <!-- CALENDAR VIEW -->
-    <div id="view-cal" style="display:none;">
-      <div class="cal-wrap">
-        <div class="cal-hdr">
-          <button class="cal-nav" onclick="calNav(-1)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <!-- SUMMARY CARDS -->
+      <div class="cards-row">
+        <div class="sum-card">
+          <div class="sum-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <div>
+            <div class="sum-card-num" id="card-today">—</div>
+            <div class="sum-card-lbl">New Leads Today</div>
+          </div>
+        </div>
+        <div class="sum-card">
+          <div class="sum-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+          </div>
+          <div>
+            <div class="sum-card-num" id="card-followup">—</div>
+            <div class="sum-card-lbl">Needs Follow-Up</div>
+          </div>
+        </div>
+        <div class="sum-card">
+          <div class="sum-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+              <path d="m9 16 2 2 4-4" />
+            </svg>
+          </div>
+          <div>
+            <div class="sum-card-num" id="card-booked">—</div>
+            <div class="sum-card-lbl">Total Booked Jobs</div>
+          </div>
+        </div>
+        <div class="sum-card">
+          <div class="sum-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+          <div>
+            <div class="sum-card-num" id="card-total">—</div>
+            <div class="sum-card-lbl">Total Leads All Time</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <div class="filter-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input id="fi-search" type="text" class="fi" placeholder="Search name, phone, vehicle, service&hellip;"
+            oninput="applyFilters()" />
+        </div>
+        <div class="fgrp">
+          <span class="flabel">Status</span>
+          <select id="fi-status" class="fsel" onchange="applyFilters()">
+            <option value="">All</option>
+            <option>New</option>
+            <option>Contacted</option>
+            <option>Booked</option>
+            <option>No Answer</option>
+            <option>Cancelled</option>
+            <option>Completed</option>
+          </select>
+        </div>
+        <div class="fgrp">
+          <span class="flabel">Service</span>
+          <select id="fi-service" class="fsel" onchange="applyFilters()">
+            <option value="">All Services</option>
+          </select>
+        </div>
+        <div class="fgrp">
+          <span class="flabel">From</span>
+          <input id="fi-from" type="date" class="fdate" onchange="applyFilters()" />
+          <span class="flabel">To</span>
+          <input id="fi-to" type="date" class="fdate" onchange="applyFilters()" />
+        </div>
+        <button class="clear-btn" onclick="clearFilters()">&times; Clear</button>
+      </div>
+
+      <!-- VIEW TOOLBAR -->
+      <div class="view-toolbar">
+        <div class="view-toggle">
+          <button class="vtbtn active" id="btn-tbl" onclick="switchView('table')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" />
+            </svg>
+            Table View
           </button>
-          <div class="cal-month-title" id="cal-title"></div>
-          <button class="cal-nav" onclick="calNav(1)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          <button class="vtbtn" id="btn-cal" onclick="switchView('calendar')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            Calendar View
           </button>
         </div>
-        <div class="cal-grid" id="cal-grid"></div>
-        <div id="cal-day-panel" style="display:none;" class="cal-day-panel">
-          <div class="cal-day-panel-title" id="cal-day-title"></div>
-          <div id="cal-day-list"></div>
+        <div class="result-count" id="result-count"></div>
+      </div>
+
+      <!-- TABLE VIEW -->
+      <div id="view-table">
+        <!-- Injected by renderLeadView() -->
+      </div>
+
+      <!-- CALENDAR VIEW -->
+      <div id="view-cal" style="display:none;">
+        <div class="cal-wrap">
+          <div class="cal-hdr">
+            <button class="cal-nav" onclick="calNav(-1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <div class="cal-month-title" id="cal-title"></div>
+            <button class="cal-nav" onclick="calNav(1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div id="cal-day-panel" style="display:none;" class="cal-day-panel">
+            <div class="cal-day-panel-title" id="cal-day-title"></div>
+            <div id="cal-day-list"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-  </main>
-</div><!-- /#dashboard -->
+    </main>
+  </div><!-- /#dashboard -->
 
-<!-- ================================================================
+  <!-- ================================================================
      MODAL
 ================================================================ -->
-<div class="modal-bd" id="modal-bd" onclick="closeModal()"></div>
+  <div class="modal-bd" id="modal-bd" onclick="closeModal()"></div>
 
-<div class="modal-panel" id="modal-panel">
+  <div class="modal-panel" id="modal-panel">
 
-  <!-- Header -->
-  <div class="modal-hdr">
-    <div class="modal-nav">
-      <button type="button" class="modal-nav-btn" id="m-prev" onclick="navLead(-1)" aria-label="Previous lead">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button type="button" class="modal-nav-btn" id="m-next" onclick="navLead(1)" aria-label="Next lead">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
-    <div class="modal-avatar" id="m-avatar">?</div>
-    <div class="modal-hdr-info">
-      <div class="modal-lead-name" id="m-name"></div>
-      <div class="modal-phone-row">
-        <div class="modal-lead-phone" id="m-phone"></div>
-        <button type="button" class="copy-phone-btn" id="m-copy-phone" onclick="copyPhone()" aria-label="Copy phone number" title="Copy phone number">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <!-- Header -->
+    <div class="modal-hdr">
+      <div class="modal-nav">
+        <button type="button" class="modal-nav-btn" id="m-prev" onclick="navLead(-1)" aria-label="Previous lead">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button type="button" class="modal-nav-btn" id="m-next" onclick="navLead(1)" aria-label="Next lead">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
         </button>
       </div>
-    </div>
-    <button class="modal-close-btn" onclick="closeModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-
-  <!-- Quick Actions -->
-  <div class="quick-acts">
-    <button class="qa qa-contacted" onclick="quickAct('Contacted')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      Mark Contacted
-    </button>
-    <button class="qa qa-booked" onclick="quickAct('Booked')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-      Mark Booked
-    </button>
-    <button class="qa qa-completed" onclick="quickAct('Completed')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      Mark Completed
-    </button>
-    <button class="qa qa-note" onclick="quickAct('note')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      Add Follow-Up Note
-    </button>
-  </div>
-
-  <!-- Call / Email / SMS -->
-  <div class="modal-cta">
-    <a class="cta-a cta-call" id="m-call" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      Call Now
-    </a>
-    <a class="cta-a cta-email" id="m-email" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-      Email Customer
-    </a>
-    <a class="cta-a cta-sms" id="m-sms" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Send SMS
-    </a>
-  </div>
-
-  <div class="modal-print-row">
-    <button type="button" class="btn-print-wo" onclick="printWorkOrder()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-      Print Work Order
-    </button>
-  </div>
-
-  <!-- Scrollable body -->
-  <div class="modal-body">
-
-    <!-- Timeline -->
-    <div>
-      <div class="sec-label">Lead Journey</div>
-      <div class="timeline" id="m-timeline"></div>
+      <div class="modal-avatar" id="m-avatar">?</div>
+      <div class="modal-hdr-info">
+        <div class="modal-lead-name" id="m-name"></div>
+        <div class="modal-phone-row">
+          <div class="modal-lead-phone" id="m-phone"></div>
+          <button type="button" class="copy-phone-btn" id="m-copy-phone" onclick="copyPhone()"
+            aria-label="Copy phone number" title="Copy phone number">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
     </div>
 
-    <!-- Detail grid -->
-    <div class="detail-grid" id="m-detail"></div>
-
-    <!-- Status update -->
-    <div>
-      <div class="sec-label">Update Status</div>
-      <select class="status-sel" id="m-status" onchange="modalStatusChange()">
-        <option>New</option><option>Contacted</option><option>Booked</option>
-        <option>No Answer</option><option>Cancelled</option><option>Completed</option>
-      </select>
+    <!-- Quick Actions -->
+    <div class="quick-acts">
+      <button class="qa qa-contacted" onclick="quickAct('Contacted')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+        </svg>
+        Mark Contacted
+      </button>
+      <button class="qa qa-booked" onclick="quickAct('Booked')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <path d="m9 16 2 2 4-4" />
+        </svg>
+        Mark Booked
+      </button>
+      <button class="qa qa-completed" onclick="quickAct('Completed')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+        Mark Completed
+      </button>
+      <button class="qa qa-note" onclick="quickAct('note')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+        Add Follow-Up Note
+      </button>
     </div>
 
-    <!-- Follow-up reminder -->
-    <div>
-      <div class="sec-label">Follow-Up Reminder</div>
-      <div class="reminder-row">
-        <select class="reminder-sel" id="m-reminder-sel" onchange="onReminderSelect()">
-          <option value="">Set a reminder&hellip;</option>
-          <option value="1">Remind me tomorrow</option>
-          <option value="2">Remind me in 2 days</option>
+    <!-- Call / Email / SMS -->
+    <div class="modal-cta">
+      <a class="cta-a cta-call" id="m-call" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+        </svg>
+        Call Now
+      </a>
+      <a class="cta-a cta-email" id="m-email" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <polyline points="2,4 12,13 22,4" />
+        </svg>
+        Email Customer
+      </a>
+      <a class="cta-a cta-sms" id="m-sms" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+        Send SMS
+      </a>
+    </div>
+
+    <div class="modal-print-row">
+      <button type="button" class="btn-print-wo" onclick="printWorkOrder()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9" />
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+          <rect x="6" y="14" width="12" height="8" />
+        </svg>
+        Print Work Order
+      </button>
+    </div>
+
+    <!-- Scrollable body -->
+    <div class="modal-body">
+
+      <!-- Timeline -->
+      <div>
+        <div class="sec-label">Lead Journey</div>
+        <div class="timeline" id="m-timeline"></div>
+      </div>
+
+      <!-- Detail grid -->
+      <div class="detail-grid" id="m-detail"></div>
+
+      <!-- Status update -->
+      <div>
+        <div class="sec-label">Update Status</div>
+        <select class="status-sel" id="m-status" onchange="modalStatusChange()">
+          <option>New</option>
+          <option>Contacted</option>
+          <option>Booked</option>
+          <option>No Answer</option>
+          <option>Cancelled</option>
+          <option>Completed</option>
         </select>
-        <span class="reminder-tag" id="m-reminder-tag" hidden></span>
       </div>
-    </div>
 
-    <!-- Notes -->
-    <div>
-      <div class="sec-label">Follow-Up Notes</div>
-      <div class="notes-list" id="m-notes-list"></div>
-      <div class="note-add" id="note-add">
-        <textarea id="note-ta" placeholder="Write a note&hellip;" oninput="updateNoteSaveBtn()"></textarea>
-        <button type="button" class="note-save-btn" id="note-save-btn" onclick="saveNote()" disabled>Save Note</button>
+      <!-- Follow-up reminder -->
+      <div>
+        <div class="sec-label">Follow-Up Reminder</div>
+        <div class="reminder-row">
+          <select class="reminder-sel" id="m-reminder-sel" onchange="onReminderSelect()">
+            <option value="">Set a reminder&hellip;</option>
+            <option value="1">Remind me tomorrow</option>
+            <option value="2">Remind me in 2 days</option>
+          </select>
+          <span class="reminder-tag" id="m-reminder-tag" hidden></span>
+        </div>
       </div>
-    </div>
 
-    <!-- Previous requests -->
-    <div>
-      <div class="sec-label">Previous Requests</div>
-      <div id="m-history"></div>
-    </div>
+      <!-- Notes -->
+      <div>
+        <div class="sec-label">Follow-Up Notes</div>
+        <div class="notes-list" id="m-notes-list"></div>
+        <div class="note-add" id="note-add">
+          <textarea id="note-ta" placeholder="Write a note&hellip;" oninput="updateNoteSaveBtn()"></textarea>
+          <button type="button" class="note-save-btn" id="note-save-btn" onclick="saveNote()" disabled>Save
+            Note</button>
+        </div>
+      </div>
 
-  </div><!-- /.modal-body -->
-</div><!-- /.modal-panel -->
+      <!-- Previous requests -->
+      <div>
+        <div class="sec-label">Previous Requests</div>
+        <div id="m-history"></div>
+      </div>
 
-<div class="crm-toast" id="crm-toast" role="status" aria-live="polite"></div>
+    </div><!-- /.modal-body -->
+  </div><!-- /.modal-panel -->
 
-<!-- ================================================================
+  <div class="crm-toast" id="crm-toast" role="status" aria-live="polite"></div>
+
+  <!-- ================================================================
      JAVASCRIPT
 ================================================================ -->
-<script>
-/* ──────────────────────────────────────────────
-   CONFIG
-────────────────────────────────────────────── */
-const CFG = {
-  sheetId:   '1kcO426Kp8BlySa4SDWyNfcvwRtsqENWbt5ooZjpJaus',
-  sheetName: 'Chaleur Bay Bookings',
-  password:  'Admin2024!',
-  refresh:   30000,
-};
-
-/* ──────────────────────────────────────────────
-   STATE
-────────────────────────────────────────────── */
-let allLeads      = [];
-let filteredLeads = [];
-let currentIdx    = null;   // lead idx open in modal
-let toastTimer    = null;
-let lastFetch     = null;   // timestamp ms
-let calYear       = new Date().getFullYear();
-let calMonth      = new Date().getMonth();
-let calSelDay     = null;
-let currentView   = 'table';
-
-/* ──────────────────────────────────────────────
-   LOGIN
-────────────────────────────────────────────── */
-function boot() {
-  if (sessionStorage.getItem('cb-admin') === '1') {
-    launchDashboard();
-  }
-  document.getElementById('pw-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') attemptLogin();
-  });
-}
-
-function attemptLogin() {
-  const val = document.getElementById('pw-input').value;
-  if (val === CFG.password) {
-    sessionStorage.setItem('cb-admin', '1');
-    document.getElementById('login-screen').style.display = 'none';
-    launchDashboard();
-  } else {
-    const card = document.getElementById('login-card');
-    const err  = document.getElementById('login-error');
-    err.classList.add('show');
-    card.classList.remove('shake');
-    void card.offsetWidth; // reflow
-    card.classList.add('shake');
-    setTimeout(() => card.classList.remove('shake'), 450);
-    document.getElementById('pw-input').value = '';
-  }
-}
-
-function launchDashboard() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('dashboard').classList.add('visible');
-  fetchLeads();
-  setInterval(fetchLeads, CFG.refresh);
-  setInterval(tickTimer, 1000);
-}
-
-/* ──────────────────────────────────────────────
-   API FETCH
-────────────────────────────────────────────── */
-async function fetchLeads() {
-  renderSkeleton();
-  try {
-    const url = `https://docs.google.com/spreadsheets/d/${CFG.sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CFG.sheetName)}`;
-    const res  = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
-    const text = await res.text();
-    const json = JSON.parse(text.substring(47, text.length - 2));
-    console.log('[GVIZ] cols:', json.table?.cols?.map(c => ({ label: c.label, type: c.type })));
-    console.log('[GVIZ] row[0] raw:', JSON.stringify(json.table?.rows?.[0]));
-    processSheet(json);
-    lastFetch = Date.now();
-  } catch (e) {
-    renderError(e.message);
-  }
-}
-
-function parseGvizDate(val, { raw = false } = {}) {
-  if (!val || typeof val !== 'string') return raw ? null : (val || '');
-
-  // Standard gviz Date(year,month0,day[,h,m,s]) format.
-  // DATETIME values are UTC — construct with Date.UTC and display/compare via local methods.
-  // DATE-only values (3 parts) must use the local constructor to avoid midnight-UTC
-  // rolling back to the previous calendar day in negative-offset timezones.
-  if (val.startsWith('Date(')) {
-    const parts = val.slice(5, -1).split(',').map(Number);
-    const [yr, mo, day, hr = 0, min = 0, sec = 0] = parts;
-    const hasTime = parts.length > 3;
-    const d = hasTime
-      ? new Date(Date.UTC(yr, mo, day, hr, min, sec))
-      : new Date(yr, mo, day);
-    if (raw) return d;
-    const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    if (!hasTime) return datePart;
-    const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-    return `${datePart} ${timePart}`;
-  }
-
-  // Plain YYYY-MM-DD[ T]HH:MM[:SS] string (e.g. Formspree _date: "2026-05-19 02:07:00").
-  // Formspree stores _date in UTC. Normalise to ISO 8601 with an explicit Z suffix so the
-  // browser parses it as UTC, then display/compare using local-time methods.
-  const isoLike = val.match(/^(\d{4}-\d{2}-\d{2})(?:[T ](\d{2}:\d{2}(?::\d{2})?))?/);
-  if (isoLike) {
-    const [, datePortion, timePortion] = isoLike;
-    const iso = timePortion
-      ? `${datePortion}T${timePortion.length === 5 ? timePortion + ':00' : timePortion}Z`
-      : `${datePortion}T00:00:00Z`;
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return raw ? null : val;
-    if (raw) return d;
-    const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-    return timePortion ? `${datePart} ${timePart}` : datePart;
-  }
-
-  // Other plain date string fallback
-  const d = new Date(val);
-  if (!isNaN(d.getTime())) {
-    if (raw) return d;
-    const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-    return `${datePart} ${timePart}`;
-  }
-
-  // Unrecognised format — return as-is for display, null for date comparisons
-  return raw ? null : val;
-}
-
-function processSheet(json) {
-  const cols = (json.table && json.table.cols) ? json.table.cols : [];
-  const rows = (json.table && json.table.rows) ? json.table.rows : [];
-  if (cols.length === 0) {
-    allLeads = [];
-    applyFilters();
-    return;
-  }
-
-  const headers = cols.map(c => (c.label || '').toLowerCase().trim());
-
-  /* column resolver */
-  const COL = {
-    name:      ['name','full name','customer name','customer'],
-    email:     ['email','email address','e-mail'],
-    phone:     ['phone','phone number','mobile','cell','telephone'],
-    vehicle:   ['vehicle','car','make model','make/model','vehicle make','truck'],
-    service:   ['service','service type','service requested','type of service'],
-    prefdate:  ['preferred_date','preferred date','appointment date','preferred appointment'],
-    preftime:  ['preferred_time','preferred time','appointment time','time'],
-    status:    ['status'],
-    notes:     ['notes','message','comments','additional notes','details'],
-    submitted: ['_date','date submitted','submitted','timestamp','created at','submission date','submitted at'],
-  };
-
-  const fi = {};
-  Object.entries(COL).forEach(([field, candidates]) => {
-    fi[field] = -1;
-    for (const c of candidates) {
-      let idx = headers.indexOf(c);
-      if (idx === -1) idx = headers.findIndex(h => h.includes(c) || c.includes(h));
-      if (idx !== -1) { fi[field] = idx; break; }
-    }
-  });
-
-  console.log('[COL] headers:', headers);
-  console.log('[COL] field→index map:', fi);
-
-  const get = (row, field) => {
-    const i = fi[field];
-    if (i < 0 || !row.c || i >= row.c.length) return '';
-    const cell = row.c[i];
-    return cell != null ? String(cell.v ?? cell.f ?? '').trim() : '';
-  };
-
-  /* For time-only columns gviz stores an unhelpful 1899 epoch in cell.v;
-     cell.f already has the formatted "HH:MM" string — prefer that. */
-  const getf = (row, field) => {
-    const i = fi[field];
-    if (i < 0 || !row.c || i >= row.c.length) return '';
-    const cell = row.c[i];
-    return cell != null ? String(cell.f ?? cell.v ?? '').trim() : '';
-  };
-
-  /* Convert "13:00" → "1:00 PM" */
-  const fmtTime = t => {
-    if (!t) return '';
-    const m = t.match(/^(\d{1,2}):(\d{2})/);
-    if (!m) return t;
-    const h = +m[1], min = m[2];
-    const ampm = h >= 12 ? 'PM' : 'AM';
-    return `${h % 12 || 12}:${min} ${ampm}`;
-  };
-
-  allLeads = rows.map((row, i) => {
-    const overStatus = localStorage.getItem(`cb-crm-status-${i}`);
-    if (i < 5) {
-      const si = fi.submitted;
-      const rawCell = si >= 0 && row.c ? row.c[si] : undefined;
-      console.log(
-        `[ROW ${i}] submitted cell:`, rawCell,
-        '→ submitted:', parseGvizDate(get(row, 'submitted')),
-        '→ submittedRaw:', parseGvizDate(get(row, 'submitted'), { raw: true })
-      );
-    }
-    const prefdateRaw = parseGvizDate(get(row, 'prefdate'), { raw: true });
-    const prefdateKey = prefdateRaw instanceof Date
-      ? `${prefdateRaw.getFullYear()}-${String(prefdateRaw.getMonth()+1).padStart(2,'0')}-${String(prefdateRaw.getDate()).padStart(2,'0')}`
-      : '';
-    return {
-      idx:       i,
-      name:      get(row,'name')      || `Lead #${i+1}`,
-      email:     get(row,'email'),
-      phone:     get(row,'phone'),
-      vehicle:   get(row,'vehicle'),
-      service:   get(row,'service'),
-      prefdate:  parseGvizDate(get(row,'prefdate')),
-      prefdateKey,
-      preftime:  fmtTime(getf(row,'preftime')),
-      status:    overStatus || get(row,'status') || 'New',
-      notes:        get(row,'notes'),
-      submitted:    parseGvizDate(get(row,'submitted')),
-      submittedRaw: parseGvizDate(get(row,'submitted'), { raw: true }),
+  <script>
+    /* ──────────────────────────────────────────────
+       CONFIG
+    ────────────────────────────────────────────── */
+    const CFG = {
+      sheetId: '1kcO426Kp8BlySa4SDWyNfcvwRtsqENWbt5ooZjpJaus',
+      sheetName: 'Chaleur Bay Bookings',
+      password: 'Admin2024!',
+      refresh: 30000,
     };
-  });
 
-  populateServiceFilter();
-  applyFilters();
-}
+    /* ──────────────────────────────────────────────
+       STATE
+    ────────────────────────────────────────────── */
+    let allLeads = [];
+    let filteredLeads = [];
+    let currentIdx = null;   // lead idx open in modal
+    let toastTimer = null;
+    let lastFetch = null;   // timestamp ms
+    let calYear = new Date().getFullYear();
+    let calMonth = new Date().getMonth();
+    let calSelDay = null;
+    let currentView = 'table';
 
-/* ──────────────────────────────────────────────
-   FILTERS
-────────────────────────────────────────────── */
-function applyFilters() {
-  const q       = (document.getElementById('fi-search')?.value  || '').toLowerCase();
-  const status  =  document.getElementById('fi-status')?.value  || '';
-  const service =  document.getElementById('fi-service')?.value || '';
-  const from    =  document.getElementById('fi-from')?.value    || '';
-  const to      =  document.getElementById('fi-to')?.value      || '';
+    /* ──────────────────────────────────────────────
+       LOGIN
+    ────────────────────────────────────────────── */
+    function boot() {
+      if (sessionStorage.getItem('cb-admin') === '1') {
+        launchDashboard();
+      }
+      document.getElementById('pw-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter') attemptLogin();
+      });
+    }
 
-  filteredLeads = allLeads.filter(l => {
-    if (q && ![l.name,l.phone,l.vehicle,l.service].join(' ').toLowerCase().includes(q)) return false;
-    if (status  && l.status  !== status)  return false;
-    if (service && l.service !== service) return false;
-    if (from && l.submitted && l.submitted.slice(0,10) < from) return false;
-    if (to   && l.submitted && l.submitted.slice(0,10) > to)   return false;
-    return true;
-  });
+    function attemptLogin() {
+      const val = document.getElementById('pw-input').value;
+      if (val === CFG.password) {
+        sessionStorage.setItem('cb-admin', '1');
+        document.getElementById('login-screen').style.display = 'none';
+        launchDashboard();
+      } else {
+        const card = document.getElementById('login-card');
+        const err = document.getElementById('login-error');
+        err.classList.add('show');
+        card.classList.remove('shake');
+        void card.offsetWidth; // reflow
+        card.classList.add('shake');
+        setTimeout(() => card.classList.remove('shake'), 450);
+        document.getElementById('pw-input').value = '';
+      }
+    }
 
-  updateCards();
-  renderLeadView();
-  if (currentView === 'calendar') renderCalendar();
+    function launchDashboard() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('visible');
+      fetchLeads();
+      setInterval(fetchLeads, CFG.refresh);
+      setInterval(tickTimer, 1000);
+    }
 
-  const rc = document.getElementById('result-count');
-  if (rc) rc.innerHTML = `Showing <b>${filteredLeads.length}</b> of <b>${allLeads.length}</b> leads`;
+    /* ──────────────────────────────────────────────
+       API FETCH
+    ────────────────────────────────────────────── */
+    async function fetchLeads() {
+      renderSkeleton();
+      try {
+        const url = `https://docs.google.com/spreadsheets/d/${CFG.sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CFG.sheetName)}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status} – ${res.statusText}`);
+        const text = await res.text();
+        const json = JSON.parse(text.substring(47, text.length - 2));
+        console.log('[GVIZ] cols:', json.table?.cols?.map(c => ({ label: c.label, type: c.type })));
+        console.log('[GVIZ] row[0] raw:', JSON.stringify(json.table?.rows?.[0]));
+        processSheet(json);
+        lastFetch = Date.now();
+      } catch (e) {
+        renderError(e.message);
+      }
+    }
 
-  if (currentIdx !== null) updateNavButtons();
-}
+    function parseGvizDate(val, { raw = false } = {}) {
+      if (!val || typeof val !== 'string') return raw ? null : (val || '');
 
-function clearFilters() {
-  ['fi-search','fi-status','fi-service','fi-from','fi-to'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  applyFilters();
-}
+      // Standard gviz Date(year,month0,day[,h,m,s]) format.
+      // DATETIME values are UTC — construct with Date.UTC and display/compare via local methods.
+      // DATE-only values (3 parts) must use the local constructor to avoid midnight-UTC
+      // rolling back to the previous calendar day in negative-offset timezones.
+      if (val.startsWith('Date(')) {
+        const parts = val.slice(5, -1).split(',').map(Number);
+        const [yr, mo, day, hr = 0, min = 0, sec = 0] = parts;
+        const hasTime = parts.length > 3;
+        const d = hasTime
+          ? new Date(Date.UTC(yr, mo, day, hr, min, sec))
+          : new Date(yr, mo, day);
+        if (raw) return d;
+        const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        if (!hasTime) return datePart;
+        const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        return `${datePart} ${timePart}`;
+      }
 
-function populateServiceFilter() {
-  const sel = document.getElementById('fi-service');
-  if (!sel) return;
-  const cur = sel.value;
-  const svcs = [...new Set(allLeads.map(l => l.service).filter(Boolean))].sort();
-  sel.innerHTML = '<option value="">All Services</option>';
-  svcs.forEach(s => {
-    const o = document.createElement('option');
-    o.value = s; o.textContent = s;
-    if (s === cur) o.selected = true;
-    sel.appendChild(o);
-  });
-}
+      // Plain YYYY-MM-DD[ T]HH:MM[:SS] string (e.g. Formspree _date: "2026-05-19 02:07:00").
+      // Formspree stores _date in UTC. Normalise to ISO 8601 with an explicit Z suffix so the
+      // browser parses it as UTC, then display/compare using local-time methods.
+      const isoLike = val.match(/^(\d{4}-\d{2}-\d{2})(?:[T ](\d{2}:\d{2}(?::\d{2})?))?/);
+      if (isoLike) {
+        const [, datePortion, timePortion] = isoLike;
+        const iso = timePortion
+          ? `${datePortion}T${timePortion.length === 5 ? timePortion + ':00' : timePortion}Z`
+          : `${datePortion}T00:00:00Z`;
+        const d = new Date(iso);
+        if (isNaN(d.getTime())) return raw ? null : val;
+        if (raw) return d;
+        const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        return timePortion ? `${datePart} ${timePart}` : datePart;
+      }
 
-/* ──────────────────────────────────────────────
-   SUMMARY CARDS
-────────────────────────────────────────────── */
-function updateCards() {
-  const now      = new Date();
-  const todayCt  = allLeads.filter(l => {
-    const d = l.submittedRaw;
-    return d instanceof Date
-      && d.getFullYear() === now.getFullYear()
-      && d.getMonth()    === now.getMonth()
-      && d.getDate()     === now.getDate();
-  }).length;
-  const followup = allLeads.filter(l => ['New','No Answer','Contacted'].includes(l.status)).length;
-  const booked   = allLeads.filter(l => l.status === 'Booked').length;
-  const total    = allLeads.length;
-  countUp('card-today',    todayCt);
-  countUp('card-followup', followup);
-  countUp('card-booked',   booked);
-  countUp('card-total',    total);
-}
+      // Other plain date string fallback
+      const d = new Date(val);
+      if (!isNaN(d.getTime())) {
+        if (raw) return d;
+        const datePart = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        return `${datePart} ${timePart}`;
+      }
 
-function countUp(id, target) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const prev = parseInt(el.textContent) || 0;
-  if (prev === target) { el.textContent = target; return; }
-  const steps = Math.min(Math.abs(target - prev), 18);
-  let n = prev, step = 0;
-  const inc = (target - prev) / steps;
-  const iv = setInterval(() => {
-    step++;
-    n += inc;
-    el.textContent = step < steps ? Math.round(n) : target;
-    if (step >= steps) clearInterval(iv);
-  }, 28);
-}
+      // Unrecognised format — return as-is for display, null for date comparisons
+      return raw ? null : val;
+    }
 
-/* ──────────────────────────────────────────────
-   STATUS UTILS
-────────────────────────────────────────────── */
-function statusClass(s) {
-  return ({
-    'New':'sb-new','Contacted':'sb-contacted','Booked':'sb-booked',
-    'No Answer':'sb-no-answer','Cancelled':'sb-cancelled','Completed':'sb-completed',
-  })[s] || 'sb-new';
-}
-function statusBadge(s) {
-  return `<span class="sbadge ${statusClass(s)}">${esc(s||'New')}</span>`;
-}
-function setStatus(leadIdx, status) {
-  localStorage.setItem(`cb-crm-status-${leadIdx}`, status);
-  const l = allLeads.find(x => x.idx === leadIdx);
-  if (l) l.status = status;
-  applyFilters();
-}
+    function processSheet(json) {
+      const cols = (json.table && json.table.cols) ? json.table.cols : [];
+      const rows = (json.table && json.table.rows) ? json.table.rows : [];
+      if (cols.length === 0) {
+        allLeads = [];
+        applyFilters();
+        return;
+      }
 
-/* ──────────────────────────────────────────────
-   RENDER — TABLE + MOBILE CARDS
-────────────────────────────────────────────── */
-function renderLeadView() {
-  const container = document.getElementById('view-table');
-  if (!container) return;
+      const headers = cols.map(c => (c.label || '').toLowerCase().trim());
 
-  if (allLeads.length === 0 && lastFetch !== null) {
-    container.innerHTML = `
+      /* column resolver */
+      const COL = {
+        name: ['name', 'full name', 'customer name', 'customer'],
+        email: ['email', 'email address', 'e-mail'],
+        phone: ['phone', 'phone number', 'mobile', 'cell', 'telephone'],
+        vehicle: ['vehicle', 'car', 'make model', 'make/model', 'vehicle make', 'truck'],
+        service: ['service', 'service type', 'service requested', 'type of service'],
+        prefdate: ['preferred_date', 'preferred date', 'appointment date', 'preferred appointment'],
+        preftime: ['preferred_time', 'preferred time', 'appointment time', 'time'],
+        status: ['status'],
+        notes: ['notes', 'message', 'comments', 'additional notes', 'details'],
+        submitted: ['_date', 'date submitted', 'submitted', 'timestamp', 'created at', 'submission date', 'submitted at'],
+      };
+
+      const fi = {};
+      Object.entries(COL).forEach(([field, candidates]) => {
+        fi[field] = -1;
+        for (const c of candidates) {
+          let idx = headers.indexOf(c);
+          if (idx === -1) idx = headers.findIndex(h => h.includes(c) || c.includes(h));
+          if (idx !== -1) { fi[field] = idx; break; }
+        }
+      });
+
+      console.log('[COL] headers:', headers);
+      console.log('[COL] field→index map:', fi);
+
+      const get = (row, field) => {
+        const i = fi[field];
+        if (i < 0 || !row.c || i >= row.c.length) return '';
+        const cell = row.c[i];
+        return cell != null ? String(cell.v ?? cell.f ?? '').trim() : '';
+      };
+
+      /* For time-only columns gviz stores an unhelpful 1899 epoch in cell.v;
+         cell.f already has the formatted "HH:MM" string — prefer that. */
+      const getf = (row, field) => {
+        const i = fi[field];
+        if (i < 0 || !row.c || i >= row.c.length) return '';
+        const cell = row.c[i];
+        return cell != null ? String(cell.f ?? cell.v ?? '').trim() : '';
+      };
+
+      /* Convert "13:00" → "1:00 PM" */
+      const fmtTime = t => {
+        if (!t) return '';
+        const m = t.match(/^(\d{1,2}):(\d{2})/);
+        if (!m) return t;
+        const h = +m[1], min = m[2];
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        return `${h % 12 || 12}:${min} ${ampm}`;
+      };
+
+      allLeads = rows.map((row, i) => {
+        const overStatus = localStorage.getItem(`cb-crm-status-${i}`);
+        if (i < 5) {
+          const si = fi.submitted;
+          const rawCell = si >= 0 && row.c ? row.c[si] : undefined;
+          console.log(
+            `[ROW ${i}] submitted cell:`, rawCell,
+            '→ submitted:', parseGvizDate(get(row, 'submitted')),
+            '→ submittedRaw:', parseGvizDate(get(row, 'submitted'), { raw: true })
+          );
+        }
+        const prefdateRaw = parseGvizDate(get(row, 'prefdate'), { raw: true });
+        const prefdateKey = prefdateRaw instanceof Date
+          ? `${prefdateRaw.getFullYear()}-${String(prefdateRaw.getMonth() + 1).padStart(2, '0')}-${String(prefdateRaw.getDate()).padStart(2, '0')}`
+          : '';
+        return {
+          idx: i,
+          name: get(row, 'name') || `Lead #${i + 1}`,
+          email: get(row, 'email'),
+          phone: get(row, 'phone'),
+          vehicle: get(row, 'vehicle'),
+          service: get(row, 'service'),
+          prefdate: parseGvizDate(get(row, 'prefdate')),
+          prefdateKey,
+          preftime: fmtTime(getf(row, 'preftime')),
+          status: overStatus || get(row, 'status') || 'New',
+          notes: get(row, 'notes'),
+          submitted: parseGvizDate(get(row, 'submitted')),
+          submittedRaw: parseGvizDate(get(row, 'submitted'), { raw: true }),
+        };
+      });
+
+      populateServiceFilter();
+      applyFilters();
+    }
+
+    /* ──────────────────────────────────────────────
+       FILTERS
+    ────────────────────────────────────────────── */
+    function applyFilters() {
+      const q = (document.getElementById('fi-search')?.value || '').toLowerCase();
+      const status = document.getElementById('fi-status')?.value || '';
+      const service = document.getElementById('fi-service')?.value || '';
+      const from = document.getElementById('fi-from')?.value || '';
+      const to = document.getElementById('fi-to')?.value || '';
+
+      filteredLeads = allLeads.filter(l => {
+        if (q && ![l.name, l.phone, l.vehicle, l.service].join(' ').toLowerCase().includes(q)) return false;
+        if (status && l.status !== status) return false;
+        if (service && l.service !== service) return false;
+        if (from && l.submitted && l.submitted.slice(0, 10) < from) return false;
+        if (to && l.submitted && l.submitted.slice(0, 10) > to) return false;
+        return true;
+      });
+
+      updateCards();
+      renderLeadView();
+      if (currentView === 'calendar') renderCalendar();
+
+      const rc = document.getElementById('result-count');
+      if (rc) rc.innerHTML = `Showing <b>${filteredLeads.length}</b> of <b>${allLeads.length}</b> leads`;
+
+      if (currentIdx !== null) updateNavButtons();
+    }
+
+    function clearFilters() {
+      ['fi-search', 'fi-status', 'fi-service', 'fi-from', 'fi-to'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      applyFilters();
+    }
+
+    function populateServiceFilter() {
+      const sel = document.getElementById('fi-service');
+      if (!sel) return;
+      const cur = sel.value;
+      const svcs = [...new Set(allLeads.map(l => l.service).filter(Boolean))].sort();
+      sel.innerHTML = '<option value="">All Services</option>';
+      svcs.forEach(s => {
+        const o = document.createElement('option');
+        o.value = s; o.textContent = s;
+        if (s === cur) o.selected = true;
+        sel.appendChild(o);
+      });
+    }
+
+    /* ──────────────────────────────────────────────
+       SUMMARY CARDS
+    ────────────────────────────────────────────── */
+    function updateCards() {
+      const now = new Date();
+      const todayCt = allLeads.filter(l => {
+        const d = l.submittedRaw;
+        return d instanceof Date
+          && d.getFullYear() === now.getFullYear()
+          && d.getMonth() === now.getMonth()
+          && d.getDate() === now.getDate();
+      }).length;
+      const followup = allLeads.filter(l => ['New', 'No Answer', 'Contacted'].includes(l.status)).length;
+      const booked = allLeads.filter(l => l.status === 'Booked').length;
+      const total = allLeads.length;
+      countUp('card-today', todayCt);
+      countUp('card-followup', followup);
+      countUp('card-booked', booked);
+      countUp('card-total', total);
+    }
+
+    function countUp(id, target) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const prev = parseInt(el.textContent) || 0;
+      if (prev === target) { el.textContent = target; return; }
+      const steps = Math.min(Math.abs(target - prev), 18);
+      let n = prev, step = 0;
+      const inc = (target - prev) / steps;
+      const iv = setInterval(() => {
+        step++;
+        n += inc;
+        el.textContent = step < steps ? Math.round(n) : target;
+        if (step >= steps) clearInterval(iv);
+      }, 28);
+    }
+
+    /* ──────────────────────────────────────────────
+       STATUS UTILS
+    ────────────────────────────────────────────── */
+    function statusClass(s) {
+      return ({
+        'New': 'sb-new', 'Contacted': 'sb-contacted', 'Booked': 'sb-booked',
+        'No Answer': 'sb-no-answer', 'Cancelled': 'sb-cancelled', 'Completed': 'sb-completed',
+      })[s] || 'sb-new';
+    }
+    function statusBadge(s) {
+      return `<span class="sbadge ${statusClass(s)}">${esc(s || 'New')}</span>`;
+    }
+    function setStatus(leadIdx, status) {
+      localStorage.setItem(`cb-crm-status-${leadIdx}`, status);
+      const l = allLeads.find(x => x.idx === leadIdx);
+      if (l) l.status = status;
+      applyFilters();
+    }
+
+    /* ──────────────────────────────────────────────
+       RENDER — TABLE + MOBILE CARDS
+    ────────────────────────────────────────────── */
+    function renderLeadView() {
+      const container = document.getElementById('view-table');
+      if (!container) return;
+
+      if (allLeads.length === 0 && lastFetch !== null) {
+        container.innerHTML = `
       <div class="state-box">
         <div class="state-emoji">📋</div>
         <div class="state-title">No Leads Yet</div>
         <p class="state-sub">Your Google Sheet is empty or the column headers don't match.</p>
       </div>`;
-    return;
-  }
+        return;
+      }
 
-  if (filteredLeads.length === 0 && allLeads.length > 0) {
-    container.innerHTML = `
+      if (filteredLeads.length === 0 && allLeads.length > 0) {
+        container.innerHTML = `
       <div class="state-box">
         <div class="state-emoji">🔍</div>
         <div class="state-title">No Matches</div>
         <p class="state-sub">Try adjusting your search or filter criteria.</p>
         <button class="state-cta" onclick="clearFilters()">Clear All Filters</button>
       </div>`;
-    return;
-  }
+        return;
+      }
 
-  /* Desktop table */
-  const trows = filteredLeads.map((l, i) => {
-    const prefDT = l.prefdate && l.preftime
-      ? `${esc(l.prefdate)} at ${esc(l.preftime)}`
-      : esc(l.prefdate) || esc(l.preftime) || '—';
-    return `
-    <tr onclick="openModal(${l.idx})" style="animation-delay:${Math.min(i*.03,.5)}s">
+      /* Desktop table */
+      const trows = filteredLeads.map((l, i) => {
+        const prefDT = l.prefdate && l.preftime
+          ? `${esc(l.prefdate)} at ${esc(l.preftime)}`
+          : esc(l.prefdate) || esc(l.preftime) || '—';
+        return `
+    <tr onclick="openModal(${l.idx})" style="animation-delay:${Math.min(i * .03, .5)}s">
       <td class="tcell-name">${esc(l.name)}</td>
-      <td class="tcell-dim">${esc(l.phone)||'<span class="tcell-mute">—</span>'}</td>
-      <td>${esc(l.vehicle)||'<span class="tcell-mute">—</span>'}</td>
-      <td>${esc(l.service)||'<span class="tcell-mute">—</span>'}</td>
+      <td class="tcell-dim">${esc(l.phone) || '<span class="tcell-mute">—</span>'}</td>
+      <td>${esc(l.vehicle) || '<span class="tcell-mute">—</span>'}</td>
+      <td>${esc(l.service) || '<span class="tcell-mute">—</span>'}</td>
       <td class="tcell-mute">${prefDT}</td>
       <td>${statusBadge(l.status)}</td>
-      <td class="tcell-mute" style="max-width:160px">${esc(l.notes)||'—'}</td>
-      <td class="tcell-mute">${esc(l.submitted)||'—'}</td>
+      <td class="tcell-mute" style="max-width:160px">${esc(l.notes) || '—'}</td>
+      <td class="tcell-mute">${esc(l.submitted) || '—'}</td>
     </tr>`;
-  }).join('');
+      }).join('');
 
-  /* Mobile cards */
-  const mcards = filteredLeads.map((l, i) => `
-    <div class="mob-card" onclick="openModal(${l.idx})" style="animation-delay:${Math.min(i*.04,.6)}s">
+      /* Mobile cards */
+      const mcards = filteredLeads.map((l, i) => `
+    <div class="mob-card" onclick="openModal(${l.idx})" style="animation-delay:${Math.min(i * .04, .6)}s">
       <div class="mob-card-top">
         <div>
           <div class="mob-card-name">${esc(l.name)}</div>
-          <div class="mob-card-phone">${esc(l.phone)||'No phone'}</div>
+          <div class="mob-card-phone">${esc(l.phone) || 'No phone'}</div>
         </div>
         ${statusBadge(l.status)}
       </div>
       <div class="mob-card-grid">
-        <div><div class="mob-field-label">Vehicle</div><div class="mob-field-val">${esc(l.vehicle)||'—'}</div></div>
-        <div><div class="mob-field-label">Service</div><div class="mob-field-val">${esc(l.service)||'—'}</div></div>
-        <div><div class="mob-field-label">Appt</div><div class="mob-field-val">${l.prefdate && l.preftime ? `${esc(l.prefdate)} at ${esc(l.preftime)}` : esc(l.prefdate)||esc(l.preftime)||'—'}</div></div>
-        <div><div class="mob-field-label">Submitted</div><div class="mob-field-val">${esc(l.submitted)||'—'}</div></div>
+        <div><div class="mob-field-label">Vehicle</div><div class="mob-field-val">${esc(l.vehicle) || '—'}</div></div>
+        <div><div class="mob-field-label">Service</div><div class="mob-field-val">${esc(l.service) || '—'}</div></div>
+        <div><div class="mob-field-label">Appt</div><div class="mob-field-val">${l.prefdate && l.preftime ? `${esc(l.prefdate)} at ${esc(l.preftime)}` : esc(l.prefdate) || esc(l.preftime) || '—'}</div></div>
+        <div><div class="mob-field-label">Submitted</div><div class="mob-field-val">${esc(l.submitted) || '—'}</div></div>
       </div>
     </div>`).join('');
 
-  container.innerHTML = `
+      container.innerHTML = `
     <div class="tbl-wrap">
       <table class="leads-tbl">
         <thead>
@@ -1424,446 +2718,446 @@ function renderLeadView() {
       </table>
     </div>
     <div class="mob-cards">${mcards}</div>`;
-}
+    }
 
-/* ──────────────────────────────────────────────
-   RENDER — SKELETON & ERROR
-────────────────────────────────────────────── */
-function renderSkeleton() {
-  const c = document.getElementById('view-table');
-  if (!c) return;
-  const srow = () => `<tr>${Array(8).fill(0).map((_,i) =>
-    `<td><div class="skel-bar" style="width:${50+Math.floor(Math.sin(i)*30+30)}%"></div></td>`).join('')}</tr>`;
-  c.innerHTML = `
+    /* ──────────────────────────────────────────────
+       RENDER — SKELETON & ERROR
+    ────────────────────────────────────────────── */
+    function renderSkeleton() {
+      const c = document.getElementById('view-table');
+      if (!c) return;
+      const srow = () => `<tr>${Array(8).fill(0).map((_, i) =>
+        `<td><div class="skel-bar" style="width:${50 + Math.floor(Math.sin(i) * 30 + 30)}%"></div></td>`).join('')}</tr>`;
+      c.innerHTML = `
     <div class="tbl-wrap">
       <table class="leads-tbl">
         <thead><tr><th>Name</th><th>Phone</th><th>Vehicle</th><th>Service</th><th>Pref Date &amp; Time</th><th>Status</th><th>Notes</th><th>Submitted</th></tr></thead>
-        <tbody>${[1,2,3,4,5].map(srow).join('')}</tbody>
+        <tbody>${[1, 2, 3, 4, 5].map(srow).join('')}</tbody>
       </table>
     </div>`;
-}
+    }
 
-function renderError(msg) {
-  const c = document.getElementById('view-table');
-  if (c) c.innerHTML = `
+    function renderError(msg) {
+      const c = document.getElementById('view-table');
+      if (c) c.innerHTML = `
     <div class="state-box">
       <div class="state-emoji">⚠️</div>
       <div class="state-title">Connection Error</div>
-      <p class="state-sub">${esc(msg||'Could not reach Google Sheets.')}</p>
+      <p class="state-sub">${esc(msg || 'Could not reach Google Sheets.')}</p>
       <button class="state-cta" onclick="fetchLeads()">Retry</button>
     </div>`;
-}
+    }
 
-/* ──────────────────────────────────────────────
-   VIEW SWITCH
-────────────────────────────────────────────── */
-function switchView(v) {
-  currentView = v;
-  document.getElementById('view-table').style.display = v === 'table'    ? '' : 'none';
-  document.getElementById('view-cal').style.display   = v === 'calendar' ? '' : 'none';
-  document.getElementById('btn-tbl').classList.toggle('active', v === 'table');
-  document.getElementById('btn-cal').classList.toggle('active', v === 'calendar');
-  if (v === 'calendar') renderCalendar();
-}
+    /* ──────────────────────────────────────────────
+       VIEW SWITCH
+    ────────────────────────────────────────────── */
+    function switchView(v) {
+      currentView = v;
+      document.getElementById('view-table').style.display = v === 'table' ? '' : 'none';
+      document.getElementById('view-cal').style.display = v === 'calendar' ? '' : 'none';
+      document.getElementById('btn-tbl').classList.toggle('active', v === 'table');
+      document.getElementById('btn-cal').classList.toggle('active', v === 'calendar');
+      if (v === 'calendar') renderCalendar();
+    }
 
-/* ──────────────────────────────────────────────
-   CALENDAR
-────────────────────────────────────────────── */
-const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    /* ──────────────────────────────────────────────
+       CALENDAR
+    ────────────────────────────────────────────── */
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-function renderCalendar() {
-  document.getElementById('cal-title').textContent = `${MONTHS[calMonth]} ${calYear}`;
+    function renderCalendar() {
+      document.getElementById('cal-title').textContent = `${MONTHS[calMonth]} ${calYear}`;
 
-  /* build booking map */
-  const bmap = {};
-  allLeads.filter(l => l.prefdateKey).forEach(l => {
-    const d = l.prefdateKey;
-    (bmap[d] = bmap[d]||[]).push(l);
-  });
+      /* build booking map */
+      const bmap = {};
+      allLeads.filter(l => l.prefdateKey).forEach(l => {
+        const d = l.prefdateKey;
+        (bmap[d] = bmap[d] || []).push(l);
+      });
 
-  const today    = new Date().toISOString().slice(0,10);
-  const first    = new Date(calYear, calMonth, 1);
-  const last     = new Date(calYear, calMonth+1, 0);
-  const startDow = first.getDay();
+      const today = new Date().toISOString().slice(0, 10);
+      const first = new Date(calYear, calMonth, 1);
+      const last = new Date(calYear, calMonth + 1, 0);
+      const startDow = first.getDay();
 
-  let html = DAYS.map(d => `<div class="cal-doh">${d}</div>`).join('');
+      let html = DAYS.map(d => `<div class="cal-doh">${d}</div>`).join('');
 
-  /* leading blank days */
-  for (let i = 0; i < startDow; i++) {
-    const prev = new Date(calYear, calMonth, 1 - startDow + i);
-    html += `<div class="cal-day other-mo"><div class="cal-dn">${prev.getDate()}</div></div>`;
-  }
+      /* leading blank days */
+      for (let i = 0; i < startDow; i++) {
+        const prev = new Date(calYear, calMonth, 1 - startDow + i);
+        html += `<div class="cal-day other-mo"><div class="cal-dn">${prev.getDate()}</div></div>`;
+      }
 
-  /* month days */
-  for (let d = 1; d <= last.getDate(); d++) {
-    const ds = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const bk = bmap[ds]||[];
-    const cls = [
-      'cal-day',
-      ds === today    ? 'is-today'    : '',
-      ds === calSelDay? 'is-selected' : '',
-    ].filter(Boolean).join(' ');
-    html += `<div class="${cls}" onclick="selectDay('${ds}')">
+      /* month days */
+      for (let d = 1; d <= last.getDate(); d++) {
+        const ds = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const bk = bmap[ds] || [];
+        const cls = [
+          'cal-day',
+          ds === today ? 'is-today' : '',
+          ds === calSelDay ? 'is-selected' : '',
+        ].filter(Boolean).join(' ');
+        html += `<div class="${cls}" onclick="selectDay('${ds}')">
       <div class="cal-dn">${d}</div>
       ${bk.length ? `<div class="cal-badge">&#10003; ${bk.length}</div>` : ''}
     </div>`;
-  }
+      }
 
-  /* trailing blanks */
-  const endDow = last.getDay();
-  for (let i = endDow+1; i <= 6; i++) {
-    html += `<div class="cal-day other-mo"><div class="cal-dn">${i-endDow}</div></div>`;
-  }
+      /* trailing blanks */
+      const endDow = last.getDay();
+      for (let i = endDow + 1; i <= 6; i++) {
+        html += `<div class="cal-day other-mo"><div class="cal-dn">${i - endDow}</div></div>`;
+      }
 
-  document.getElementById('cal-grid').innerHTML = html;
-}
+      document.getElementById('cal-grid').innerHTML = html;
+    }
 
-function calNav(dir) {
-  calMonth += dir;
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  if (calMonth <  0) { calMonth = 11; calYear--; }
-  calSelDay = null;
-  document.getElementById('cal-day-panel').style.display = 'none';
-  renderCalendar();
-}
+    function calNav(dir) {
+      calMonth += dir;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      calSelDay = null;
+      document.getElementById('cal-day-panel').style.display = 'none';
+      renderCalendar();
+    }
 
-function selectDay(ds) {
-  calSelDay = ds;
-  renderCalendar();
+    function selectDay(ds) {
+      calSelDay = ds;
+      renderCalendar();
 
-  const dayLeads = allLeads.filter(l => l.prefdateKey === ds);
-  const panel    = document.getElementById('cal-day-panel');
-  document.getElementById('cal-day-title').textContent = `Appointments for ${ds} (${dayLeads.length})`;
-  document.getElementById('cal-day-list').innerHTML = dayLeads.length
-    ? dayLeads.map(l => `
+      const dayLeads = allLeads.filter(l => l.prefdateKey === ds);
+      const panel = document.getElementById('cal-day-panel');
+      document.getElementById('cal-day-title').textContent = `Appointments for ${ds} (${dayLeads.length})`;
+      document.getElementById('cal-day-list').innerHTML = dayLeads.length
+        ? dayLeads.map(l => `
         <div class="cal-lead-row" onclick="openModal(${l.idx})">
           <div>
             <div class="cal-lead-name">${esc(l.name)}</div>
-            <div class="cal-lead-meta">${esc(l.service)||''} &middot; ${esc(l.vehicle)||''}</div>
+            <div class="cal-lead-meta">${esc(l.service) || ''} &middot; ${esc(l.vehicle) || ''}</div>
           </div>
-          <div style="font-size:12px;color:var(--text-mute);font-family:var(--f-mono)">${esc(l.phone)||'—'}</div>
+          <div style="font-size:12px;color:var(--text-mute);font-family:var(--f-mono)">${esc(l.phone) || '—'}</div>
         </div>`).join('')
-    : `<p style="color:var(--text-mute);font-size:13px">No bookings on this date.</p>`;
-  panel.style.display = 'block';
-}
+        : `<p style="color:var(--text-mute);font-size:13px">No bookings on this date.</p>`;
+      panel.style.display = 'block';
+    }
 
-/* ──────────────────────────────────────────────
-   TOAST
-────────────────────────────────────────────── */
-function showToast(msg) {
-  const el = document.getElementById('crm-toast');
-  if (!el) return;
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
-}
+    /* ──────────────────────────────────────────────
+       TOAST
+    ────────────────────────────────────────────── */
+    function showToast(msg) {
+      const el = document.getElementById('crm-toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+    }
 
-/* ──────────────────────────────────────────────
-   MODAL — OPEN / CLOSE
-────────────────────────────────────────────── */
-function normPhone(p) {
-  return (p || '').replace(/\D/g, '');
-}
+    /* ──────────────────────────────────────────────
+       MODAL — OPEN / CLOSE
+    ────────────────────────────────────────────── */
+    function normPhone(p) {
+      return (p || '').replace(/\D/g, '');
+    }
 
-function prefDateTime(l) {
-  return l.prefdate && l.preftime
-    ? `${l.prefdate} at ${l.preftime}`
-    : (l.prefdate || l.preftime || '—');
-}
+    function prefDateTime(l) {
+      return l.prefdate && l.preftime
+        ? `${l.prefdate} at ${l.preftime}`
+        : (l.prefdate || l.preftime || '—');
+    }
 
-function refreshModal(l) {
-  const idx = l.idx;
-  const initials = l.name.split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
-  document.getElementById('m-avatar').textContent = initials;
-  document.getElementById('m-name').textContent   = l.name;
-  document.getElementById('m-phone').textContent = l.phone || 'No phone on file';
+    function refreshModal(l) {
+      const idx = l.idx;
+      const initials = l.name.split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
+      document.getElementById('m-avatar').textContent = initials;
+      document.getElementById('m-name').textContent = l.name;
+      document.getElementById('m-phone').textContent = l.phone || 'No phone on file';
 
-  const copyBtn = document.getElementById('m-copy-phone');
-  if (copyBtn) copyBtn.disabled = !l.phone;
+      const copyBtn = document.getElementById('m-copy-phone');
+      if (copyBtn) copyBtn.disabled = !l.phone;
 
-  const digits = (l.phone || '').replace(/\D/g, '');
-  const tel    = digits ? `tel:+1${digits}` : '#';
-  const sms    = digits ? `sms:+1${digits}` : '#';
-  document.getElementById('m-call').href = tel;
-  document.getElementById('m-sms').href  = sms;
+      const digits = (l.phone || '').replace(/\D/g, '');
+      const tel = digits ? `tel:+1${digits}` : '#';
+      const sms = digits ? `sms:+1${digits}` : '#';
+      document.getElementById('m-call').href = tel;
+      document.getElementById('m-sms').href = sms;
 
-  const emailBtn = document.getElementById('m-email');
-  if (l.email) {
-    const subj = encodeURIComponent('Your Appointment \u2014 Chaleur Bay Auto Care');
-    const body = encodeURIComponent(`Hi ${l.name},`);
-    emailBtn.href = `mailto:${l.email}?subject=${subj}&body=${body}`;
-    emailBtn.classList.remove('no-email');
-    emailBtn.title = '';
-  } else {
-    emailBtn.href = '#';
-    emailBtn.classList.add('no-email');
-    emailBtn.title = 'No email provided';
-  }
+      const emailBtn = document.getElementById('m-email');
+      if (l.email) {
+        const subj = encodeURIComponent('Your Appointment \u2014 Chaleur Bay Auto Care');
+        const body = encodeURIComponent(`Hi ${l.name},`);
+        emailBtn.href = `mailto:${l.email}?subject=${subj}&body=${body}`;
+        emailBtn.classList.remove('no-email');
+        emailBtn.title = '';
+      } else {
+        emailBtn.href = '#';
+        emailBtn.classList.add('no-email');
+        emailBtn.title = 'No email provided';
+      }
 
-  document.getElementById('m-status').value = l.status || 'New';
-  renderTimeline(l.status);
-  renderDetailGrid(l);
-  renderNotesList(idx);
-  renderReminderTag(idx);
-  renderPastVisits(l);
-  updateNavButtons();
+      document.getElementById('m-status').value = l.status || 'New';
+      renderTimeline(l.status);
+      renderDetailGrid(l);
+      renderNotesList(idx);
+      renderReminderTag(idx);
+      renderPastVisits(l);
+      updateNavButtons();
 
-  const sel = document.getElementById('m-reminder-sel');
-  if (sel) sel.value = '';
-}
+      const sel = document.getElementById('m-reminder-sel');
+      if (sel) sel.value = '';
+    }
 
-function openModal(idx) {
-  const l = allLeads.find(x => x.idx === idx);
-  if (!l) return;
-  currentIdx = idx;
-  refreshModal(l);
+    function openModal(idx) {
+      const l = allLeads.find(x => x.idx === idx);
+      if (!l) return;
+      currentIdx = idx;
+      refreshModal(l);
 
-  const bd    = document.getElementById('modal-bd');
-  const panel = document.getElementById('modal-panel');
-  const opening = !bd.classList.contains('open');
-  bd.classList.add('open');
-  panel.classList.add('open');
-  panel.scrollTop = 0;
-  document.querySelector('#modal-panel .modal-body').scrollTop = 0;
-  if (opening) document.body.style.overflow = 'hidden';
-}
+      const bd = document.getElementById('modal-bd');
+      const panel = document.getElementById('modal-panel');
+      const opening = !bd.classList.contains('open');
+      bd.classList.add('open');
+      panel.classList.add('open');
+      panel.scrollTop = 0;
+      document.querySelector('#modal-panel .modal-body').scrollTop = 0;
+      if (opening) document.body.style.overflow = 'hidden';
+    }
 
-function closeModal() {
-  document.getElementById('modal-bd').classList.remove('open');
-  document.getElementById('modal-panel').classList.remove('open');
-  document.body.style.overflow = '';
-  currentIdx = null;
-}
+    function closeModal() {
+      document.getElementById('modal-bd').classList.remove('open');
+      document.getElementById('modal-panel').classList.remove('open');
+      document.body.style.overflow = '';
+      currentIdx = null;
+    }
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && document.getElementById('modal-bd').classList.contains('open'))
-    closeModal();
-});
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('modal-bd').classList.contains('open'))
+        closeModal();
+    });
 
-function updateNavButtons() {
-  const prev = document.getElementById('m-prev');
-  const next = document.getElementById('m-next');
-  if (!prev || !next) return;
-  const pos = filteredLeads.findIndex(l => l.idx === currentIdx);
-  prev.disabled = pos <= 0;
-  next.disabled = pos < 0 || pos >= filteredLeads.length - 1;
-}
+    function updateNavButtons() {
+      const prev = document.getElementById('m-prev');
+      const next = document.getElementById('m-next');
+      if (!prev || !next) return;
+      const pos = filteredLeads.findIndex(l => l.idx === currentIdx);
+      prev.disabled = pos <= 0;
+      next.disabled = pos < 0 || pos >= filteredLeads.length - 1;
+    }
 
-function navLead(delta) {
-  const pos = filteredLeads.findIndex(l => l.idx === currentIdx);
-  if (pos < 0) return;
-  const next = filteredLeads[pos + delta];
-  if (next) openModal(next.idx);
-}
+    function navLead(delta) {
+      const pos = filteredLeads.findIndex(l => l.idx === currentIdx);
+      if (pos < 0) return;
+      const next = filteredLeads[pos + delta];
+      if (next) openModal(next.idx);
+    }
 
-function copyPhone() {
-  if (currentIdx === null) return;
-  const l = allLeads.find(x => x.idx === currentIdx);
-  if (!l || !l.phone) return;
-  navigator.clipboard.writeText(l.phone).then(() => {
-    showToast('Phone number copied');
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = l.phone;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast('Phone number copied');
-  });
-}
+    function copyPhone() {
+      if (currentIdx === null) return;
+      const l = allLeads.find(x => x.idx === currentIdx);
+      if (!l || !l.phone) return;
+      navigator.clipboard.writeText(l.phone).then(() => {
+        showToast('Phone number copied');
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = l.phone;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('Phone number copied');
+      });
+    }
 
-/* ──────────────────────────────────────────────
-   MODAL — TIMELINE
-────────────────────────────────────────────── */
-const TL_STEPS = ['New','Contacted','Booked','Completed'];
-const TL_ORDER = { New:0, Contacted:1, 'No Answer':1, Booked:2, Cancelled:2, Completed:3 };
+    /* ──────────────────────────────────────────────
+       MODAL — TIMELINE
+    ────────────────────────────────────────────── */
+    const TL_STEPS = ['New', 'Contacted', 'Booked', 'Completed'];
+    const TL_ORDER = { New: 0, Contacted: 1, 'No Answer': 1, Booked: 2, Cancelled: 2, Completed: 3 };
 
-const CHECK_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const CHECK_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 
-function renderTimeline(status) {
-  const cur = TL_ORDER[status] ?? 0;
-  document.getElementById('m-timeline').innerHTML = TL_STEPS.map((step, i) => {
-    const passed = i < cur;
-    const active = i === cur;
-    const cls    = `tl-step${passed?' tl-past':''}${active?' tl-active':''}`;
-    return `<div class="${cls}">
-      <div class="tl-dot">${(passed||active) ? CHECK_ICON : ''}</div>
+    function renderTimeline(status) {
+      const cur = TL_ORDER[status] ?? 0;
+      document.getElementById('m-timeline').innerHTML = TL_STEPS.map((step, i) => {
+        const passed = i < cur;
+        const active = i === cur;
+        const cls = `tl-step${passed ? ' tl-past' : ''}${active ? ' tl-active' : ''}`;
+        return `<div class="${cls}">
+      <div class="tl-dot">${(passed || active) ? CHECK_ICON : ''}</div>
       <div class="tl-lbl">${step}</div>
     </div>`;
-  }).join('');
-}
+      }).join('');
+    }
 
-/* ──────────────────────────────────────────────
-   MODAL — DETAIL GRID
-────────────────────────────────────────────── */
-function renderDetailGrid(l) {
-  document.getElementById('m-detail').innerHTML = `
-    <div class="det-item"><div class="det-lbl">Vehicle</div><div class="det-val">${esc(l.vehicle)||'—'}</div></div>
-    <div class="det-item"><div class="det-lbl">Service Requested</div><div class="det-val">${esc(l.service)||'—'}</div></div>
-    <div class="det-item full"><div class="det-lbl">Preferred Appointment</div><div class="det-val">${l.prefdate && l.preftime ? `${esc(l.prefdate)} at ${esc(l.preftime)}` : esc(l.prefdate)||esc(l.preftime)||'—'}</div></div>
+    /* ──────────────────────────────────────────────
+       MODAL — DETAIL GRID
+    ────────────────────────────────────────────── */
+    function renderDetailGrid(l) {
+      document.getElementById('m-detail').innerHTML = `
+    <div class="det-item"><div class="det-lbl">Vehicle</div><div class="det-val">${esc(l.vehicle) || '—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Service Requested</div><div class="det-val">${esc(l.service) || '—'}</div></div>
+    <div class="det-item full"><div class="det-lbl">Preferred Appointment</div><div class="det-val">${l.prefdate && l.preftime ? `${esc(l.prefdate)} at ${esc(l.preftime)}` : esc(l.prefdate) || esc(l.preftime) || '—'}</div></div>
     <div class="det-item"><div class="det-lbl">Email</div><div class="det-val">${l.email ? `<a href="mailto:${esc(l.email)}" style="color:var(--orange)">${esc(l.email)}</a>` : '—'}</div></div>
-    <div class="det-item"><div class="det-lbl">Date Submitted</div><div class="det-val">${esc(l.submitted)||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Date Submitted</div><div class="det-val">${esc(l.submitted) || '—'}</div></div>
     <div class="det-item"><div class="det-lbl">Current Status</div><div class="det-val">${statusBadge(l.status)}</div></div>
-    <div class="det-item full"><div class="det-lbl">Sheet Notes</div><div class="det-val" style="white-space:pre-wrap">${esc(l.notes)||'—'}</div></div>`;
-}
+    <div class="det-item full"><div class="det-lbl">Sheet Notes</div><div class="det-val" style="white-space:pre-wrap">${esc(l.notes) || '—'}</div></div>`;
+    }
 
-/* ──────────────────────────────────────────────
-   MODAL — STATUS CHANGE
-────────────────────────────────────────────── */
-function modalStatusChange() {
-  if (currentIdx === null) return;
-  const s = document.getElementById('m-status').value;
-  setStatus(currentIdx, s);
-  renderTimeline(s);
-  const l = allLeads.find(x => x.idx === currentIdx);
-  if (l) renderDetailGrid(l);
-}
+    /* ──────────────────────────────────────────────
+       MODAL — STATUS CHANGE
+    ────────────────────────────────────────────── */
+    function modalStatusChange() {
+      if (currentIdx === null) return;
+      const s = document.getElementById('m-status').value;
+      setStatus(currentIdx, s);
+      renderTimeline(s);
+      const l = allLeads.find(x => x.idx === currentIdx);
+      if (l) renderDetailGrid(l);
+    }
 
-/* ──────────────────────────────────────────────
-   MODAL — QUICK ACTIONS
-────────────────────────────────────────────── */
-function quickAct(action) {
-  if (action === 'note') {
-    const ta = document.getElementById('note-ta');
-    ta.focus();
-    ta.scrollIntoView({ behavior:'smooth', block:'center' });
-    return;
-  }
-  if (currentIdx === null) return;
-  setStatus(currentIdx, action);
-  document.getElementById('m-status').value = action;
-  renderTimeline(action);
-  const l = allLeads.find(x => x.idx === currentIdx);
-  if (l) renderDetailGrid(l);
+    /* ──────────────────────────────────────────────
+       MODAL — QUICK ACTIONS
+    ────────────────────────────────────────────── */
+    function quickAct(action) {
+      if (action === 'note') {
+        const ta = document.getElementById('note-ta');
+        ta.focus();
+        ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if (currentIdx === null) return;
+      setStatus(currentIdx, action);
+      document.getElementById('m-status').value = action;
+      renderTimeline(action);
+      const l = allLeads.find(x => x.idx === currentIdx);
+      if (l) renderDetailGrid(l);
 
-  /* pulse animation on clicked button */
-  const cls = action === 'Contacted' ? '.qa-contacted'
-    : action === 'Booked' ? '.qa-booked'
-    : action === 'Completed' ? '.qa-completed' : null;
-  const btn = cls ? document.querySelector(cls) : null;
-  if (btn) {
-    btn.classList.remove('pulse-once');
-    void btn.offsetWidth;
-    btn.classList.add('pulse-once');
-    setTimeout(() => btn.classList.remove('pulse-once'), 350);
-  }
-}
+      /* pulse animation on clicked button */
+      const cls = action === 'Contacted' ? '.qa-contacted'
+        : action === 'Booked' ? '.qa-booked'
+          : action === 'Completed' ? '.qa-completed' : null;
+      const btn = cls ? document.querySelector(cls) : null;
+      if (btn) {
+        btn.classList.remove('pulse-once');
+        void btn.offsetWidth;
+        btn.classList.add('pulse-once');
+        setTimeout(() => btn.classList.remove('pulse-once'), 350);
+      }
+    }
 
-/* ──────────────────────────────────────────────
-   NOTES
-────────────────────────────────────────────── */
-function getNotes(idx) {
-  try { return JSON.parse(localStorage.getItem(`cb-crm-notes-${idx}`) || '[]'); }
-  catch { return []; }
-}
+    /* ──────────────────────────────────────────────
+       NOTES
+    ────────────────────────────────────────────── */
+    function getNotes(idx) {
+      try { return JSON.parse(localStorage.getItem(`cb-crm-notes-${idx}`) || '[]'); }
+      catch { return []; }
+    }
 
-function renderNotesList(idx) {
-  const notes = getNotes(idx);
-  const list  = document.getElementById('m-notes-list');
-  list.innerHTML = notes.length
-    ? notes.map(n => `
+    function renderNotesList(idx) {
+      const notes = getNotes(idx);
+      const list = document.getElementById('m-notes-list');
+      list.innerHTML = notes.length
+        ? notes.map(n => `
         <div class="note-item">
           <div class="note-ts">${esc(n.ts)}</div>
           <div class="note-body">${esc(n.text)}</div>
         </div>`).join('')
-    : `<p class="notes-empty">No notes yet. Add your first follow-up below.</p>`;
-  document.getElementById('note-ta').value = '';
-  updateNoteSaveBtn();
-}
+        : `<p class="notes-empty">No notes yet. Add your first follow-up below.</p>`;
+      document.getElementById('note-ta').value = '';
+      updateNoteSaveBtn();
+    }
 
-function updateNoteSaveBtn() {
-  const ta  = document.getElementById('note-ta');
-  const btn = document.getElementById('note-save-btn');
-  if (!ta || !btn) return;
-  btn.disabled = !ta.value.trim();
-}
+    function updateNoteSaveBtn() {
+      const ta = document.getElementById('note-ta');
+      const btn = document.getElementById('note-save-btn');
+      if (!ta || !btn) return;
+      btn.disabled = !ta.value.trim();
+    }
 
-function saveNote() {
-  const ta   = document.getElementById('note-ta');
-  const text = ta.value.trim();
-  if (!text || currentIdx === null) return;
-  const notes = getNotes(currentIdx);
-  const ts    = new Date().toLocaleString('en-CA', {
-    year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'
-  });
-  notes.unshift({ text, ts });
-  localStorage.setItem(`cb-crm-notes-${currentIdx}`, JSON.stringify(notes));
-  renderNotesList(currentIdx);
-}
+    function saveNote() {
+      const ta = document.getElementById('note-ta');
+      const text = ta.value.trim();
+      if (!text || currentIdx === null) return;
+      const notes = getNotes(currentIdx);
+      const ts = new Date().toLocaleString('en-CA', {
+        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+      notes.unshift({ text, ts });
+      localStorage.setItem(`cb-crm-notes-${currentIdx}`, JSON.stringify(notes));
+      renderNotesList(currentIdx);
+    }
 
-/* ──────────────────────────────────────────────
-   REMINDER
-────────────────────────────────────────────── */
-function setReminder(days) {
-  if (currentIdx === null) return;
-  const target = new Date();
-  target.setHours(0, 0, 0, 0);
-  target.setDate(target.getDate() + days);
-  localStorage.setItem(`cb-crm-reminder-${currentIdx}`, target.toISOString());
-  renderReminderTag(currentIdx);
-}
+    /* ──────────────────────────────────────────────
+       REMINDER
+    ────────────────────────────────────────────── */
+    function setReminder(days) {
+      if (currentIdx === null) return;
+      const target = new Date();
+      target.setHours(0, 0, 0, 0);
+      target.setDate(target.getDate() + days);
+      localStorage.setItem(`cb-crm-reminder-${currentIdx}`, target.toISOString());
+      renderReminderTag(currentIdx);
+    }
 
-function renderReminderTag(idx) {
-  const tag = document.getElementById('m-reminder-tag');
-  if (!tag) return;
-  const raw = localStorage.getItem(`cb-crm-reminder-${idx}`);
-  if (!raw) {
-    tag.hidden = true;
-    tag.textContent = '';
-    return;
-  }
-  const d = new Date(raw);
-  if (isNaN(d.getTime())) {
-    tag.hidden = true;
-    return;
-  }
-  const label = d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
-  tag.textContent = `Reminder set for: ${label}`;
-  tag.hidden = false;
-}
+    function renderReminderTag(idx) {
+      const tag = document.getElementById('m-reminder-tag');
+      if (!tag) return;
+      const raw = localStorage.getItem(`cb-crm-reminder-${idx}`);
+      if (!raw) {
+        tag.hidden = true;
+        tag.textContent = '';
+        return;
+      }
+      const d = new Date(raw);
+      if (isNaN(d.getTime())) {
+        tag.hidden = true;
+        return;
+      }
+      const label = d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
+      tag.textContent = `Reminder set for: ${label}`;
+      tag.hidden = false;
+    }
 
-function onReminderSelect() {
-  const sel = document.getElementById('m-reminder-sel');
-  if (!sel || !sel.value) return;
-  setReminder(parseInt(sel.value, 10));
-  sel.value = '';
-}
+    function onReminderSelect() {
+      const sel = document.getElementById('m-reminder-sel');
+      if (!sel || !sel.value) return;
+      setReminder(parseInt(sel.value, 10));
+      sel.value = '';
+    }
 
-/* ──────────────────────────────────────────────
-   PAST VISITS
-────────────────────────────────────────────── */
-function renderPastVisits(l) {
-  const el = document.getElementById('m-history');
-  if (!el) return;
-  const phone = normPhone(l.phone);
-  const visits = allLeads
-    .filter(x => x.idx !== l.idx && phone && normPhone(x.phone) === phone)
-    .sort((a, b) => {
-      const ta = a.submittedRaw instanceof Date ? a.submittedRaw.getTime() : 0;
-      const tb = b.submittedRaw instanceof Date ? b.submittedRaw.getTime() : 0;
-      return tb - ta;
-    });
-  if (!visits.length) {
-    el.innerHTML = '<p class="history-empty">No previous requests from this customer</p>';
-    return;
-  }
-  el.innerHTML = `<div class="history-list">${visits.map(v => `
+    /* ──────────────────────────────────────────────
+       PAST VISITS
+    ────────────────────────────────────────────── */
+    function renderPastVisits(l) {
+      const el = document.getElementById('m-history');
+      if (!el) return;
+      const phone = normPhone(l.phone);
+      const visits = allLeads
+        .filter(x => x.idx !== l.idx && phone && normPhone(x.phone) === phone)
+        .sort((a, b) => {
+          const ta = a.submittedRaw instanceof Date ? a.submittedRaw.getTime() : 0;
+          const tb = b.submittedRaw instanceof Date ? b.submittedRaw.getTime() : 0;
+          return tb - ta;
+        });
+      if (!visits.length) {
+        el.innerHTML = '<p class="history-empty">No previous requests from this customer</p>';
+        return;
+      }
+      el.innerHTML = `<div class="history-list">${visits.map(v => `
     <div class="history-item">
       <span class="history-date">${esc(v.submitted) || '—'}</span>
       <span class="history-svc">${esc(v.service) || '—'}</span>
       ${statusBadge(v.status)}
     </div>`).join('')}</div>`;
-}
+    }
 
-/* ──────────────────────────────────────────────
-   PRINT WORK ORDER
-────────────────────────────────────────────── */
-function buildPrintHtml(l) {
-  const pref = prefDateTime(l);
-  return `<!DOCTYPE html>
+    /* ──────────────────────────────────────────────
+       PRINT WORK ORDER
+    ────────────────────────────────────────────── */
+    function buildPrintHtml(l) {
+      const pref = prefDateTime(l);
+      return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1899,72 +3193,73 @@ function buildPrintHtml(l) {
   </div>
 </body>
 </html>`;
-}
+    }
 
-function printWorkOrder() {
-  if (currentIdx === null) return;
-  const l = allLeads.find(x => x.idx === currentIdx);
-  if (!l) return;
-  const w = window.open('', '_blank', 'noopener,noreferrer');
-  if (!w) return;
-  w.document.write(buildPrintHtml(l));
-  w.document.close();
-  w.onload = () => { w.focus(); w.print(); };
-}
+    function printWorkOrder() {
+      if (currentIdx === null) return;
+      const l = allLeads.find(x => x.idx === currentIdx);
+      if (!l) return;
+      const w = window.open('', '_blank', 'noopener,noreferrer');
+      if (!w) return;
+      w.document.write(buildPrintHtml(l));
+      w.document.close();
+      w.onload = () => { w.focus(); w.print(); };
+    }
 
-/* ──────────────────────────────────────────────
-   EXPORT CSV
-────────────────────────────────────────────── */
-function exportCSV() {
-  const src  = filteredLeads.length ? filteredLeads : allLeads;
-  const cols = ['Name','Email','Phone','Vehicle','Service','Preferred Date & Time','Status','Sheet Notes','Date Submitted'];
-  const rows = src.map(l =>
-    [l.name,l.email,l.phone,l.vehicle,l.service,
-     l.prefdate && l.preftime ? `${l.prefdate} at ${l.preftime}` : l.prefdate||l.preftime||'',
-     l.status,l.notes,l.submitted]
-      .map(v => `"${(v||'').replace(/"/g,'""')}"`)
-      .join(',')
-  );
-  const csv  = [cols.join(','), ...rows].join('\r\n');
-  const date = new Date().toISOString().slice(0,10);
-  const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
-  const url  = URL.createObjectURL(blob);
-  const a    = Object.assign(document.createElement('a'), {
-    href: url, download: `chaleur-bay-leads-${date}.csv`
-  });
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
+    /* ──────────────────────────────────────────────
+       EXPORT CSV
+    ────────────────────────────────────────────── */
+    function exportCSV() {
+      const src = filteredLeads.length ? filteredLeads : allLeads;
+      const cols = ['Name', 'Email', 'Phone', 'Vehicle', 'Service', 'Preferred Date & Time', 'Status', 'Sheet Notes', 'Date Submitted'];
+      const rows = src.map(l =>
+        [l.name, l.email, l.phone, l.vehicle, l.service,
+        l.prefdate && l.preftime ? `${l.prefdate} at ${l.preftime}` : l.prefdate || l.preftime || '',
+        l.status, l.notes, l.submitted]
+          .map(v => `"${(v || '').replace(/"/g, '""')}"`)
+          .join(',')
+      );
+      const csv = [cols.join(','), ...rows].join('\r\n');
+      const date = new Date().toISOString().slice(0, 10);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = Object.assign(document.createElement('a'), {
+        href: url, download: `chaleur-bay-leads-${date}.csv`
+      });
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
-/* ──────────────────────────────────────────────
-   LAST-UPDATED TIMER
-────────────────────────────────────────────── */
-function tickTimer() {
-  const el = document.getElementById('last-upd-text');
-  if (!el) return;
-  if (!lastFetch) { el.textContent = 'Connecting…'; return; }
-  const s = Math.floor((Date.now() - lastFetch) / 1000);
-  el.textContent = s < 5 ? 'Just updated' : `Updated ${s}s ago`;
-}
+    /* ──────────────────────────────────────────────
+       LAST-UPDATED TIMER
+    ────────────────────────────────────────────── */
+    function tickTimer() {
+      const el = document.getElementById('last-upd-text');
+      if (!el) return;
+      if (!lastFetch) { el.textContent = 'Connecting…'; return; }
+      const s = Math.floor((Date.now() - lastFetch) / 1000);
+      el.textContent = s < 5 ? 'Just updated' : `Updated ${s}s ago`;
+    }
 
-/* ──────────────────────────────────────────────
-   UTILITY
-────────────────────────────────────────────── */
-function esc(s) {
-  if (!s) return '';
-  return String(s)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;');
-}
+    /* ──────────────────────────────────────────────
+       UTILITY
+    ────────────────────────────────────────────── */
+    function esc(s) {
+      if (!s) return '';
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
-/* ──────────────────────────────────────────────
-   BOOT
-────────────────────────────────────────────── */
-boot();
-</script>
+    /* ──────────────────────────────────────────────
+       BOOT
+    ────────────────────────────────────────────── */
+    boot();
+  </script>
 </body>
+
 </html>

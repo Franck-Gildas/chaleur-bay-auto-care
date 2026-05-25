@@ -369,9 +369,9 @@ function FabChat() {
 }
 
 /* ============ Reveal-on-scroll helper ============ */
-function useReveal() {
+function useReveal(deps = []) {
   useEffect(() => {
-    const els = document.querySelectorAll(".reveal");
+    const els = document.querySelectorAll(".reveal:not(.is-in)");
     if (!("IntersectionObserver" in window)) {
       els.forEach(e => e.classList.add("is-in"));
       return;
@@ -386,7 +386,7 @@ function useReveal() {
     }, { threshold: 0.12 });
     els.forEach(el => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, deps);
 }
 
 Object.assign(window, { Navbar, Footer, FabChat, Icon, useReveal });

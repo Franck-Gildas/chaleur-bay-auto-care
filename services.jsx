@@ -85,6 +85,7 @@ function ServicesHero() {
 
 function ServiceCategories() {
   const [filter, setFilter] = useState("All");
+  useReveal([filter]);
   const cats = ["All", ...ALL_SERVICES.map(c => c.cat)];
 
   const visible = filter === "All"
@@ -111,20 +112,22 @@ function ServiceCategories() {
           ))}
         </div>
 
-        {visible.map((cat, ci) => (
+        {visible.map((cat) => {
+          const num = ALL_SERVICES.findIndex(c => c.cat === cat.cat) + 1;
+          return (
           <div key={cat.cat} className="reveal" style={{marginBottom: 80}} id={cat.cat === "Specialty" ? "fleet" : null}>
             <div style={{
               display: "flex", alignItems: "center", gap: 16, marginBottom: 32,
             }}>
               <span className="display" style={{
                 fontSize: 56, color: "var(--orange-soft)", lineHeight: 0.8,
-              }}>0{ci+1}</span>
+              }}>0{num}</span>
               <div>
                 <div style={{
                   fontFamily: "var(--f-mono)", fontSize: 11,
                   letterSpacing: "0.18em", textTransform: "uppercase",
                   color: "var(--orange)", marginBottom: 6,
-                }}>Category 0{ci+1}</div>
+                }}>Category 0{num}</div>
                 <h2 className="display" style={{
                   fontSize: 40, margin: 0,
                 }}>{cat.cat}</h2>
@@ -176,7 +179,8 @@ function ServiceCategories() {
               ))}
             </div>
           </div>
-        ))}
+          );
+        })}
 
         <style>{`
           @media (max-width: 720px) { .cat-grid { grid-template-columns: 1fr !important; } }
@@ -227,7 +231,6 @@ function ServiceCTA() {
 }
 
 function ServicesPage() {
-  useReveal();
   return (
     <React.Fragment>
       <Navbar active="services"/>

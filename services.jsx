@@ -105,8 +105,8 @@ function ServicesHero() {
       overflow: "hidden",
     }}>
       <div style={{
-        position: "absolute", inset: 0, opacity: 0.12,
-        backgroundImage: "url('img/hero-bg.jpg')",
+        position: "absolute", inset: 0, opacity: 0.15,
+        backgroundImage: "url('img/engine.jpg')",
         backgroundSize: "cover", backgroundPosition: "right center",
         maskImage: "linear-gradient(90deg, transparent 30%, black 100%)",
         WebkitMaskImage: "linear-gradient(90deg, transparent 30%, black 100%)",
@@ -267,30 +267,36 @@ function ServiceCategories() {
 
 function ServiceCTA() {
   return (
-    <section style={{
-      padding: "80px 0",
+    <section className="section" style={{
       background: "var(--bg-elev)",
       borderTop: "1px solid var(--line)",
     }}>
-      <div className="wrap reveal" style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        gap: 40, flexWrap: "wrap",
+      <div className="wrap cta-grid reveal" style={{
+        display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 56, alignItems: "center",
       }}>
         <div>
           <h2 className="display" style={{fontSize: 48, margin: "0 0 12px"}}>
             Ready to <span style={{color: "var(--copper)"}}>book?</span>
           </h2>
-          <p style={{color: "var(--text-dim)", margin: 0, maxWidth: 480}}>
+          <p style={{color: "var(--text-dim)", margin: "0 0 32px", maxWidth: 480}}>
             Get a free quote today. Call us or request an appointment online —
             we'll confirm by phone during business hours.
           </p>
+          <div style={{display: "flex", gap: 14, flexWrap: "wrap"}}>
+            <a className="btn btn--primary" href="contact.html#book"
+              onClick={(e) => onPageLinkClick(e, "contact.html#book")}>Book Appointment <Icon.arrow width="16" height="16"/></a>
+            <a className="btn btn--ghost" href={`tel:${SITE.phoneTel}`}>Call {SITE.phone}</a>
+          </div>
         </div>
-        <div style={{display: "flex", gap: 14, flexWrap: "wrap"}}>
-          <a className="btn btn--primary" href="contact.html#book"
-            onClick={(e) => onPageLinkClick(e, "contact.html#book")}>Book Appointment <Icon.arrow width="16" height="16"/></a>
-          <a className="btn btn--ghost" href={`tel:${SITE.phoneTel}`}>Call {SITE.phone}</a>
-        </div>
+        <div style={{
+          aspectRatio: "1/1",
+          background: "url('img/measurement.jpg') center/cover",
+          border: "1px solid var(--line)",
+        }}/>
       </div>
+      <style>{`
+        @media (max-width: 820px) { .cta-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   );
 }

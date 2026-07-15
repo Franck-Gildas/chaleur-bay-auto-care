@@ -1,5 +1,5 @@
-﻿/* global React, Navbar, Footer, FabChat, Icon, usePageMotion, onPageLinkClick, emailjs, SITE */
-const { useState } = React;
+﻿/* global React, Navbar, Footer, FabChat, Icon, usePageMotion, onPageLinkClick, emailjs, SITE, scrollToAnchor */
+const { useState, useLayoutEffect, useRef } = React;
 
 emailjs.init({ publicKey: "kx8ejBAxjQ56jwuma" });
 
@@ -56,14 +56,15 @@ function ContactBands() {
     {
       kicker: "Email",
       title: SITE.email,
+      titleVariant: "email",
       sub: "Replies during business hours",
       action: `mailto:${SITE.email}`,
       cta: "Send email",
     },
     {
       kicker: "Visit",
-      title: `${SITE.address.street} Â· ${SITE.address.city}`,
-      sub: `${SITE.hours.weekdays} Â· ${SITE.hours.weekend}`,
+      title: `${SITE.address.street} · ${SITE.address.city}`,
+      sub: `${SITE.hours.weekdays} · ${SITE.hours.weekend}`,
       action: SITE.mapsDirections,
       cta: "Get directions",
     },
@@ -79,7 +80,7 @@ function ContactBands() {
         className="wrap bands-grid"
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "1fr 1.25fr 1fr",
           gap: 1,
           background: "var(--line)",
         }}
@@ -113,21 +114,40 @@ function ContactBands() {
                 color: "var(--orange)",
               }}
             >
-              0{i + 1} Â· {b.kicker}
+              0{i + 1} · {b.kicker}
             </div>
-            <div
-              style={{
-                fontFamily: "var(--f-display)",
-                fontSize: 30,
-                textTransform: "uppercase",
-                letterSpacing: "0.01em",
-                lineHeight: 1.05,
-                wordBreak: "break-word",
-                overflowWrap: "break-word",
-              }}
-            >
-              {b.title}
-            </div>
+            {b.titleVariant === "email" ? (
+              <div
+                className="band-title band-title--email"
+                style={{
+                  fontFamily: "var(--f-mono)",
+                  fontSize: "clamp(14px, 1.5vw, 18px)",
+                  letterSpacing: "0.02em",
+                  lineHeight: 1.45,
+                  fontWeight: 500,
+                  wordBreak: "break-all",
+                }}
+              >
+                {b.title.split("@").map((part, j, arr) => (
+                  <span key={j} style={{ display: "block" }}>
+                    {j === 0 ? `${part}@` : part}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <div
+                className="band-title"
+                style={{
+                  fontFamily: "var(--f-display)",
+                  fontSize: 30,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.01em",
+                  lineHeight: 1.05,
+                }}
+              >
+                {b.title}
+              </div>
+            )}
             <div style={{ color: "var(--text-dim)", fontSize: 14 }}>
               {b.sub}
             </div>
@@ -166,6 +186,23 @@ function ContactBands() {
 
 function BookingFlow() {
   const [step, setStep] = useState(1);
+  const bookingBodyRef = useRef(null);
+  const skipBodyReset = useRef(true);
+
+  function changeStep(next) {
+    setStep(next);
+  }
+
+  useLayoutEffect(() => {
+    if (skipBodyReset.current) {
+      skipBodyReset.current = false;
+      return;
+    }
+    if (bookingBodyRef.current) {
+      bookingBodyRef.current.scrollTop = 0;
+    }
+  }, [step]);
+
   const [data, setData] = useState({
     service: "",
     vehicle: { year: "", make: "", model: "" },
@@ -192,7 +229,7 @@ function BookingFlow() {
     {
       cat: "Brakes & Suspension",
       items: [
-        { id: "brake", label: "Brake Repair", time: "2 â€“ 4 h" },
+        { id: "brake", label: "Brake Repair", time: "2 – 4 h" },
         { id: "susp", label: "Steering & Suspension", time: "Quoted" },
       ],
     },
@@ -200,15 +237,15 @@ function BookingFlow() {
       cat: "Engine & Transmission",
       items: [
         { id: "eng", label: "Engine Repair & Diagnostics", time: "60 min+" },
-        { id: "tx", label: "Transmission Service", time: "60 â€“ 90 min" },
+        { id: "tx", label: "Transmission Service", time: "60 – 90 min" },
         { id: "battery", label: "Batteries", time: "20 min" },
-        { id: "tune", label: "Tune Up", time: "2 â€“ 3 h" },
+        { id: "tune", label: "Tune Up", time: "2 – 3 h" },
       ],
     },
     {
       cat: "Cooling & AC",
       items: [
-        { id: "ac", label: "Air Conditioning Repair", time: "1 â€“ 2 h" },
+        { id: "ac", label: "Air Conditioning Repair", time: "1 – 2 h" },
         { id: "cooling", label: "Cooling System Repair", time: "Quoted" },
       ],
     },
@@ -224,7 +261,7 @@ function BookingFlow() {
     {
       cat: "Specialty Services",
       items: [
-        { id: "belts", label: "Belts & Hoses", time: "1 â€“ 2 h" },
+        { id: "belts", label: "Belts & Hoses", time: "1 – 2 h" },
         { id: "diesel", label: "Diesel Engine Service", time: "Quoted" },
         { id: "preventive", label: "Preventive Maintenance", time: "2 h" },
         { id: "other", label: "Something else", time: "Let us know" },
@@ -308,7 +345,7 @@ function BookingFlow() {
   }
 
   return (
-    <section className="section" id="book">
+    <section className="section">
       <div className="wrap">
         <div className="sec-head reveal">
           <div className="sec-head__left">
@@ -325,11 +362,8 @@ function BookingFlow() {
         </div>
 
         <div
-          className="reveal"
-          style={{
-            border: "1px solid var(--line)",
-            background: "var(--bg-card)",
-          }}
+          id="book"
+          className={`reveal booking-form${step === 5 ? " booking-form--done" : ""}`}
         >
           {/* Stepper */}
           <div
@@ -382,7 +416,11 @@ function BookingFlow() {
                       fontWeight: 700,
                     }}
                   >
-                    {done ? "âœ“" : n}
+                    {done ? (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M20 6 9 17l-5-5"/>
+                      </svg>
+                    ) : n}
                   </div>
                   <div>
                     <div
@@ -413,7 +451,10 @@ function BookingFlow() {
             })}
           </div>
 
-          <div className="booking-body" style={{ padding: 40, minHeight: 340 }}>
+          <div
+            ref={bookingBodyRef}
+            className="booking-body"
+          >
             {step === 1 && (
               <div>
                 <h3
@@ -443,6 +484,7 @@ function BookingFlow() {
                     }} className="svc-pick">
                       {cat.items.map((s) => (
                         <button
+                          type="button"
                           key={s.id}
                           onClick={() => setData({ ...data, service: s.id })}
                           style={{
@@ -569,7 +611,7 @@ function BookingFlow() {
                   When works?
                 </h3>
                 <p style={{ color: "var(--text-dim)", margin: "0 0 28px" }}>
-                  Pick any open slot. We'll confirm by phone â€” easy to change.
+                  Pick any open slot. We'll confirm by phone — easy to change.
                 </p>
                 <div
                   style={{
@@ -675,7 +717,7 @@ function BookingFlow() {
                   How to reach you
                 </h3>
                 <p style={{ color: "var(--text-dim)", margin: "0 0 28px" }}>
-                  One call, one confirmation â€” that's it.
+                  One call, one confirmation — that's it.
                 </p>
                 <div
                   style={{
@@ -778,13 +820,7 @@ function BookingFlow() {
           </div>
 
           {step < 5 && (
-            <div
-              style={{
-                padding: 24,
-                borderTop: "1px solid var(--line)",
-                background: "var(--bg)",
-              }}
-            >
+            <div className="booking-actions">
               {submitError && (
                 <div
                   style={{
@@ -810,18 +846,20 @@ function BookingFlow() {
               >
                 {step > 1 ? (
                   <button
-                    onClick={() => setStep(step - 1)}
+                    type="button"
+                    onClick={() => changeStep(step - 1)}
                     disabled={submitting}
                     className="btn btn--ghost"
                   >
-                    â† Back
+                    ← Back
                   </button>
                 ) : (
                   <div />
                 )}
                 <button
+                  type="button"
                   onClick={() =>
-                    step === 4 ? handleSubmit() : setStep(step + 1)
+                    step === 4 ? handleSubmit() : changeStep(step + 1)
                   }
                   disabled={!canNext || submitting}
                   className="btn btn--primary"
@@ -832,7 +870,7 @@ function BookingFlow() {
                 >
                   {step === 4
                     ? submitting
-                      ? "Sendingâ€¦"
+                      ? "Sending…"
                       : "Send request"
                     : "Continue"}{" "}
                   {!submitting && <Icon.arrow width="16" height="16" />}
@@ -843,9 +881,6 @@ function BookingFlow() {
         </div>
       </div>
       <style>{`
-        @media (max-width: 720px) {
-          .booking-body { padding: 24px 20px !important; }
-        }
         @media (max-width: 640px) {
           .booking-stepper { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
           .booking-stepper > div {
@@ -969,7 +1004,7 @@ function MapBlock() {
               }}>Address</div>
               <div style={{ fontWeight: 600, fontSize: 17 }}>{SITE.address.street}</div>
               <div style={{ color: "var(--text-dim)" }}>
-                {SITE.address.city}, {SITE.address.province} Â· {SITE.address.postal}
+                {SITE.address.city}, {SITE.address.province} · {SITE.address.postal}
               </div>
             </div>
 
@@ -982,7 +1017,7 @@ function MapBlock() {
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
                 <tbody>
                   {[
-                    ["Mon â€“ Fri", "8:00 AM â€“ 5:30 PM"],
+                    ["Mon – Fri", "8:00 AM – 5:30 PM"],
                     ["Saturday", "Closed"],
                     ["Sunday", "Closed"],
                   ].map(([d, h], i) => (
@@ -996,7 +1031,14 @@ function MapBlock() {
             </div>
 
             <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--line)" }}>
-              <a className="btn btn--primary btn--block" href="#book">
+              <a
+                className="btn btn--primary btn--block"
+                href="#book"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToAnchor("#book");
+                }}
+              >
                 Book online <Icon.arrow width="16" height="16" />
               </a>
               <div style={{ height: 10 }} />
@@ -1027,7 +1069,7 @@ function FAQ() {
     },
     {
       q: "Do you provide free quotes?",
-      a: "Yes â€” we provide written quotes before any work begins. Starting prices are listed on our Services page; your final quote depends on vehicle make and model.",
+      a: "Yes — we provide written quotes before any work begins. Starting prices are listed on our Services page; your final quote depends on vehicle make and model.",
     },
     {
       q: "What tire brands do you carry?",
@@ -1035,7 +1077,7 @@ function FAQ() {
     },
     {
       q: "Do you speak French?",
-      a: "Oui. Toute notre Ã©quipe est bilingue. Aucun problÃ¨me, on s'occupe de vous en franÃ§ais ou en anglais.",
+      a: "Oui. Toute notre équipe est bilingue. Aucun problème, on s'occupe de vous en français ou en anglais.",
     },
   ];
   return (

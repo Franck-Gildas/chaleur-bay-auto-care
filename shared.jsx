@@ -118,6 +118,23 @@ function navigateTo(href) {
   }
 }
 
+function scrollToAnchor(target, options = {}) {
+  const el = typeof target === "string"
+    ? document.querySelector(target.startsWith("#") ? target : `#${target}`)
+    : target;
+  if (!el) return false;
+
+  const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 76;
+  const offset = options.offset ?? 20;
+  const top = el.getBoundingClientRect().top + window.scrollY - navH - offset;
+
+  window.scrollTo({
+    top: Math.max(0, top),
+    behavior: options.behavior ?? "smooth",
+  });
+  return true;
+}
+
 function onPageLinkClick(e, href, onAfter) {
   const url = new URL(href, window.location.href);
   if (url.origin !== window.location.origin) return;
@@ -126,9 +143,8 @@ function onPageLinkClick(e, href, onAfter) {
   if (isSamePage(href)) {
     if (url.hash) {
       e.preventDefault();
-      const el = document.querySelector(url.hash);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-      else window.location.hash = url.hash;
+      history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+      scrollToAnchor(url.hash);
       if (onAfter) onAfter();
     }
     return;
@@ -491,8 +507,7 @@ function usePageMotion(deps = []) {
         document.documentElement.classList.add("page-ready");
         if (hash) {
           setTimeout(() => {
-            const el = document.querySelector(hash);
-            if (el) el.scrollIntoView({ behavior: "smooth" });
+            scrollToAnchor(hash, { behavior: "smooth" });
           }, 480);
         }
       });
@@ -505,5 +520,5 @@ function usePageMotion(deps = []) {
 
 Object.assign(window, {
   Navbar, Footer, FabChat, Icon, useReveal, usePageMotion,
-  onPageLinkClick, navigateTo, BrandLogo,
+  onPageLinkClick, navigateTo, scrollToAnchor, BrandLogo,
 });

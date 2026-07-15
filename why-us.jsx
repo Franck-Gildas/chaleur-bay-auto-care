@@ -12,7 +12,7 @@ function WhyHero() {
     }}>
       <div style={{
         position: "absolute", inset: 0, opacity: 0.15,
-        backgroundImage: "url('img/hero-bg.jpg')",
+        backgroundImage: "url('img/garage.jpg')",
         backgroundSize: "cover", backgroundPosition: "center 35%",
         maskImage: "linear-gradient(180deg, transparent 0%, black 30%, black 70%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(180deg, transparent 0%, black 30%, black 70%, transparent 100%)",
@@ -52,7 +52,7 @@ function WhyHero() {
           border: "1px solid var(--line)",
         }}>
           {[
-            { num: "01", label: "Google Rated", href: "#rated" },
+            { num: "01", label: "Certified Techs", href: "#certified" },
             { num: "02", label: "Fair Pricing", href: "#pricing" },
             { num: "03", label: "Tire Experts", href: "#tires" },
             { num: "04", label: "Local & Trusted", href: "#local" },
@@ -86,9 +86,9 @@ function WhyHero() {
 
 function StatStrip() {
   const stats = [
-    { v: "4.58★", l: "Google rating" },
+    { v: "3", l: "Red Seal journeymen on staff" },
+    { v: `${SITE.rating.score}★`, l: "Google rating" },
     { v: "27", l: "Services offered" },
-    { v: "Mon–Fri", l: "8 AM – 5:30 PM" },
     { v: "100%", l: "Written quotes before work" },
   ];
   return (
@@ -120,7 +120,7 @@ function StatStrip() {
   );
 }
 
-function ReasonBlock({ id, num, kicker, title, lead, paragraphs, bullets, image, flip, bg }) {
+function ReasonBlock({ id, num, kicker, title, lead, paragraphs, bullets, signal, image, flip, bg }) {
   return (
     <section id={id} className="section" style={{background: bg || "var(--bg)"}}>
       <div className="wrap">
@@ -131,16 +131,52 @@ function ReasonBlock({ id, num, kicker, title, lead, paragraphs, bullets, image,
         }}>
           <div className="reveal reason-img" style={{
             order: flip ? 2 : 1,
-            position: "relative", minHeight: 420,
-            background: `url('${image}') center/cover`,
-            border: "1px solid var(--line)",
+            position: "relative",
+            minHeight: 520,
           }}>
+            <div style={{
+              position: "absolute", inset: 0,
+              backgroundImage: `url('${image}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              border: "1px solid var(--line)",
+            }}/>
             <div className="display" style={{
-              position: "absolute", [flip ? "right" : "left"]: -28, top: -28,
+              position: "absolute",
+              [flip ? "right" : "left"]: -28,
+              top: -28,
               fontSize: "clamp(100px, 12vw, 180px)",
               color: "var(--copper)", lineHeight: 0.8, opacity: 0.3,
               pointerEvents: "none",
             }}>{num}</div>
+            {signal && (
+              <div style={{
+                position: "absolute",
+                bottom: 24,
+                [flip ? "right" : "left"]: 24,
+                background: "var(--bg)",
+                border: "1px solid var(--line)",
+                padding: "14px 18px",
+                display: "flex", alignItems: "center", gap: 12,
+                maxWidth: 320,
+              }}>
+                <div style={{
+                  width: 32, height: 32, borderRadius: "50%",
+                  background: "var(--copper)", color: "#fff",
+                  display: "grid", placeItems: "center",
+                  flexShrink: 0,
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                </div>
+                <div style={{
+                  fontFamily: "var(--f-mono)", fontSize: 11,
+                  letterSpacing: "0.14em", textTransform: "uppercase",
+                  color: "var(--text)", lineHeight: 1.4,
+                }}>{signal}</div>
+              </div>
+            )}
           </div>
           <div className="reveal reason-detail" style={{
             order: flip ? 1 : 2,
@@ -188,11 +224,141 @@ function ReasonBlock({ id, num, kicker, title, lead, paragraphs, bullets, image,
         <style>{`
           @media (max-width: 980px) {
             .reason-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-            .reason-img { min-height: 320px !important; order: 1 !important; }
+            .reason-img { min-height: 380px !important; order: 1 !important; overflow: hidden !important; }
             .reason-detail { order: 2 !important; }
           }
         `}</style>
       </div>
+    </section>
+  );
+}
+
+const CERTS = [
+  { name: "Red Seal", sub: "Inter-provincial standard", code: "RS" },
+  { name: "ASE Certified", sub: "Automotive Service Excellence", code: "ASE" },
+  { name: "NB Inspection", sub: "Authorized MVI station", code: "MVI" },
+  { name: "AIA Canada", sub: "Automotive Industries Assoc.", code: "AIA" },
+];
+
+const PARTNERS = [
+  { name: "NAPA Auto Parts", tag: "Parts supplier" },
+  { name: "Bosch Service", tag: "Diagnostic equipment" },
+  { name: "Michelin", tag: "Tire partner" },
+  { name: "Mobil 1", tag: "Lubricants" },
+  { name: "Castrol", tag: "Lubricants" },
+  { name: "Interstate Batteries", tag: "Battery partner" },
+];
+
+function Certifications() {
+  return (
+    <section className="section" style={{background: "var(--bg-elev)", borderTop: "1px solid var(--line)"}}>
+      <div className="wrap">
+        <div className="sec-head reveal">
+          <div className="sec-head__left">
+            <span className="eyebrow">Credentials</span>
+            <h2>Certifications<br/><em>& partnerships.</em></h2>
+          </div>
+          <div className="sec-head__right">
+            We invest in training and we partner with the brands you already trust.
+            The wall in our waiting room is covered in this stuff — here's the short version.
+          </div>
+        </div>
+
+        <div className="reveal" style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: 1,
+          background: "var(--line)",
+          border: "1px solid var(--line)",
+          marginBottom: 56,
+        }} data-cert-grid>
+          {CERTS.map((c, i) => (
+            <div key={i} style={{
+              background: "var(--bg)",
+              padding: "48px 28px",
+              display: "flex", flexDirection: "column",
+              alignItems: "center", textAlign: "center", gap: 18,
+            }}>
+              <div style={{
+                width: 96, height: 96,
+                border: "2px solid var(--copper)",
+                borderRadius: "50%",
+                display: "grid", placeItems: "center",
+                position: "relative",
+                background: "var(--copper-soft)",
+              }}>
+                <div style={{
+                  position: "absolute", inset: 6,
+                  border: "1px solid var(--copper-soft)",
+                  borderRadius: "50%",
+                }}/>
+                <span className="display" style={{
+                  fontSize: 28,
+                  color: "var(--copper)",
+                  letterSpacing: 0,
+                  lineHeight: 1,
+                }}>{c.code}</span>
+              </div>
+              <div>
+                <div style={{
+                  fontFamily: "var(--f-display)", fontSize: 20, fontWeight: 800,
+                  textTransform: "uppercase", letterSpacing: "0.02em",
+                  marginBottom: 4,
+                }}>{c.name}</div>
+                <div style={{
+                  fontFamily: "var(--f-mono)", fontSize: 11,
+                  letterSpacing: "0.14em", textTransform: "uppercase",
+                  color: "var(--text-mute)",
+                }}>{c.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{
+          padding: "32px 0",
+          borderTop: "1px solid var(--line)",
+          borderBottom: "1px solid var(--line)",
+        }}>
+          <div style={{
+            fontFamily: "var(--f-mono)", fontSize: 11,
+            letterSpacing: "0.2em", textTransform: "uppercase",
+            color: "var(--text-mute)", marginBottom: 24, textAlign: "center",
+          }}>Trusted parts &amp; equipment partners</div>
+          <div className="partner-row" style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(6, 1fr)",
+            gap: 0,
+          }}>
+            {PARTNERS.map((p, i) => (
+              <div key={i} style={{
+                padding: "12px 16px",
+                textAlign: "center",
+                borderRight: i < PARTNERS.length - 1 ? "1px solid var(--line)" : "none",
+              }} className="partner-cell">
+                <div style={{
+                  fontFamily: "var(--f-display)", fontSize: 18, fontWeight: 800,
+                  textTransform: "uppercase", letterSpacing: "0.03em",
+                  marginBottom: 4,
+                  color: "var(--text)",
+                }}>{p.name}</div>
+                <div style={{
+                  fontFamily: "var(--f-mono)", fontSize: 10,
+                  letterSpacing: "0.14em", textTransform: "uppercase",
+                  color: "var(--text-mute)",
+                }}>{p.tag}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 820px) {
+          [data-cert-grid] { grid-template-columns: repeat(2, 1fr) !important; }
+          .partner-row { grid-template-columns: repeat(2, 1fr) !important; }
+          .partner-cell { border-right: none !important; border-bottom: 1px solid var(--line); padding: 18px 12px !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -253,19 +419,23 @@ function WhyUsPage() {
         <StatStrip/>
 
         <ReasonBlock
-          id="rated"
+          id="certified"
           num="01"
-          kicker="Rated"
-          title={<>4.58★ on<br/><span style={{color: "var(--copper)"}}>Google.</span></>}
-          lead="Real reviews from real customers in Bath and the surrounding area."
+          kicker="Certified"
+          title={<>Red Seal &amp; ASE<br/><span style={{color: "var(--copper)"}}>certified technicians.</span></>}
+          lead="Every wrench in our bay belongs to a technician with credentials you can verify — not someone we hired off Kijiji last week."
           paragraphs={[
-            "Our Google rating reflects the trust we've built one repair at a time. We don't filter reviews — we earn them with honest service and fair pricing.",
+            "Our team includes Red Seal journeymen and ASE-certified techs. Every diagnosis on a complex job gets signed off by a certified lead before we quote you.",
+            "We pay for ongoing training because vehicles change. Our scan tools, our techs and our procedures stay current with what's actually rolling out of the factory — hybrids, modern diesels, ADAS calibration, the works.",
           ]}
           bullets={[
-            { t: "Verified reviews", d: "Real feedback from local drivers who trust us with their vehicles." },
-            { t: "Consistent quality", d: "Same high standard on every oil change, tire install, and repair." },
+            { t: "Red Seal journeymen", d: "On staff. Their tickets are on the wall, not just on the website." },
+            { t: "ASE Master Certified", d: "Specialty areas recertified every five years as required." },
+            { t: "Manufacturer-trained", d: "Ongoing training on GM, Ford, Toyota and Subaru systems." },
+            { t: "Lead-tech sign-off", d: "Complex diagnoses are reviewed by a senior tech before quoting." },
           ]}
-          image="img/hero-bg.jpg"
+          signal="Verify any tech's Red Seal at red-seal.ca"
+          image="img/hero-mechanic.jpg"
           flip={false}
         />
 
@@ -283,7 +453,8 @@ function WhyUsPage() {
             { t: "27 services listed", d: "Full catalog with starting prices on our Services page." },
             { t: "Written quotes", d: "You approve the price before we turn a wrench." },
           ]}
-          image="img/hero-bg.jpg"
+          signal="Starting prices published on our Services page"
+          image="img/measurement.jpg"
           flip={true}
           bg="var(--bg-elev)"
         />
@@ -301,7 +472,8 @@ function WhyUsPage() {
             { t: "Tires from $119.99", d: "Quality brands mounted and balanced, ready to roll." },
             { t: "Complete wheel service", d: "Rotation, balancing, repair and TPMS diagnostics." },
           ]}
-          image="img/hero-bg.jpg"
+          signal="Rotation, balancing, repair and TPMS under one roof"
+          image="img/tire-change.jpg"
           flip={false}
         />
 
@@ -318,11 +490,13 @@ function WhyUsPage() {
             { t: SITE.address.full, d: "Easy to find on Main Street with convenient parking." },
             { t: SITE.hours.weekdays, d: SITE.hours.weekend },
           ]}
-          image="img/hero-bg.jpg"
+          signal={`Serving Bath & the Fredericton region`}
+          image="img/car-repair.jpg"
           flip={true}
           bg="var(--bg-elev)"
         />
 
+        <Certifications/>
         <FinalCTA/>
       </main>
       <Footer/>

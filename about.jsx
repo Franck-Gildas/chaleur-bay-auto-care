@@ -11,9 +11,9 @@ function AboutHero() {
       borderBottom: "1px solid var(--line)",
     }}>
       <div className="wrap abh-grid" style={{
-        display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 60, alignItems: "end",
+        display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 60, alignItems: "stretch",
       }}>
-        <div>
+        <div className="abh-copy">
           <span className="eyebrow hero-eyebrow">About</span>
           <h1 className="display hero-title" style={{
             fontSize: "clamp(48px, 7vw, 112px)",
@@ -32,15 +32,32 @@ function AboutHero() {
             we stand for every day.
           </p>
         </div>
-        <div className="hero-extra" style={{
-          aspectRatio: "4/5",
-          background: "url('img/hero-bg.jpg') center/cover",
-          border: "1px solid var(--line)",
-          maxHeight: 480,
-        }}/>
+        <div className="hero-extra abh-photo">
+          <img
+            src="img/mountain-view-auto-site.webp"
+            alt="Mountain View Auto Ltd. storefront on Main Street, Bath, New Brunswick"
+          />
+        </div>
       </div>
       <style>{`
-        @media (max-width: 880px) { .abh-grid { grid-template-columns: 1fr !important; } }
+        .abh-photo {
+          display: flex;
+          min-height: 100%;
+          border: 1px solid var(--line);
+          overflow: hidden;
+          background: var(--bg-elev);
+        }
+        .abh-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: center top;
+          display: block;
+        }
+        @media (max-width: 880px) {
+          .abh-grid { grid-template-columns: 1fr !important; }
+          .abh-photo { aspect-ratio: 2 / 3; max-height: none; }
+        }
       `}</style>
     </section>
   );
@@ -148,9 +165,45 @@ function Values() {
 
 function Team() {
   const crew = [
-    { name: "Lead Technician", role: "Diagnostics & Engine Repair", bio: "Experienced in engine diagnostics, drivetrain repair, and getting to the root of complex problems." },
-    { name: "Tire Specialist", role: "Tires & Wheels", bio: "Expert in tire sales, installation, rotation, balancing, and TPMS service for all makes and models." },
-    { name: "Service Advisor", role: "Front Desk & Scheduling", bio: "Your first point of contact — clear quotes, honest timelines, and answers to every question." },
+    {
+      name: "Hank Arseneau",
+      role: "Owner · Red Seal Technician",
+      years: 22,
+      img: "img/hank-arseneau.jpg",
+      pos: "center 25%",
+      bio: "Bathurst born, NBCC-trained. Specializes in diagnostics and drivetrain. Drives a 2010 Tacoma — still.",
+    },
+    {
+      name: "Jamie Archer",
+      role: "Licensed Automotive Mechanic",
+      years: "20+",
+      img: "img/jamie-archer.jpg",
+      pos: "center 20%",
+      bio: "A licensed automotive mechanic spanning over two decades. His past work with Hank guarantees a strong partnership in the bay.",
+    },
+    {
+      name: "Élise Chiasson",
+      role: "Service Manager · ASE Master",
+      years: 14,
+      img: "img/elise-chiasson.jpg",
+      pos: "center",
+      bio: "Runs the front of house and the back of the shop. The reason your quote is in writing.",
+    },
+    {
+      name: "Marc Doucet",
+      role: "Red Seal · Tires & Brakes",
+      years: 9,
+      img: "img/marc-doucet.jpg",
+      pos: "70% center",
+      bio: "Fastest seasonal swap in the peninsula. Will absolutely tell you when your pads are still fine.",
+    },
+    {
+      name: "Elizabeth McSheffery",
+      role: "Customer Service & Sales",
+      img: "img/elizabeth-mcSheffery.jpg",
+      pos: "center 15%",
+      bio: "Your first call, your quote, and the follow-up — Elizabeth keeps customer service and sales running smoothly at the front of the shop.",
+    },
   ];
 
   return (
@@ -158,45 +211,36 @@ function Team() {
       <div className="wrap">
         <div className="sec-head reveal">
           <div className="sec-head__left">
-            <span className="eyebrow">03 / Our team</span>
-            <h2>Skilled people,<br/><em>personal service.</em></h2>
+            <span className="eyebrow">03 / The crew</span>
+            <h2>The people who'll<br/><em>be working on it.</em></h2>
           </div>
           <div className="sec-head__right">
-            A small, dedicated team that treats every vehicle like our own.
+            No revolving door of technicians. Same trusted faces, every visit.
           </div>
         </div>
 
-        <div style={{
-          display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24,
-        }} className="team-grid">
+        <div className="team-grid">
           {crew.map((p, i) => (
-            <div key={i} className="reveal" style={{
-              background: "var(--bg)", border: "1px solid var(--line)",
-              padding: 32, display: "flex", flexDirection: "column", gap: 16,
-            }}>
-              <div style={{
-                width: 56, height: 56, borderRadius: "50%",
-                background: "var(--forest-soft)", border: "2px solid var(--forest)",
-                display: "grid", placeItems: "center",
-                fontFamily: "var(--f-display)", fontSize: 20, fontWeight: 800,
-                color: "var(--forest)",
-              }}>{String(i + 1).padStart(2, "0")}</div>
-              <div style={{
-                fontFamily: "var(--f-mono)", fontSize: 11,
-                letterSpacing: "0.16em", textTransform: "uppercase",
-                color: "var(--copper)",
-              }}>{p.role}</div>
-              <h3 style={{
-                fontFamily: "var(--f-display)", fontSize: 24, fontWeight: 800,
-                textTransform: "uppercase", letterSpacing: "0.01em", margin: 0,
-              }}>{p.name}</h3>
-              <p style={{color: "var(--text-dim)", fontSize: 14, lineHeight: 1.65, margin: 0}}>{p.bio}</p>
-            </div>
+            <article key={p.name} className="team-card reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
+              <div
+                className="team-card__photo"
+                style={{
+                  backgroundImage: `url('${p.img}')`,
+                  backgroundPosition: p.pos || "center",
+                }}
+              >
+                {p.years != null && (
+                  <span className="team-card__badge">{p.years} yrs in</span>
+                )}
+              </div>
+              <div className="team-card__body">
+                <div className="team-card__role">{p.role}</div>
+                <h3 className="team-card__name">{p.name}</h3>
+                <p className="team-card__bio">{p.bio}</p>
+              </div>
+            </article>
           ))}
         </div>
-        <style>{`
-          @media (max-width: 880px) { .team-grid { grid-template-columns: 1fr !important; } }
-        `}</style>
       </div>
     </section>
   );
@@ -239,7 +283,7 @@ function CommunityBlock() {
       }}>
         <div style={{
           aspectRatio: "4/5",
-          background: "url('img/hero-bg.jpg') center/cover",
+          background: "url('img/garage.jpg') center/cover",
           border: "1px solid var(--line)",
         }}/>
         <div className="reveal">

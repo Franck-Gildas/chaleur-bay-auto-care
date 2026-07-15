@@ -363,7 +363,7 @@ function BookingFlow() {
 
         <div
           id="book"
-          className={`reveal booking-form${step === 5 ? " booking-form--done" : ""}`}
+          className={step === 5 ? "booking-form booking-form--done" : "reveal booking-form"}
         >
           {/* Stepper */}
           <div

@@ -1,8 +1,8 @@
-/* global React, Navbar, Footer, FabChat, Icon, useReveal, SITE */
+/* global React, Navbar, Footer, FabChat, Icon, usePageMotion, SITE */
 
 function AboutHero() {
   return (
-    <section style={{
+    <section className="page-hero" style={{
       paddingTop: "calc(var(--nav-h) + 80px)",
       paddingBottom: 80,
       position: "relative",
@@ -14,14 +14,14 @@ function AboutHero() {
         display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 60, alignItems: "end",
       }}>
         <div>
-          <span className="eyebrow">About</span>
-          <h1 className="display" style={{
+          <span className="eyebrow hero-eyebrow">About</span>
+          <h1 className="display hero-title" style={{
             fontSize: "clamp(48px, 7vw, 112px)",
             margin: "16px 0 24px",
           }}>
             Your neighbours<br/>on <span style={{color: "var(--copper)"}}>Main Street.</span>
           </h1>
-          <p style={{
+          <p className="hero-lead" style={{
             maxWidth: 560,
             fontSize: 18,
             color: "var(--text-dim)",
@@ -32,7 +32,7 @@ function AboutHero() {
             we stand for every day.
           </p>
         </div>
-        <div style={{
+        <div className="hero-extra" style={{
           aspectRatio: "4/5",
           background: "url('img/hero-bg.jpg') center/cover",
           border: "1px solid var(--line)",
@@ -271,7 +271,7 @@ function CommunityBlock() {
 }
 
 function AboutPage() {
-  useReveal();
+  usePageMotion();
   return (
     <React.Fragment>
       <Navbar active="about"/>

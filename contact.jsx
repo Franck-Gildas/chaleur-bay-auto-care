@@ -1,4 +1,4 @@
-﻿/* global React, Navbar, Footer, FabChat, Icon, useReveal, emailjs, SITE */
+﻿/* global React, Navbar, Footer, FabChat, Icon, usePageMotion, onPageLinkClick, emailjs, SITE */
 const { useState } = React;
 
 emailjs.init({ publicKey: "kx8ejBAxjQ56jwuma" });
@@ -6,6 +6,7 @@ emailjs.init({ publicKey: "kx8ejBAxjQ56jwuma" });
 function ContactHero() {
   return (
     <section
+      className="page-hero"
       style={{
         paddingTop: "calc(var(--nav-h) + 80px)",
         paddingBottom: 60,
@@ -14,9 +15,9 @@ function ContactHero() {
       }}
     >
       <div className="wrap">
-        <span className="eyebrow">Contact &amp; booking</span>
+        <span className="eyebrow hero-eyebrow">Contact &amp; booking</span>
         <h1
-          className="display"
+          className="display hero-title"
           style={{
             fontSize: "clamp(36px, 9vw, 112px)",
             margin: "16px 0 24px",
@@ -26,6 +27,7 @@ function ContactHero() {
           Book an <span style={{ color: "var(--copper)" }}>appointment.</span>
         </h1>
         <p
+          className="hero-lead"
           style={{
             maxWidth: 640,
             fontSize: 18,
@@ -767,7 +769,8 @@ function BookingFlow() {
                   Your appointment request has been received. We'll confirm by
                   phone within the hour during business hours.
                 </p>
-                <a href="index.html" className="btn btn--ghost">
+                <a href="index.html" className="btn btn--ghost"
+                  onClick={(e) => onPageLinkClick(e, "index.html")}>
                   Back to home
                 </a>
               </div>
@@ -1129,7 +1132,7 @@ function FAQ() {
 }
 
 function ContactPage() {
-  useReveal();
+  usePageMotion();
   return (
     <React.Fragment>
       <Navbar active="contact" />

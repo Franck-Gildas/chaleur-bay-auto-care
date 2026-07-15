@@ -1,8 +1,8 @@
-/* global React, ReactDOM, Navbar, Footer, FabChat, Icon, useReveal, SITE */
+/* global React, ReactDOM, Navbar, Footer, FabChat, Icon, usePageMotion, onPageLinkClick, SITE */
 
 function WhyHero() {
   return (
-    <section style={{
+    <section className="page-hero" style={{
       paddingTop: "calc(var(--nav-h) + 80px)",
       paddingBottom: 80,
       position: "relative",
@@ -23,8 +23,8 @@ function WhyHero() {
         pointerEvents: "none",
       }}/>
       <div className="wrap" style={{position: "relative"}}>
-        <span className="eyebrow">Why Mountain View</span>
-        <h1 className="display" style={{
+        <span className="eyebrow hero-eyebrow">Why Mountain View</span>
+        <h1 className="display hero-title" style={{
           fontSize: "clamp(56px, 9vw, 140px)",
           margin: "20px 0 28px",
           maxWidth: 1200,
@@ -32,7 +32,7 @@ function WhyHero() {
           Four reasons<br/>
           <span style={{color: "var(--copper)"}}>drivers stay with us.</span>
         </h1>
-        <p style={{
+        <p className="hero-lead" style={{
           maxWidth: 720,
           fontSize: 19,
           color: "var(--text-dim)",
@@ -43,14 +43,14 @@ function WhyHero() {
           and a {SITE.rating.score}★ Google rating — here's why neighbours keep coming back.
         </p>
 
-        <div style={{
+        <div className="hero-extra jump-grid" style={{
           marginTop: 56,
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           gap: 1,
           background: "var(--line)",
           border: "1px solid var(--line)",
-        }} className="jump-grid">
+        }}>
           {[
             { num: "01", label: "Google Rated", href: "#rated" },
             { num: "02", label: "Fair Pricing", href: "#pricing" },
@@ -221,7 +221,8 @@ function FinalCTA() {
           {SITE.bookingNote}
         </p>
         <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-          <a className="btn btn--primary" href="contact.html#book">
+          <a className="btn btn--primary" href="contact.html#book"
+            onClick={(e) => onPageLinkClick(e, "contact.html#book")}>
             Book Appointment <Icon.arrow width="16" height="16"/>
           </a>
           <a className="btn btn--ghost" href={`tel:${SITE.phoneTel}`}>
@@ -243,7 +244,7 @@ function FinalCTA() {
 }
 
 function WhyUsPage() {
-  useReveal();
+  usePageMotion();
   return (
     <React.Fragment>
       <Navbar active="why-us"/>

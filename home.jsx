@@ -1,4 +1,4 @@
-/* global React, Navbar, Footer, FabChat, Icon, useReveal, SITE */
+/* global React, Navbar, Footer, FabChat, Icon, usePageMotion, onPageLinkClick, SITE */
 const { useState, useEffect, useRef } = React;
 
 /* ===================== HERO with parallax depth ===================== */
@@ -235,7 +235,8 @@ function Hero() {
             <a className="btn btn--primary" href={`tel:${SITE.phoneTel}`}>
               Call {SITE.phone} <Icon.phone width="16" height="16" />
             </a>
-            <a className="btn btn--ghost" href="contact.html#book">
+            <a className="btn btn--ghost" href="contact.html#book"
+              onClick={(e) => onPageLinkClick(e, "contact.html#book")}>
               Book Appointment <Icon.arrow width="16" height="16" />
             </a>
           </div>
@@ -326,15 +327,6 @@ function Hero() {
       </div>
 
       <style>{`
-        @keyframes heroWordIn {
-          from { opacity: 0; transform: translateY(40px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .hero-word {
-          display: inline-block;
-          opacity: 0;
-          animation: heroWordIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
         @keyframes scrollDot {
           0%   { transform: translateY(-100%); }
           100% { transform: translateY(40px); }
@@ -632,6 +624,7 @@ function Services() {
                 key={i}
                 href="services.html"
                 className="svc-card reveal"
+                onClick={(e) => onPageLinkClick(e, "services.html")}
                 style={{
                   background: "var(--bg)",
                   padding: 32,
@@ -1852,7 +1845,7 @@ function FakeMap() {
 
 /* ===================== HOMEPAGE ROOT ===================== */
 function HomePage() {
-  useReveal();
+  usePageMotion();
   return (
     <React.Fragment>
       <Navbar active="home" />

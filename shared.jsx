@@ -86,6 +86,59 @@ function getInitialTheme() {
   return "dark";
 }
 
+/* ============ Page motion & navigation ============ */
+function normalizePath(pathname) {
+  const p = pathname.replace(/\\/g, "/");
+  const file = p.split("/").pop() || "index.html";
+  if (file === "" || file === "index.html") return "index";
+  return file.replace(/\.html$/, "");
+}
+
+function isSamePage(href) {
+  const url = new URL(href, window.location.href);
+  return normalizePath(url.pathname) === normalizePath(window.location.pathname);
+}
+
+function navigateTo(href) {
+  document.documentElement.classList.remove("page-ready");
+
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      window.location.href = href;
+    });
+    return;
+  }
+
+  const main = document.querySelector("main");
+  if (main) {
+    main.classList.add("page-exit");
+    setTimeout(() => { window.location.href = href; }, 280);
+  } else {
+    window.location.href = href;
+  }
+}
+
+function onPageLinkClick(e, href, onAfter) {
+  const url = new URL(href, window.location.href);
+  if (url.origin !== window.location.origin) return;
+  if (url.protocol === "tel:" || url.protocol === "mailto:") return;
+
+  if (isSamePage(href)) {
+    if (url.hash) {
+      e.preventDefault();
+      const el = document.querySelector(url.hash);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      else window.location.hash = url.hash;
+      if (onAfter) onAfter();
+    }
+    return;
+  }
+
+  e.preventDefault();
+  if (onAfter) onAfter();
+  navigateTo(href);
+}
+
 /* ============ Navbar ============ */
 function Navbar({ active }) {
   const [scrolled, setScrolled] = useState(false);
@@ -108,10 +161,15 @@ function Navbar({ active }) {
     { id: "contact",  label: "Contact",  href: "contact.html" },
   ];
 
+  function handleNav(e, href) {
+    onPageLinkClick(e, href, () => setOpen(false));
+  }
+
   return (
     <header className={"nav" + (scrolled ? " is-scrolled" : "")}>
       <div className="nav__inner">
-        <a className="nav__brand" href="index.html" aria-label={`${SITE.name} home`}>
+        <a className="nav__brand" href="index.html" aria-label={`${SITE.name} home`}
+          onClick={(e) => handleNav(e, "index.html")}>
           <BrandLogo />
           <div className="brand-name">
             <b>Mountain View</b>
@@ -120,7 +178,8 @@ function Navbar({ active }) {
         </a>
         <nav className="nav__menu">
           {items.map(it => (
-            <a key={it.id} href={it.href} className={active === it.id ? "is-active" : ""}>
+            <a key={it.id} href={it.href} className={active === it.id ? "is-active" : ""}
+              onClick={(e) => handleNav(e, it.href)}>
               {it.label}
             </a>
           ))}
@@ -136,7 +195,8 @@ function Navbar({ active }) {
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
             {theme === "dark" ? <Icon.sun width="16" height="16"/> : <Icon.moon width="16" height="16"/>}
           </button>
-          <a className="btn btn--primary nav__cta" href="contact.html#book">Book Now</a>
+          <a className="btn btn--primary nav__cta" href="contact.html#book"
+            onClick={(e) => handleNav(e, "contact.html#book")}>Book Now</a>
           <button className="nav__burger" aria-label="Menu" onClick={() => setOpen(o => !o)}>
             <span></span>
           </button>
@@ -149,12 +209,13 @@ function Navbar({ active }) {
           padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16,
         }}>
           {items.map(it => (
-            <a key={it.id} href={it.href} onClick={() => setOpen(false)} style={{
+            <a key={it.id} href={it.href} onClick={(e) => handleNav(e, it.href)} style={{
               color: active === it.id ? "var(--copper)" : "var(--text)",
               fontWeight: 500, padding: "8px 0",
             }}>{it.label}</a>
           ))}
-          <a className="btn btn--primary" href="contact.html#book" onClick={() => setOpen(false)}>Book Appointment</a>
+          <a className="btn btn--primary" href="contact.html#book"
+            onClick={(e) => handleNav(e, "contact.html#book")}>Book Appointment</a>
         </div>
       )}
     </header>
@@ -192,11 +253,11 @@ function Footer() {
           <div className="footer__col">
             <h5>Services</h5>
             <ul>
-              <li><a href="services.html">Oil Changes</a></li>
-              <li><a href="services.html">Brakes & Suspension</a></li>
-              <li><a href="services.html">Tires & Wheels</a></li>
-              <li><a href="services.html">Engine & Transmission</a></li>
-              <li><a href="services.html">Specialty Services</a></li>
+              <li><a href="services.html" onClick={(e) => onPageLinkClick(e, "services.html")}>Oil Changes</a></li>
+              <li><a href="services.html" onClick={(e) => onPageLinkClick(e, "services.html")}>Brakes & Suspension</a></li>
+              <li><a href="services.html" onClick={(e) => onPageLinkClick(e, "services.html")}>Tires & Wheels</a></li>
+              <li><a href="services.html" onClick={(e) => onPageLinkClick(e, "services.html")}>Engine & Transmission</a></li>
+              <li><a href="services.html" onClick={(e) => onPageLinkClick(e, "services.html")}>Specialty Services</a></li>
             </ul>
           </div>
 
@@ -205,7 +266,7 @@ function Footer() {
             <ul>
               <li><a href={`tel:${SITE.phoneTel}`}>{SITE.phone}</a></li>
               <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-              <li><a href="contact.html#book">Book Online →</a></li>
+              <li><a href="contact.html#book" onClick={(e) => onPageLinkClick(e, "contact.html#book")}>Book Online →</a></li>
             </ul>
           </div>
         </div>
@@ -215,7 +276,8 @@ function Footer() {
           <div style={{display: "flex", gap: 20}}>
             <a href="#">Privacy</a>
             <a href="#">Warranty</a>
-            <a href="admin.html" style={{color: "var(--text-mute)"}}>Admin</a>
+            <a href="admin.html" style={{color: "var(--text-mute)"}}
+              onClick={(e) => onPageLinkClick(e, "admin.html")}>Admin</a>
           </div>
         </div>
       </div>
@@ -389,10 +451,13 @@ function FabChat() {
 function useReveal(deps = []) {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal:not(.is-in)");
+    if (!els.length) return;
+
     if (!("IntersectionObserver" in window)) {
       els.forEach(e => e.classList.add("is-in"));
       return;
     }
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -400,10 +465,45 @@ function useReveal(deps = []) {
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
-    els.forEach(el => io.observe(el));
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+    els.forEach((el, i) => {
+      el.style.setProperty("--reveal-delay", `${Math.min(i % 6, 5) * 0.07}s`);
+      io.observe(el);
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.88 && r.bottom > 0) {
+        el.classList.add("is-in");
+      }
+    });
+
     return () => io.disconnect();
   }, deps);
 }
 
-Object.assign(window, { Navbar, Footer, FabChat, Icon, useReveal, BrandLogo });
+function usePageMotion(deps = []) {
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    const hash = window.location.hash;
+    if (!hash) window.scrollTo(0, 0);
+    document.documentElement.classList.remove("page-ready");
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.documentElement.classList.add("page-ready");
+        if (hash) {
+          setTimeout(() => {
+            const el = document.querySelector(hash);
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }, 480);
+        }
+      });
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  useReveal(deps);
+}
+
+Object.assign(window, {
+  Navbar, Footer, FabChat, Icon, useReveal, usePageMotion,
+  onPageLinkClick, navigateTo, BrandLogo,
+});

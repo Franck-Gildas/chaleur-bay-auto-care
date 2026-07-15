@@ -1,4 +1,4 @@
-/* global React, Navbar, Footer, FabChat, Icon, useReveal, SITE */
+/* global React, Navbar, Footer, FabChat, Icon, usePageMotion, useReveal, onPageLinkClick, SITE */
 const { useState } = React;
 
 const CATEGORY_ICONS = {
@@ -96,7 +96,7 @@ const ALL_SERVICES = [
 
 function ServicesHero() {
   return (
-    <section style={{
+    <section className="page-hero" style={{
       paddingTop: "calc(var(--nav-h) + 80px)",
       paddingBottom: 80,
       position: "relative",
@@ -112,8 +112,8 @@ function ServicesHero() {
         WebkitMaskImage: "linear-gradient(90deg, transparent 30%, black 100%)",
       }}/>
       <div className="wrap" style={{position: "relative"}}>
-        <span className="eyebrow">Services</span>
-        <h1 className="display" style={{
+        <span className="eyebrow hero-eyebrow">Services</span>
+        <h1 className="display hero-title" style={{
           fontSize: "clamp(48px, 7vw, 112px)",
           margin: "16px 0 24px",
           maxWidth: 1000,
@@ -121,7 +121,7 @@ function ServicesHero() {
           Twenty-seven services.<br/>
           <span style={{color: "var(--copper)"}}>One trusted team.</span>
         </h1>
-        <p style={{
+        <p className="hero-lead" style={{
           maxWidth: 640,
           fontSize: 18,
           color: "var(--text-dim)",
@@ -233,7 +233,8 @@ function ServiceCategories() {
                     color: "var(--text-mute)",
                   }}>
                     <span>⏱ {it.time}</span>
-                    <a href="contact.html#book" style={{color: "var(--copper)"}}>Book →</a>
+                    <a href="contact.html#book" style={{color: "var(--copper)"}}
+                      onClick={(e) => onPageLinkClick(e, "contact.html#book")}>Book →</a>
                   </div>
                 </div>
               ))}
@@ -285,7 +286,8 @@ function ServiceCTA() {
           </p>
         </div>
         <div style={{display: "flex", gap: 14, flexWrap: "wrap"}}>
-          <a className="btn btn--primary" href="contact.html#book">Book Appointment <Icon.arrow width="16" height="16"/></a>
+          <a className="btn btn--primary" href="contact.html#book"
+            onClick={(e) => onPageLinkClick(e, "contact.html#book")}>Book Appointment <Icon.arrow width="16" height="16"/></a>
           <a className="btn btn--ghost" href={`tel:${SITE.phoneTel}`}>Call {SITE.phone}</a>
         </div>
       </div>
@@ -294,7 +296,7 @@ function ServiceCTA() {
 }
 
 function ServicesPage() {
-  useReveal();
+  usePageMotion();
   return (
     <React.Fragment>
       <Navbar active="services"/>

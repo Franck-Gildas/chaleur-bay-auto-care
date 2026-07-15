@@ -149,19 +149,12 @@ function ServiceCategories() {
   return (
     <section className="section">
       <div className="wrap">
-        <div style={{
-          display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 56,
-        }}>
+        <div className="service-filter">
           {cats.map(c => (
-            <button key={c} onClick={() => setFilter(c)} style={{
-              padding: "10px 18px",
+            <button key={c} className="service-filter-btn" onClick={() => setFilter(c)} style={{
               border: "1px solid " + (filter === c ? "var(--copper)" : "var(--line)"),
               background: filter === c ? "var(--copper)" : "transparent",
               color: filter === c ? "#fff" : "var(--text)",
-              fontFamily: "var(--f-mono)", fontSize: 12,
-              letterSpacing: "0.14em", textTransform: "uppercase",
-              fontWeight: 600,
-              transition: "all .2s ease",
             }}>{c}</button>
           ))}
         </div>
@@ -171,57 +164,23 @@ function ServiceCategories() {
           const CatIcon = CATEGORY_ICONS[cat.cat];
           return (
           <div key={cat.cat} className="reveal" style={{marginBottom: 80}}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: 16, marginBottom: 32,
-            }}>
-              <span className="display" style={{
-                fontSize: 56, color: "var(--copper-soft)", lineHeight: 0.8,
-              }}>0{num}</span>
-              <div style={{ color: "var(--forest)" }}>
+            <div className="service-cat-head">
+              <span className="display service-cat-num">0{num}</span>
+              <div className="service-cat-icon">
                 {CatIcon && <CatIcon />}
               </div>
-              <div>
-                <div style={{
-                  fontFamily: "var(--f-mono)", fontSize: 11,
-                  letterSpacing: "0.18em", textTransform: "uppercase",
-                  color: "var(--copper)", marginBottom: 6,
-                }}>Category 0{num}</div>
-                <h2 className="display" style={{
-                  fontSize: 40, margin: 0,
-                }}>{cat.cat}</h2>
+              <div className="service-cat-text">
+                <div className="service-cat-label">Category 0{num}</div>
+                <h2 className="display service-cat-title">{cat.cat}</h2>
               </div>
             </div>
 
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: 1,
-              background: "var(--line)",
-              border: "1px solid var(--line)",
-            }} className="cat-grid">
+            <div className="cat-grid">
               {cat.items.map((it, i) => (
-                <div key={i} style={{
-                  background: "var(--bg)",
-                  padding: 32,
-                  display: "flex", flexDirection: "column", gap: 14,
-                  position: "relative",
-                  minHeight: 200,
-                }}>
-                  <div style={{
-                    display: "flex", justifyContent: "space-between", alignItems: "flex-start",
-                    gap: 16,
-                  }}>
-                    <h3 style={{
-                      fontFamily: "var(--f-display)", fontSize: 22,
-                      fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.01em",
-                      margin: 0,
-                    }}>{it.name}</h3>
-                    <span style={{
-                      fontFamily: "var(--f-mono)", fontSize: 10,
-                      letterSpacing: "0.08em", textTransform: "uppercase",
-                      color: "var(--copper)", textAlign: "right", flexShrink: 0,
-                      maxWidth: 160, paddingTop: 4,
-                    }}>{it.price}</span>
+                <div key={i} className="service-card">
+                  <div className="service-card-top">
+                    <h3 className="service-card-name">{it.name}</h3>
+                    <span className="service-card-price">{it.price}</span>
                   </div>
                   <p style={{color: "var(--text-dim)", fontSize: 14, lineHeight: 1.6, margin: 0}}>{it.desc}</p>
                   <div style={{
@@ -257,9 +216,6 @@ function ServiceCategories() {
           <em>{SITE.priceDisclaimer}</em>
         </div>
 
-        <style>{`
-          @media (max-width: 820px) { .cat-grid { grid-template-columns: 1fr !important; } }
-        `}</style>
       </div>
     </section>
   );

@@ -680,6 +680,126 @@ section { position: relative; }
   }
 }
 
+/* Services page */
+.service-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.service-filter-btn {
+  padding: 10px 18px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all .2s ease;
+}
+.service-cat-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.service-cat-num {
+  font-size: clamp(36px, 10vw, 56px);
+  color: var(--copper-soft);
+  line-height: 0.8;
+  flex-shrink: 0;
+}
+.service-cat-icon {
+  color: var(--forest);
+  flex-shrink: 0;
+}
+.service-cat-text {
+  min-width: 0;
+  flex: 1 1 160px;
+}
+.service-cat-label {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 6px;
+}
+.service-cat-title {
+  font-size: clamp(22px, 5vw, 40px);
+  margin: 0;
+  overflow-wrap: break-word;
+}
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  container-type: inline-size;
+}
+.service-card {
+  background: var(--bg);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  min-height: 200px;
+}
+.service-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.service-card-name {
+  font-family: var(--f-display);
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-wrap: break-word;
+}
+.service-card-price {
+  font-family: var(--f-mono);
+  font-size: clamp(9px, 2.5vw, 10px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--copper);
+  text-align: right;
+  flex: 0 1 160px;
+  padding-top: 4px;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+@container (max-width: 420px) {
+  .service-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .service-card-price {
+    flex-basis: auto;
+    max-width: 100%;
+    text-align: left;
+  }
+}
+@media (max-width: 820px) {
+  .cat-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .service-filter-btn {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 8px 12px;
+  }
+  .service-card { padding: 20px; }
+}
+
 /* Focus */
 :focus-visible {
   outline: 2px solid var(--orange);

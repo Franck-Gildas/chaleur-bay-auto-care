@@ -1,169 +1,39 @@
-/* global React, Navbar, Footer, FabChat, Icon, useReveal */
+/* global React, Navbar, Footer, FabChat, Icon, useReveal, SITE */
 const { useState, useEffect, useRef } = React;
 
 /* ===================== HERO with parallax depth ===================== */
 const HEADLINE = [
-  ["Local", "Pride."],
-  ["Winter-Ready."],
-  ["Trusted", "Performance."],
+  ["Expert", "Auto", "Repair."],
+  ["Tire", "Service"],
+  ["You", "Trust."],
 ];
 
-const BRAKE_METAL_DARK = "#1e2a3a";
-const BRAKE_METAL_MID = "#2a3848";
-const BRAKE_METAL_LIGHT = "#3d5068";
-const BRAKE_SLOT = "#070D1B";
-const BRAKE_ACCENT_SOFT = "rgba(255,98,0,0.22)";
+const COPPER = "#B87333";
+const COPPER_SOFT = "rgba(184,115,51,0.22)";
 
-const VENT_SLOT =
-  "M 49.6 26.2 C 50.6 30.2 50.6 35.8 49.6 39.8 C 48.6 35.8 48.6 30.2 49.6 26.2 Z";
-
-function BrakeRotor({ mx, my }) {
-  const bolts = [30, 90, 150, 210, 270, 330].map((deg) => {
-    const rad = (deg * Math.PI) / 180;
-    return {
-      cx: 50 + 45.5 * Math.sin(rad),
-      cy: 50 - 45.5 * Math.cos(rad),
-    };
-  });
-
+function MountainSilhouette({ mx, my }) {
   return (
-    <div className="hero-brake-rotor">
+    <div className="hero-mountain">
       <div
-        className="brake-rotor-parallax"
+        className="mountain-parallax"
         style={{
-          transform: `translate3d(${mx * -16}px, ${my * -16}px, 0)`,
+          transform: `translate3d(${mx * -12}px, ${my * -12}px, 0)`,
           transition: "transform 0.28s ease-out",
         }}
       >
-        <div className="brake-rotor-spin">
-          <div className="brake-rotor-glow" aria-hidden="true" />
-          <svg
-            viewBox="0 0 100 100"
-            width="100%"
-            height="100%"
-            aria-hidden="true"
-          >
-            <defs>
-              <linearGradient
-                id="brakeDiscMetal"
-                x1="28%"
-                y1="18%"
-                x2="72%"
-                y2="82%"
-              >
-                <stop
-                  offset="0%"
-                  stopColor={BRAKE_METAL_LIGHT}
-                  stopOpacity="0.35"
-                />
-                <stop
-                  offset="45%"
-                  stopColor={BRAKE_METAL_MID}
-                  stopOpacity="0.2"
-                />
-                <stop
-                  offset="100%"
-                  stopColor={BRAKE_METAL_DARK}
-                  stopOpacity="0"
-                />
-              </linearGradient>
-              <linearGradient
-                id="brakeRingShine"
-                x1="12%"
-                y1="8%"
-                x2="88%"
-                y2="92%"
-              >
-                <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-                <stop offset="38%" stopColor="rgba(210,222,238,0.55)" />
-                <stop offset="52%" stopColor="rgba(255,255,255,0.28)" />
-                <stop offset="68%" stopColor="rgba(175,190,210,0.35)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-              </linearGradient>
-            </defs>
-            <circle
-              cx="50"
-              cy="50"
-              r="48"
-              fill="none"
-              stroke={BRAKE_METAL_DARK}
-              strokeWidth="1.2"
-              opacity="0.5"
-            />
-            <circle
-              cx="50"
-              cy="50"
-              r="45.5"
-              fill="none"
-              stroke={BRAKE_METAL_MID}
-              strokeWidth="5.5"
-            />
-            <circle
-              cx="50"
-              cy="50"
-              r="42"
-              fill="none"
-              stroke={BRAKE_METAL_DARK}
-              strokeWidth="0.6"
-              opacity="0.7"
-            />
-            <circle cx="50" cy="50" r="36" fill={BRAKE_METAL_DARK} />
-            <circle cx="50" cy="50" r="36" fill="url(#brakeDiscMetal)" />
-            {[0, 60, 120, 180, 240, 300].map((angle) => (
-              <g key={angle} transform={`rotate(${angle} 50 50)`}>
-                <path
-                  d={VENT_SLOT}
-                  fill={BRAKE_SLOT}
-                  stroke="rgba(160,178,200,0.18)"
-                  strokeWidth="0.25"
-                />
-              </g>
-            ))}
-            <circle
-              cx="50"
-              cy="50"
-              r="46.8"
-              fill="none"
-              stroke="url(#brakeRingShine)"
-              strokeWidth="0.85"
-            />
-            {bolts.map((b, i) => (
-              <circle
-                key={i}
-                cx={b.cx}
-                cy={b.cy}
-                r="1.6"
-                fill={BRAKE_SLOT}
-                stroke="rgba(140,158,180,0.2)"
-                strokeWidth="0.2"
-              />
-            ))}
-            <circle
-              cx="50"
-              cy="50"
-              r="9.5"
-              fill={BRAKE_METAL_DARK}
-              stroke="rgba(180,195,215,0.25)"
-              strokeWidth="0.5"
-            />
-            <circle
-              cx="50"
-              cy="50"
-              r="9.5"
-              fill="none"
-              stroke={BRAKE_ACCENT_SOFT}
-              strokeWidth="0.4"
-            />
-            <circle
-              cx="50"
-              cy="50"
-              r="5.5"
-              fill="none"
-              stroke="rgba(200,212,228,0.15)"
-              strokeWidth="0.35"
-            />
-          </svg>
-        </div>
+        <svg viewBox="0 0 400 280" width="100%" height="100%" aria-hidden="true">
+          <defs>
+            <linearGradient id="mountainCopper" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor={COPPER} stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#8B5A2B" stopOpacity="0.7" />
+            </linearGradient>
+          </defs>
+          <path d="M0 220 L80 120 L140 180 L200 60 L260 140 L320 80 L400 160 L400 280 L0 280 Z" fill="url(#mountainCopper)" opacity="0.35" />
+          <path d="M0 240 L100 160 L180 200 L240 100 L300 170 L400 130 L400 280 L0 280 Z" fill="url(#mountainCopper)" opacity="0.55" />
+          <path d="M195 200 Q200 140 205 200" stroke="#1A1A1A" strokeWidth="8" fill="none" opacity="0.6" />
+          <path d="M200 200 L200 120 Q210 100 220 120 L220 200" stroke="#1A1A1A" strokeWidth="6" fill="none" opacity="0.5" />
+          <circle cx="200" cy="200" r="120" fill="none" stroke={COPPER} strokeWidth="1" opacity="0.25" />
+        </svg>
       </div>
     </div>
   );
@@ -225,7 +95,7 @@ function Hero() {
         minHeight: "100vh",
         paddingTop: "var(--nav-h)",
         overflow: "hidden",
-        background: "#070D1B",
+        background: "#1A1A1A",
       }}
     >
       {/* Layer 1: image */}
@@ -248,8 +118,8 @@ function Hero() {
           inset: 0,
           opacity: Math.min(1, 0.85 + t * 0.25),
           background: `
-          linear-gradient(180deg, rgba(10,20,40,${overlayAlpha}) 0%, rgba(10,20,40,${0.7 + t * 0.1}) 50%, rgba(10,20,40,0.95) 100%),
-          linear-gradient(100deg, rgba(10,20,40,${0.85 + t * 0.05}) 0%, rgba(10,20,40,0.2) 60%, rgba(10,20,40,0) 100%)
+          linear-gradient(180deg, rgba(26,26,26,${overlayAlpha}) 0%, rgba(26,26,26,${0.7 + t * 0.1}) 50%, rgba(26,26,26,0.95) 100%),
+          linear-gradient(100deg, rgba(45,106,79,0.15) 0%, rgba(26,26,26,0.2) 60%, rgba(26,26,26,0) 100%)
         `,
         }}
       />
@@ -262,15 +132,13 @@ function Hero() {
           width: 720,
           height: 720,
           background:
-            "radial-gradient(circle, rgba(255,98,0,0.22), transparent 60%)",
+            "radial-gradient(circle, rgba(184,115,51,0.22), transparent 60%)",
           transform: `translate3d(${scrollPx * 0.08 + mx * -21}px, ${-scrollPx * 0.3 + my * -21}px, 0)`,
           transition: "transform 0.2s ease-out",
           pointerEvents: "none",
         }}
       />
-      {/* Layer 4: snow flecks */}
-      <Snow t={t} />
-      <BrakeRotor mx={mx} my={my} />
+      <MountainSilhouette mx={mx} my={my} />
 
       {/* Content */}
       <div
@@ -303,17 +171,17 @@ function Hero() {
             <span className="eyebrow" style={{ color: "#fff" }}>
               <span
                 style={{
-                  background: "var(--orange)",
-                  color: "#0A1428",
+                  background: "var(--copper)",
+                  color: "#fff",
                   padding: "4px 10px",
                   borderRadius: 4,
                   fontWeight: 700,
                   letterSpacing: "0.14em",
                 }}
               >
-                EST. 2012
+                {SITE.rating.label}
               </span>
-              Bathurst · New Brunswick
+              Bath · New Brunswick
             </span>
           </div>
 
@@ -359,17 +227,16 @@ function Hero() {
               lineHeight: 1.55,
             }}
           >
-            Expert auto repair with honest service in Bathurst, NB. Red-Seal &
-            ASE certified technicians, 2-year warranty on every fix, and no
-            surprises when you pay.
+            {SITE.tagline}. Family-owned garage on Main Street with honest
+            quotes, quality parts, and service you can count on.
           </p>
 
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <a className="btn btn--primary" href="contact.html#book">
-              Book Service Now <Icon.arrow width="16" height="16" />
+            <a className="btn btn--primary" href={`tel:${SITE.phoneTel}`}>
+              Call {SITE.phone} <Icon.phone width="16" height="16" />
             </a>
-            <a className="btn btn--ghost" href="services.html">
-              View Services
+            <a className="btn btn--ghost" href="contact.html#book">
+              Book Appointment <Icon.arrow width="16" height="16" />
             </a>
           </div>
         </div>
@@ -389,10 +256,10 @@ function Hero() {
           className="hero-stats"
         >
           {[
-            ["13", "Years on the bay"],
-            ["4.9★", "180+ Google reviews"],
-            ["2 yr", "Parts & labour warranty"],
-            ["48 h", "Average turnaround"],
+            ["4.58★", "Google rating"],
+            ["Mon–Fri", "8 AM – 5:30 PM"],
+            ["Bath", "Main Street location"],
+            ["Free", "Quotes available"],
           ].map(([n, l], i) => (
             <div key={i}>
               <div
@@ -488,55 +355,26 @@ function Hero() {
           animation: scrollRingPulse 1.8s ease-in-out infinite;
           pointer-events: none;
         }
-        .hero-brake-rotor {
+        .hero-mountain {
           position: absolute;
-          right: 4%;
-          top: 52%;
-          width: 320px;
-          height: 320px;
+          right: 2%;
+          top: 50%;
+          width: 380px;
+          height: 280px;
           z-index: 1;
           pointer-events: none;
           opacity: 0;
           transform: translateY(-50%) scale(0.92);
-          animation: brakeRotorFadeIn 1.4s ease-out forwards;
+          animation: mountainFadeIn 1.4s ease-out forwards;
           -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 18%, black 42%);
           mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 18%, black 42%);
         }
-        .brake-rotor-parallax {
-          width: 100%;
-          height: 100%;
-        }
-        .brake-rotor-spin {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          animation: brakeRotorSpin 40s linear infinite;
-        }
-        .brake-rotor-glow {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 55%;
-          height: 55%;
-          margin-left: -27.5%;
-          margin-top: -27.5%;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,98,0,0.05) 0%, rgba(255,98,0,0.015) 55%, transparent 72%);
-          animation: brakeRotorGlow 6s ease-in-out infinite;
-          pointer-events: none;
-        }
-        @keyframes brakeRotorFadeIn {
-          to { opacity: 0.4; transform: translateY(-50%) scale(1); }
-        }
-        @keyframes brakeRotorSpin {
-          to { transform: rotate(360deg); }
-        }
-        @keyframes brakeRotorGlow {
-          0%, 100% { opacity: 0.25; transform: scale(0.96); }
-          50%      { opacity: 0.4; transform: scale(1.03); }
+        .mountain-parallax { width: 100%; height: 100%; }
+        @keyframes mountainFadeIn {
+          to { opacity: 0.5; transform: translateY(-50%) scale(1); }
         }
         @media (max-width: 767px) {
-          .hero-brake-rotor { display: none !important; }
+          .hero-mountain { display: none !important; }
         }
         @media (max-width: 720px) {
           .hero-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
@@ -590,51 +428,51 @@ function Snow({ t }) {
 const SERVICES = [
   {
     title: "Oil Changes",
-    desc: "Synthetic, semi, conventional — with a 21-point check.",
-    price: "from $69",
+    desc: "Conventional, semi-synthetic or full synthetic with inspection.",
+    price: "from $69.99",
     icon: "oil",
   },
   {
     title: "Brake Repair",
-    desc: "Pads, rotors, lines, ABS diagnostics. Stop with confidence.",
-    price: "from $189",
+    desc: "Pads, rotors, calipers and lines — stop with confidence.",
+    price: "from $149.99",
     icon: "brake",
   },
   {
-    title: "Diagnostics",
-    desc: "Computerized scan and root-cause for every warning light.",
-    price: "$95 flat",
-    icon: "scan",
-  },
-  {
     title: "Tires",
-    desc: "Mounting, balancing, seasonal swap & on-rim storage.",
-    price: "from $25/wheel",
+    desc: "Quality tires mounted, balanced and installed.",
+    price: "from $119.99/tire",
     icon: "tire",
   },
   {
     title: "Engine Repair",
-    desc: "Timing, gaskets, sensors, full rebuilds when needed.",
-    price: "Quoted",
+    desc: "Diagnostics, sensors, and full engine service.",
+    price: "from $129.99",
     icon: "engine",
   },
   {
     title: "Transmission",
-    desc: "Fluid service, mounts, and full transmission diagnosis.",
-    price: "from $149",
+    desc: "Fluid service, mounts, and transmission diagnosis.",
+    price: "from $179.99",
     icon: "trans",
   },
   {
-    title: "Fleet Service",
-    desc: "Priority bays and monthly invoicing for local fleets.",
-    price: "Per contract",
-    icon: "fleet",
+    title: "A/C Repair",
+    desc: "Stay cool with A/C diagnosis, recharge and repair.",
+    price: "from $129.99",
+    icon: "scan",
   },
   {
-    title: "Mobile Repair",
-    desc: "We come to you within Greater Bathurst for select jobs.",
-    price: "from $120",
-    icon: "mobile",
+    title: "Vehicle Inspection",
+    desc: "Comprehensive safety and mechanical inspection.",
+    price: "from $89.99",
+    icon: "scan",
+  },
+  {
+    title: "Preventive Maintenance",
+    desc: "Scheduled service to keep your vehicle running reliably.",
+    price: "from $99.99",
+    icon: "oil",
   },
 ];
 
@@ -772,9 +610,8 @@ function Services() {
             </h2>
           </div>
           <div className="sec-head__right">
-            From a 30-minute oil change to a full engine rebuild — eight focused
-            service lines, staffed by certified techs, finished with a 2-year
-            warranty.
+            From oil changes to specialty repairs — honest starting prices
+            and quality work under one roof on Main Street.
           </div>
         </div>
 
@@ -888,6 +725,12 @@ function Services() {
             );
           })}
         </div>
+        <p className="reveal" style={{
+          marginTop: 32, fontSize: 14, color: "var(--text-dim)",
+          fontStyle: "italic", textAlign: "center",
+        }}>
+          {SITE.priceDisclaimer}
+        </p>
         <style>{`
           .svc-card:hover { background: var(--bg-card) !important; }
           @media (max-width: 980px) { .svc-grid { grid-template-columns: repeat(2, 1fr) !important; } }
@@ -902,28 +745,28 @@ function Services() {
 function WhyUs() {
   const items = [
     {
-      kicker: "Certified",
-      title: "Red Seal & ASE Technicians",
-      desc: "Three Red Seal journeymen on staff. Every diagnosis signed off by a certified lead.",
-      badge: "ASE · Red Seal",
+      kicker: "Rated",
+      title: "4.58★ Google Rating",
+      desc: "Trusted by drivers across Bath and the surrounding area. Real reviews from real customers.",
+      badge: "Google verified",
     },
     {
-      kicker: "Guaranteed",
-      title: "2-Year Warranty on Repairs",
-      desc: "Parts and labour, no fine print. If it fails inside 24 months, we fix it free.",
-      badge: "24 mo · Bumper to bumper",
-    },
-    {
-      kicker: "Convenient",
-      title: "Mobile Service Available",
-      desc: "Battery, brakes, diagnostics and seasonal swaps — we’ll come to your driveway.",
-      badge: "Greater Bathurst",
-    },
-    {
-      kicker: "Honest",
-      title: "Fast Turnaround & Fair Pricing",
-      desc: "Quote before we wrench. Photos of what we find. Average turnaround under 48 hours.",
+      kicker: "Transparent",
+      title: "Honest Starting Prices",
+      desc: "Every service listed with clear starting prices. Your final quote is in writing before we begin.",
       badge: "No-surprise pricing",
+    },
+    {
+      kicker: "Tire Experts",
+      title: "Full Tire Service",
+      desc: "Sales, installation, rotation, balancing and repair — everything your wheels need.",
+      badge: "Tires & wheels",
+    },
+    {
+      kicker: "Local",
+      title: "Family-Owned on Main St",
+      desc: "Your neighbours in Bath, NB. Convenient location, personal service, and a team that knows your name.",
+      badge: "Bath · New Brunswick",
     },
   ];
 
@@ -936,16 +779,16 @@ function WhyUs() {
       <div className="wrap">
         <div className="sec-head reveal">
           <div className="sec-head__left">
-            <span className="eyebrow">02 / Why Chaleur Bay</span>
+            <span className="eyebrow">02 / Why Mountain View</span>
             <h2>
-              The shop the
+              The shop
               <br />
-              <em>peninsula trusts.</em>
+              <em>Bath trusts.</em>
             </h2>
           </div>
           <div className="sec-head__right">
-            We earn it the old-fashioned way — by knowing your name, your truck,
-            and what the road salt did to it last March.
+            Family-owned, locally operated, and committed to honest service
+            on every vehicle that rolls through our bays.
           </div>
         </div>
 
@@ -1070,30 +913,30 @@ function WhyUs() {
 const TESTIMONIALS = [
   {
     quote:
-      "These guys saved my F-150 from a winter that would have killed it. Honest quote up front, finished a day early, and called to check in a week later. That’s rare.",
-    name: "Marc Doucet",
-    role: "Fleet manager · Acadie Plumbing",
+      "Great experience from start to finish. They gave me an honest quote, finished on time, and my truck runs better than ever. Highly recommend.",
+    name: "Sarah M.",
+    role: "Bath, NB",
     rating: 5,
   },
   {
     quote:
-      "I drove three hours from Moncton on a referral. Worth every kilometre. They diagnosed an electrical gremlin two other shops missed — and the price was fair.",
-    name: "Janelle Roy",
-    role: "Subaru Outback owner",
+      "Best tire service in the area. Fair prices, no upselling, and they took the time to explain everything. This is our go-to shop now.",
+    name: "James T.",
+    role: "Fredericton region",
     rating: 5,
   },
   {
     quote:
-      "First time I’ve had a mechanic show me photos of every problem before touching the car. No upsell, just facts. We’ve moved all four family vehicles here.",
-    name: "Pierre & Lisa Arseneau",
-    role: "Beresford, NB",
+      "Family-owned and it shows. They treated me like a neighbour, not a number. Fixed my brakes quickly and the price was exactly what they quoted.",
+    name: "Linda K.",
+    role: "Bath, NB",
     rating: 5,
   },
   {
     quote:
-      "Mobile service for our school bus fleet has been a game-changer. They come to our yard at 5 a.m. so the buses are ready by route time. Pros, top to bottom.",
-    name: "Theresa Chiasson",
-    role: "Ops director · Peninsula Coach",
+      "Reliable, honest, and right on Main Street. I've sent three friends here already. Mountain View Auto is the real deal.",
+    name: "Mike R.",
+    role: "Highway 105 corridor",
     rating: 5,
   },
 ];
@@ -1122,9 +965,9 @@ function Testimonials() {
           <div className="sec-head__left">
             <span className="eyebrow">03 / What folks say</span>
             <h2>
-              4.9 stars,
+              4.58 stars,
               <br />
-              <em>180+ neighbours.</em>
+              <em>happy neighbours.</em>
             </h2>
           </div>
           <div
@@ -1389,7 +1232,7 @@ function BeforeAfter() {
           </div>
           <div className="sec-head__right">
             We document every major repair. Drag the slider to see what a
-            Chaleur Bay service looks like from rough-shape to road-ready.
+            Mountain View service looks like from rough-shape to road-ready.
           </div>
         </div>
 
@@ -1622,16 +1465,16 @@ function ContactBlock() {
       <div className="wrap">
         <div className="sec-head reveal">
           <div className="sec-head__left">
-            <span className="eyebrow">05 / Book your slot</span>
+            <span className="eyebrow">05 / Book Appointment</span>
             <h2>
-              Three steps,
+              Request your
               <br />
-              <em>one trustworthy shop.</em>
+              <em>appointment today.</em>
             </h2>
           </div>
           <div className="sec-head__right">
             Tell us what's going on with your vehicle. We'll confirm by phone
-            within the hour during business hours.
+            during business hours. {SITE.bookingNote}
           </div>
         </div>
 
@@ -1672,7 +1515,7 @@ function ContactBlock() {
                 label="Phone"
                 value={form.phone}
                 onChange={(v) => setForm({ ...form, phone: v })}
-                placeholder="(506) 555-0000"
+                placeholder={SITE.phone}
                 required
               />
             </div>
@@ -1699,11 +1542,12 @@ function ContactBlock() {
                 options={[
                   "Oil change",
                   "Brake repair",
-                  "Tires / seasonal swap",
-                  "Diagnostics",
+                  "Tires",
                   "Engine repair",
                   "Transmission",
-                  "Mobile service",
+                  "A/C repair",
+                  "Vehicle inspection",
+                  "Preventive maintenance",
                   "Other",
                 ]}
               />
@@ -1742,10 +1586,16 @@ function ContactBlock() {
               }}
             >
               Prefer to talk? Call{" "}
-              <a href="tel:+15065551234" style={{ color: "var(--orange)" }}>
-                (506) 555-1234
+              <a href={`tel:${SITE.phoneTel}`} style={{ color: "var(--copper)" }}>
+                {SITE.phone}
               </a>
             </div>
+            <p style={{
+              marginTop: 12, fontSize: 12, color: "var(--text-mute)",
+              fontStyle: "italic", lineHeight: 1.5,
+            }}>
+              {SITE.bookingNote}
+            </p>
           </form>
 
           {/* Map / info */}
@@ -1779,27 +1629,40 @@ function ContactBlock() {
                 }}
               >
                 <span>Visit the shop</span>
-                <span>Bathurst · NB</span>
+                <span>Bath · NB</span>
               </div>
               <div
                 style={{ display: "flex", flexDirection: "column", gap: 14 }}
               >
                 <Info
                   icon={<Icon.pin width="16" height="16" />}
-                  title="418 King Avenue"
-                  sub="Bathurst, NB · E2A 1S2"
+                  title={SITE.address.street}
+                  sub={`${SITE.address.city}, ${SITE.address.province} · ${SITE.address.postal}`}
                 />
                 <Info
                   icon={<Icon.phone width="16" height="16" />}
-                  title="(506) 555 - 1234"
+                  title={SITE.phone}
                   sub="Real human on the line"
                 />
                 <Info
                   icon={<Icon.clock width="16" height="16" />}
-                  title="Mon – Fri · 7:30 – 17:30"
-                  sub="Sat · 8 – 14 · Sun · Closed"
+                  title={SITE.hours.weekdays}
+                  sub={SITE.hours.weekend}
                 />
               </div>
+              <a
+                href={SITE.mapsDirections}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  marginTop: 20, fontFamily: "var(--f-mono)", fontSize: 11,
+                  letterSpacing: "0.14em", textTransform: "uppercase",
+                  color: "var(--copper)", fontWeight: 600,
+                }}
+              >
+                Get directions <Icon.arrow width="14" height="14" />
+              </a>
             </div>
           </div>
         </div>
@@ -1972,164 +1835,17 @@ function Info({ icon, title, sub }) {
 }
 
 function FakeMap() {
-  // Stylized custom "map" so we don't need an external embed
   return (
-    <div
-      style={{
-        flex: 1,
-        position: "relative",
-        background: "linear-gradient(180deg, #0F1B33 0%, #152545 100%)",
-        overflow: "hidden",
-        minHeight: 260,
-      }}
-    >
-      <svg
-        viewBox="0 0 600 360"
-        preserveAspectRatio="xMidYMid slice"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <defs>
-          <pattern
-            id="grid"
-            width="40"
-            height="40"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 40 0 L 0 0 0 40"
-              fill="none"
-              stroke="rgba(255,255,255,0.04)"
-              strokeWidth="1"
-            />
-          </pattern>
-          <linearGradient id="bay" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#1A2A48" />
-            <stop offset="1" stopColor="#0E1A30" />
-          </linearGradient>
-        </defs>
-        <rect width="600" height="360" fill="url(#grid)" />
-        {/* Bay shape */}
-        <path
-          d="M 0 60 Q 200 120 380 100 T 600 40 L 600 0 L 0 0 Z"
-          fill="url(#bay)"
-        />
-        <path
-          d="M 0 60 Q 200 120 380 100 T 600 40"
-          stroke="rgba(138,160,191,0.4)"
-          strokeWidth="1"
-          fill="none"
-        />
-        {/* Roads */}
-        <path
-          d="M 80 360 L 80 200 Q 80 160 140 160 L 320 160 Q 360 160 360 200 L 360 300 Q 360 340 400 340 L 600 340"
-          stroke="rgba(255,255,255,0.18)"
-          strokeWidth="2"
-          fill="none"
-        />
-        <path
-          d="M 0 240 L 220 240 Q 260 240 260 280 L 260 360"
-          stroke="rgba(255,255,255,0.1)"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        <path
-          d="M 380 360 L 380 220 Q 380 200 420 200 L 600 200"
-          stroke="rgba(255,255,255,0.1)"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        {/* Labels */}
-        <text
-          x="40"
-          y="50"
-          fill="rgba(199,213,232,0.5)"
-          fontFamily="JetBrains Mono, monospace"
-          fontSize="10"
-          letterSpacing="2"
-        >
-          CHALEUR BAY
-        </text>
-        <text
-          x="40"
-          y="280"
-          fill="rgba(199,213,232,0.45)"
-          fontFamily="JetBrains Mono, monospace"
-          fontSize="9"
-          letterSpacing="1.5"
-        >
-          KING AVE
-        </text>
-        <text
-          x="430"
-          y="195"
-          fill="rgba(199,213,232,0.45)"
-          fontFamily="JetBrains Mono, monospace"
-          fontSize="9"
-          letterSpacing="1.5"
-        >
-          RTE 11 →
-        </text>
-        {/* Pin */}
-        <g transform="translate(280, 220)">
-          <circle r="36" fill="rgba(255,98,0,0.15)">
-            <animate
-              attributeName="r"
-              values="20;36;20"
-              dur="2.4s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="opacity"
-              values="0.6;0;0.6"
-              dur="2.4s"
-              repeatCount="indefinite"
-            />
-          </circle>
-          <circle r="14" fill="#FF6200" />
-          <circle r="5" fill="#0A1428" />
-        </g>
-        <text
-          x="306"
-          y="226"
-          fill="#FF6200"
-          fontFamily="Anton, sans-serif"
-          fontSize="14"
-          letterSpacing="1"
-        >
-          CHALEUR BAY AUTO
-        </text>
-      </svg>
-
-      <div
-        style={{
-          position: "absolute",
-          bottom: 16,
-          left: 16,
-          display: "flex",
-          gap: 8,
-        }}
-      >
-        <a
-          href="#"
-          style={{
-            padding: "8px 14px",
-            background: "rgba(10,20,40,0.85)",
-            color: "#fff",
-            fontFamily: "var(--f-mono)",
-            fontSize: 11,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            border: "1px solid var(--line)",
-          }}
-        >
-          Get directions →
-        </a>
-      </div>
+    <div style={{ flex: 1, position: "relative", minHeight: 260 }}>
+      <iframe
+        title="Mountain View Auto location"
+        src={SITE.mapsUrl}
+        width="100%"
+        height="100%"
+        style={{ border: 0, minHeight: 260, display: "block" }}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
     </div>
   );
 }

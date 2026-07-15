@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin · Chaleur Bay Auto Care</title>
-  <link rel="icon" href="img/logo.ico" type="image/x-icon" />
+  <title>Admin · Mountain View Auto Ltd.</title>
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap"
     rel="stylesheet" />
   <style>
     /* ============================================================
        DESIGN TOKENS
     ============================================================ */
     :root {
-      --navy: #0A1428;
+      --navy: #1A1A1A;
       --navy-2: #0F1B33;
       --navy-3: #152545;
       --navy-line: #1E2F4F;
       --steel: #2A3B5C;
-      --orange: #FF6200;
+      --orange: #B87333;
       --orange-2: #FF7A24;
       --orange-soft: rgba(255, 98, 0, .12);
       --ice: #C9D6E8;
@@ -28,7 +28,7 @@
       --text: #F5F8FC;
       --text-dim: #A7B6CC;
       --text-mute: #6E7E96;
-      --bg: #0A1428;
+      --bg: #1A1A1A;
       --bg-elev: #0F1B33;
       --bg-card: #152545;
       --line: #1E2F4F;
@@ -1892,7 +1892,7 @@
     <div class="login-card" id="login-card">
       <div class="login-brandmark">CB</div>
       <div class="login-title">Admin Access</div>
-      <p class="login-subtitle">Chaleur Bay Auto Care &middot; CRM Dashboard</p>
+      <p class="login-subtitle">Mountain View Auto Ltd. &middot; CRM Dashboard</p>
       <input id="pw-input" type="password" class="login-input" placeholder="Enter admin password&hellip;"
         autocomplete="current-password" />
       <button class="login-btn" onclick="attemptLogin()">Sign In &rarr;</button>
@@ -1912,7 +1912,7 @@
           <div class="adm-brandmark">CB</div>
           <div class="adm-brand-text">
             <b>CRM Dashboard</b>
-            <small>Chaleur Bay Auto Care</small>
+            <small>Mountain View Auto Ltd.</small>
           </div>
         </div>
 
@@ -2307,7 +2307,7 @@
     ────────────────────────────────────────────── */
     const CFG = {
       sheetId: '1kcO426Kp8BlySa4SDWyNfcvwRtsqENWbt5ooZjpJaus',
-      sheetName: 'Chaleur Bay Bookings',
+      sheetName: 'Mountain View Bookings',
       password: 'Admin2024!',
       refresh: 30000,
     };
@@ -2885,7 +2885,7 @@
 
       const emailBtn = document.getElementById('m-email');
       if (l.email) {
-        const subj = encodeURIComponent('Your Appointment \u2014 Chaleur Bay Auto Care');
+        const subj = encodeURIComponent('Your Appointment \u2014 Mountain View Auto Ltd.');
         const body = encodeURIComponent(`Hi ${l.name},`);
         emailBtn.href = `mailto:${l.email}?subject=${subj}&body=${body}`;
         emailBtn.classList.remove('no-email');
@@ -3166,8 +3166,8 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Inter, sans-serif; color: #1a1a1a; background: #fff; padding: 40px; max-width: 720px; margin: 0 auto; }
-    h1 { font-family: Anton, sans-serif; font-size: 28px; letter-spacing: .04em; text-transform: uppercase; color: #0A1428; }
-    .rule { height: 4px; background: #FF6200; margin: 12px 0 28px; border-radius: 2px; }
+    h1 { font-family: Montserrat, sans-serif; font-size: 28px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #1A1A1A; }
+    .rule { height: 4px; background: #B87333; margin: 12px 0 28px; border-radius: 2px; }
     .sub { font-size: 12px; color: #666; margin-bottom: 32px; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; }
     .field { margin-bottom: 4px; }
@@ -3179,7 +3179,7 @@
   </style>
 </head>
 <body>
-  <h1>Chaleur Bay Auto Care</h1>
+  <h1>Mountain View Auto Ltd.</h1>
   <div class="rule"></div>
   <p class="sub">Work Order</p>
   <div class="grid">
@@ -3224,7 +3224,7 @@
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = Object.assign(document.createElement('a'), {
-        href: url, download: `chaleur-bay-leads-${date}.csv`
+        href: url, download: `mountain-view-leads-${date}.csv`
       });
       document.body.appendChild(a);
       a.click();

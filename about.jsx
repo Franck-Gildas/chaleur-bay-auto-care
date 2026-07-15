@@ -1,4 +1,4 @@
-/* global React, Navbar, Footer, FabChat, Icon, useReveal */
+/* global React, Navbar, Footer, FabChat, Icon, useReveal, SITE */
 
 function AboutHero() {
   return (
@@ -19,7 +19,7 @@ function AboutHero() {
             fontSize: "clamp(48px, 7vw, 112px)",
             margin: "16px 0 24px",
           }}>
-            A small shop<br/>with <span style={{color: "var(--orange)"}}>big standards.</span>
+            Your neighbours<br/>on <span style={{color: "var(--copper)"}}>Main Street.</span>
           </h1>
           <p style={{
             maxWidth: 560,
@@ -27,14 +27,14 @@ function AboutHero() {
             color: "var(--text-dim)",
             lineHeight: 1.55, margin: 0,
           }}>
-            Three Red Seal techs. One Acadian-Peninsula garage. A flat rate for diagnostics,
-            a 2-year warranty on repairs, and a phone call before we spend a dollar of yours.
-            That's the whole pitch — and we've kept it since 2012.
+            Mountain View Auto Ltd. is a family-owned garage in Bath, New Brunswick.
+            Honest quotes, quality parts, and service you can trust — that's what
+            we stand for every day.
           </p>
         </div>
         <div style={{
           aspectRatio: "4/5",
-          background: "url('img/oil-change.jpg') center/cover",
+          background: "url('img/hero-bg.jpg') center/cover",
           border: "1px solid var(--line)",
           maxHeight: 480,
         }}/>
@@ -53,7 +53,7 @@ function Story() {
         <div className="sec-head reveal">
           <div className="sec-head__left">
             <span className="eyebrow">01 / Our story</span>
-            <h2>Built on the bay,<br/><em>tested by winter.</em></h2>
+            <h2>Rooted in Bath,<br/><em>built on trust.</em></h2>
           </div>
         </div>
 
@@ -62,19 +62,19 @@ function Story() {
           background: "var(--line)", border: "1px solid var(--line)",
         }} className="story-grid">
           {[
-            { year: "2012", title: "One bay, one truck", body: "Joël Arseneau finished his Red Seal and opened a single-bay garage off King Avenue. Word of mouth did the marketing." },
-            { year: "2017", title: "Three bays, fleet contracts", body: "Two more certified techs joined. Peninsula Coach and Acadie Plumbing signed on for fleet maintenance." },
-            { year: "2024", title: "Mobile + winter program", body: "Launched in-driveway service for Greater Bathurst and a free fall winter-prep clinic for seniors." },
+            { year: "Day 1", title: "Main Street beginnings", body: "Mountain View Auto opened its doors on Main Street in Bath with a simple goal: honest auto repair for the community we call home." },
+            { year: "Growth", title: "Tires & full service", body: "Expanded into comprehensive tire service alongside general maintenance and repair — becoming a one-stop shop for local drivers." },
+            { year: "Today", title: "A Bath fixture", body: "Trusted by neighbours across Bath and the Fredericton region. Same family, same commitment to quality work and fair pricing." },
           ].map((m, i) => (
             <div key={i} className="reveal" style={{
               background: "var(--bg)", padding: 40,
               display: "flex", flexDirection: "column", gap: 16,
             }}>
               <div className="display" style={{
-                fontSize: 88, color: "var(--orange)", lineHeight: 0.8,
+                fontSize: 56, color: "var(--copper)", lineHeight: 0.8,
               }}>{m.year}</div>
               <h3 style={{
-                fontFamily: "var(--f-display)", fontSize: 26,
+                fontFamily: "var(--f-display)", fontSize: 22, fontWeight: 800,
                 textTransform: "uppercase", letterSpacing: "0.01em", margin: 0,
               }}>{m.title}</h3>
               <p style={{color: "var(--text-dim)", margin: 0, lineHeight: 1.65, fontSize: 14}}>{m.body}</p>
@@ -92,9 +92,9 @@ function Story() {
 function Values() {
   const values = [
     { kicker: "Honest", title: "Quote first, fix second", body: "If the price changes, we call — before the wrench turns." },
-    { kicker: "Documented", title: "Photo of every finding", body: "You'll see what we see. Real pictures of real wear." },
-    { kicker: "Warrantied", title: "2 years, parts & labour", body: "Anything we touch is covered, full stop. No fine print." },
-    { kicker: "Local", title: "Family-run, year-round", body: "Same family. Same garage. Same bay. Since 2012." },
+    { kicker: "Quality", title: "Parts you can trust", body: "We use quality parts and stand behind the work we do on every vehicle." },
+    { kicker: "Local", title: "Family-run, year-round", body: "Same family. Same garage. Same commitment to our neighbours." },
+    { kicker: "Fair", title: "Transparent pricing", body: "Starting prices listed upfront. Your final quote is in writing before we begin." },
   ];
   return (
     <section className="section" style={{background: "var(--bg-elev)"}}>
@@ -105,8 +105,7 @@ function Values() {
             <h2>Four rules<br/><em>we don't break.</em></h2>
           </div>
           <div className="sec-head__right">
-            We made these promises to ourselves before we made them to customers.
-            They're how we sleep at night.
+            These are the promises we made to ourselves before we made them to customers.
           </div>
         </div>
 
@@ -121,17 +120,17 @@ function Values() {
             }}>
               <div style={{
                 width: 44, height: 44,
-                background: "var(--orange)", color: "#0A1428",
+                background: "var(--copper)", color: "#fff",
                 display: "grid", placeItems: "center",
-                fontFamily: "var(--f-display)", fontSize: 22,
+                fontFamily: "var(--f-display)", fontSize: 18, fontWeight: 800,
               }}>0{i+1}</div>
               <div style={{
                 fontFamily: "var(--f-mono)", fontSize: 11,
                 letterSpacing: "0.18em", textTransform: "uppercase",
-                color: "var(--orange)",
+                color: "var(--copper)",
               }}>{v.kicker}</div>
               <h3 style={{
-                fontFamily: "var(--f-display)", fontSize: 22,
+                fontFamily: "var(--f-display)", fontSize: 20, fontWeight: 800,
                 textTransform: "uppercase", letterSpacing: "0.01em", margin: 0,
               }}>{v.title}</h3>
               <p style={{color: "var(--text-dim)", fontSize: 14, lineHeight: 1.6, margin: 0}}>{v.body}</p>
@@ -149,12 +148,9 @@ function Values() {
 
 function Team() {
   const crew = [
-    { name: "Joël Arseneau", role: "Owner · Red Seal Technician", years: 22, img: "img/joel-arseneau.jpg", pos: "center 25%",
-      bio: "Bathurst born, NBCC-trained. Specializes in diagnostics and drivetrain. Drives a 2010 Tacoma — still." },
-    { name: "Élise Chiasson", role: "Service Manager · ASE Master", years: 14, img: "img/customer.jpg", pos: "center",
-      bio: "Runs the front of house and the back of the shop. The reason your quote is in writing." },
-    { name: "Marc Doucet", role: "Red Seal · Tires & Brakes", years: 9, img: "img/marc-doucet.jpg", pos: "70% center",
-      bio: "Fastest seasonal swap in the peninsula. Will absolutely tell you when your pads are still fine." },
+    { name: "Lead Technician", role: "Diagnostics & Engine Repair", bio: "Experienced in engine diagnostics, drivetrain repair, and getting to the root of complex problems." },
+    { name: "Tire Specialist", role: "Tires & Wheels", bio: "Expert in tire sales, installation, rotation, balancing, and TPMS service for all makes and models." },
+    { name: "Service Advisor", role: "Front Desk & Scheduling", bio: "Your first point of contact — clear quotes, honest timelines, and answers to every question." },
   ];
 
   return (
@@ -162,11 +158,11 @@ function Team() {
       <div className="wrap">
         <div className="sec-head reveal">
           <div className="sec-head__left">
-            <span className="eyebrow">03 / The crew</span>
-            <h2>The people who'll<br/><em>be working on it.</em></h2>
+            <span className="eyebrow">03 / Our team</span>
+            <h2>Skilled people,<br/><em>personal service.</em></h2>
           </div>
           <div className="sec-head__right">
-            No revolving door of technicians. Same three faces, every visit.
+            A small, dedicated team that treats every vehicle like our own.
           </div>
         </div>
 
@@ -175,42 +171,31 @@ function Team() {
         }} className="team-grid">
           {crew.map((p, i) => (
             <div key={i} className="reveal" style={{
-              display: "flex", flexDirection: "column",
+              background: "var(--bg)", border: "1px solid var(--line)",
+              padding: 32, display: "flex", flexDirection: "column", gap: 16,
             }}>
               <div style={{
-                aspectRatio: "4/5",
-                background: `url('${p.img}') ${p.pos || "center"}/cover, #111`,
-                position: "relative",
-                border: "1px solid var(--line)",
-              }}>
-                <div style={{
-                  position: "absolute", bottom: 16, left: 16,
-                  background: "var(--orange)", color: "#0A1428",
-                  padding: "6px 12px",
-                  fontFamily: "var(--f-mono)", fontSize: 11,
-                  letterSpacing: "0.14em", textTransform: "uppercase",
-                  fontWeight: 700,
-                }}>{p.years} yrs in</div>
-              </div>
-              <div style={{padding: "20px 0"}}>
-                <div style={{
-                  fontFamily: "var(--f-mono)", fontSize: 11,
-                  letterSpacing: "0.16em", textTransform: "uppercase",
-                  color: "var(--orange)", marginBottom: 8,
-                }}>{p.role}</div>
-                <h3 style={{
-                  fontFamily: "var(--f-display)", fontSize: 28,
-                  textTransform: "uppercase", letterSpacing: "0.01em",
-                  margin: "0 0 12px",
-                }}>{p.name}</h3>
-                <p style={{color: "var(--text-dim)", fontSize: 14, lineHeight: 1.65, margin: 0}}>{p.bio}</p>
-              </div>
+                width: 56, height: 56, borderRadius: "50%",
+                background: "var(--forest-soft)", border: "2px solid var(--forest)",
+                display: "grid", placeItems: "center",
+                fontFamily: "var(--f-display)", fontSize: 20, fontWeight: 800,
+                color: "var(--forest)",
+              }}>{String(i + 1).padStart(2, "0")}</div>
+              <div style={{
+                fontFamily: "var(--f-mono)", fontSize: 11,
+                letterSpacing: "0.16em", textTransform: "uppercase",
+                color: "var(--copper)",
+              }}>{p.role}</div>
+              <h3 style={{
+                fontFamily: "var(--f-display)", fontSize: 24, fontWeight: 800,
+                textTransform: "uppercase", letterSpacing: "0.01em", margin: 0,
+              }}>{p.name}</h3>
+              <p style={{color: "var(--text-dim)", fontSize: 14, lineHeight: 1.65, margin: 0}}>{p.bio}</p>
             </div>
           ))}
         </div>
         <style>{`
-          @media (max-width: 880px) { .team-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-          @media (max-width: 540px) { .team-grid { grid-template-columns: 1fr !important; } }
+          @media (max-width: 880px) { .team-grid { grid-template-columns: 1fr !important; } }
         `}</style>
       </div>
     </section>
@@ -225,10 +210,10 @@ function Numbers() {
           display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24,
         }} className="num-grid">
           {[
-            ["13", "Years on King Ave"],
-            ["12 400+", "Repairs completed"],
-            ["4.9★", "Average review · 180+"],
-            ["0", "Surprise invoices"],
+            ["4.58★", "Google rating"],
+            ["27", "Services offered"],
+            ["Mon–Fri", "8 AM – 5:30 PM"],
+            ["100%", "Written quotes"],
           ].map(([n, l], i) => (
             <div key={i} className="reveal" style={{
               padding: "32px 0", borderTop: "1px solid var(--line)",
@@ -254,27 +239,27 @@ function CommunityBlock() {
       }}>
         <div style={{
           aspectRatio: "4/5",
-          background: "url('img/garage.jpg') center/cover",
+          background: "url('img/hero-bg.jpg') center/cover",
           border: "1px solid var(--line)",
         }}/>
         <div className="reveal">
-          <span className="eyebrow">04 / The bay</span>
+          <span className="eyebrow">04 / Our community</span>
           <h2 className="display" style={{
             fontSize: "clamp(40px, 5vw, 64px)",
             margin: "16px 0 24px",
           }}>
-            We live here, too.<br/>
-            <span style={{color: "var(--orange)"}}>That changes things.</span>
+            Proud to serve<br/>
+            <span style={{color: "var(--copper)"}}>Bath & beyond.</span>
           </h2>
           <p style={{color: "var(--text-dim)", fontSize: 17, lineHeight: 1.65, marginBottom: 24}}>
-            Our kids go to school here. Our suppliers are our neighbours. When
-            you sit in our waiting room, the person at the desk knows your name,
-            and probably your truck's. We sponsor the K-3 hockey league, host
-            the free fall winter-prep clinic for seniors, and donate one
-            full-service oil change every month to a family in need.
+            We're part of this community — Bath, the Highway 105 corridor, and
+            the wider Fredericton region. When you bring your vehicle to Mountain
+            View Auto, you're supporting a local family business that gives back
+            to the place we all call home.
           </p>
           <p style={{color: "var(--text-dim)", fontSize: 17, lineHeight: 1.65, margin: 0}}>
-            Local pride isn't a slogan for us. It's why the shop exists.
+            Conveniently located at {SITE.address.full}. Stop by, call {SITE.phone},
+            or book online — we're here to help.
           </p>
         </div>
       </div>

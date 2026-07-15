@@ -1,4 +1,4 @@
-/* global React */
+/* global React, SITE */
 const { useState, useEffect, useRef } = React;
 
 /* ============ Shared icons ============ */
@@ -51,16 +51,36 @@ const Icon = {
       <path d="M12 6v6l4 2"/>
     </svg>
   ),
+  star: (props) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" {...props}>
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    </svg>
+  ),
 };
+
+function BrandLogo({ size = 60 }) {
+  return (
+    <img
+      src={SITE.logo}
+      srcSet={`${SITE.logo} 1x, ${SITE.logo2x} 2x`}
+      alt={SITE.name}
+      className="brand-logo"
+      width={size}
+      height={size}
+      loading="lazy"
+      decoding="async"
+    />
+  );
+}
 
 /* ============ Theme ============ */
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  try { localStorage.setItem("cb-theme", theme); } catch (e) {}
+  try { localStorage.setItem(SITE.themeKey, theme); } catch (e) {}
 }
 function getInitialTheme() {
   try {
-    const t = localStorage.getItem("cb-theme");
+    const t = localStorage.getItem(SITE.themeKey);
     if (t) return t;
   } catch (e) {}
   return "dark";
@@ -91,11 +111,11 @@ function Navbar({ active }) {
   return (
     <header className={"nav" + (scrolled ? " is-scrolled" : "")}>
       <div className="nav__inner">
-        <a className="nav__brand" href="index.html" aria-label="Chaleur Bay Auto Care home">
-          <div className="brandmark"><span>CB</span></div>
+        <a className="nav__brand" href="index.html" aria-label={`${SITE.name} home`}>
+          <BrandLogo />
           <div className="brand-name">
-            <b>Chaleur Bay</b>
-            <small>Auto Care · NB</small>
+            <b>Mountain View</b>
+            <small>Auto Ltd. · NB</small>
           </div>
         </a>
         <nav className="nav__menu">
@@ -106,9 +126,9 @@ function Navbar({ active }) {
           ))}
         </nav>
         <div className="nav__right">
-          <a className="nav__phone" href="tel:+15065551234">
+          <a className="nav__phone" href={`tel:${SITE.phoneTel}`}>
             <Icon.phone />
-            <span className="num num-tab">(506) 555 - 1234</span>
+            <span className="num num-tab">{SITE.phone}</span>
           </a>
           <button
             className="theme-toggle"
@@ -130,11 +150,11 @@ function Navbar({ active }) {
         }}>
           {items.map(it => (
             <a key={it.id} href={it.href} onClick={() => setOpen(false)} style={{
-              color: active === it.id ? "var(--orange)" : "var(--text)",
+              color: active === it.id ? "var(--copper)" : "var(--text)",
               fontWeight: 500, padding: "8px 0",
             }}>{it.label}</a>
           ))}
-          <a className="btn btn--primary" href="contact.html#book" onClick={() => setOpen(false)}>Book Service</a>
+          <a className="btn btn--primary" href="contact.html#book" onClick={() => setOpen(false)}>Book Appointment</a>
         </div>
       )}
     </header>
@@ -149,23 +169,23 @@ function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <div className="nav__brand" style={{gap: 14}}>
-              <div className="brandmark"><span>CB</span></div>
+              <BrandLogo />
               <div className="brand-name">
-                <b>Chaleur Bay</b>
-                <small>Auto Care · NB</small>
+                <b>Mountain View</b>
+                <small>Auto Ltd. · NB</small>
               </div>
             </div>
-            <p>Honest, certified auto repair on the shores of Chaleur Bay. Locally owned and winter-tested since 2012.</p>
-            <span className="bathurst-badge">Proudly Bathurst · Acadian Peninsula</span>
+            <p>{SITE.tagline}. Family-owned garage with honest quotes and quality work you can count on.</p>
+            <span className="location-badge">Proudly Bath · New Brunswick</span>
           </div>
 
           <div className="footer__col">
             <h5>Visit</h5>
             <ul>
-              <li>418 King Avenue</li>
-              <li>Bathurst, NB E2A 1S2</li>
-              <li>Mon–Fri · 7:30 – 17:30</li>
-              <li>Sat · 8:00 – 14:00</li>
+              <li>{SITE.address.street}</li>
+              <li>{SITE.address.city}, {SITE.address.province} {SITE.address.postal}</li>
+              <li>{SITE.hours.weekdays}</li>
+              <li>{SITE.hours.weekend}</li>
             </ul>
           </div>
 
@@ -173,31 +193,28 @@ function Footer() {
             <h5>Services</h5>
             <ul>
               <li><a href="services.html">Oil Changes</a></li>
-              <li><a href="services.html">Brakes & Tires</a></li>
-              <li><a href="services.html">Diagnostics</a></li>
-              <li><a href="services.html">Mobile Repair</a></li>
-              <li><a href="services.html">Winter Prep</a></li>
+              <li><a href="services.html">Brakes & Suspension</a></li>
+              <li><a href="services.html">Tires & Wheels</a></li>
+              <li><a href="services.html">Engine & Transmission</a></li>
+              <li><a href="services.html">Specialty Services</a></li>
             </ul>
           </div>
 
           <div className="footer__col">
             <h5>Contact</h5>
             <ul>
-              <li><a href="tel:+15065551234">(506) 555 - 1234</a></li>
-              <li><a href="mailto:hello@chaleurbayauto.ca">hello@chaleurbayauto.ca</a></li>
+              <li><a href={`tel:${SITE.phoneTel}`}>{SITE.phone}</a></li>
+              <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
               <li><a href="contact.html#book">Book Online →</a></li>
-              <li><a href="#" aria-label="Facebook">Facebook</a></li>
-              <li><a href="#" aria-label="Instagram">Instagram</a></li>
             </ul>
           </div>
         </div>
 
         <div className="footer__bottom">
-          <div>© 2026 Chaleur Bay Auto Care · All rights reserved.</div>
+          <div>© 2026 {SITE.name} · All rights reserved.</div>
           <div style={{display: "flex", gap: 20}}>
             <a href="#">Privacy</a>
             <a href="#">Warranty</a>
-            <a href="#">Careers</a>
             <a href="admin.html" style={{color: "var(--text-mute)"}}>Admin</a>
           </div>
         </div>
@@ -210,7 +227,7 @@ function Footer() {
 function FabChat() {
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState([
-    { role: "bot", text: "Hi! I’m Cap, the Chaleur Bay service assistant. What can I help with today — booking, a quote, or a quick question?" }
+    { role: "bot", text: `Hi! I'm the Mountain View Auto service assistant. What can I help with today — booking, a quote, or a quick question?` }
   ]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
@@ -236,7 +253,7 @@ function FabChat() {
     setMsgs(m => [...m, { role: "user", text }]);
     setThinking(true);
     try {
-      const systemPrompt = "You are Cap, the friendly AI service assistant for Chaleur Bay Auto Care in Bathurst, New Brunswick. You help customers with booking appointments, getting quotes, and answering questions about services. Keep responses short and friendly — 2-3 sentences max. Services include: Oil changes from $69, Brake repair from $189, Diagnostics at $95 flat, Tire swap from $25/wheel, Engine repair, Transmission service, Mobile service available. Hours: Mon-Fri 7:30-17:30, Sat 8:00-14:00. Phone: (506) 555-1234. Address: 418 King Avenue Bathurst NB. When a customer wants to book an appointment, give them ALL THREE options: 1) Use the online booking form on this website — just click Book Now at the top of the page or scroll to the Contact section — it takes 2 minutes. 2) Call us directly at (506) 555-1234 — a real human answers, no menus or holds. 3) Visit us in person at 418 King Avenue, Bathurst NB. Always mention the online form first as it is the fastest option. If you cannot help, direct them to call (506) 555-1234.";
+      const systemPrompt = `You are the friendly AI service assistant for ${SITE.name} in Bath, New Brunswick. You help customers with booking appointments, getting quotes, and answering questions about services. Keep responses short and friendly — 2-3 sentences max. Services include: Oil changes from $69.99, Brake repair from $149.99, Tires from $119.99/tire installed, Engine repair from $129.99, Transmission from $179.99, A/C repair from $129.99, Vehicle inspection from $89.99, and many more. Hours: Mon-Fri 8:00 AM-5:30 PM, closed weekends. Phone: ${SITE.phone}. Address: ${SITE.address.full}. Email: ${SITE.email}. Google rating: ${SITE.rating.score} stars. When a customer wants to book an appointment, give them ALL THREE options: 1) Use the online booking form on this website — click Book Now at the top or go to the Contact page — it takes 2 minutes. 2) Call us directly at ${SITE.phone}. 3) Visit us at ${SITE.address.full}. Always mention the online form first. If you cannot help, direct them to call ${SITE.phone}.`;
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -249,7 +266,7 @@ function FabChat() {
       if (!res.ok) throw new Error(data.error || "Request failed");
       setMsgs(m => [...m, { role: "bot", text: data.text }]);
     } catch (err) {
-      setMsgs(m => [...m, { role: "bot", text: "Sorry, I am having trouble connecting. Please call us at (506) 555-1234." }]);
+      setMsgs(m => [...m, { role: "bot", text: `Sorry, I am having trouble connecting. Please call us at ${SITE.phone}.` }]);
     } finally {
       setThinking(false);
     }
@@ -262,7 +279,7 @@ function FabChat() {
           <div className="fab-chat__dot">
             <Icon.chat width="18" height="18"/>
           </div>
-          <span className="lbl">Ask Cap · AI helper</span>
+          <span className="lbl">Ask us · AI helper</span>
         </button>
       )}
       {open && (
@@ -281,16 +298,16 @@ function FabChat() {
             display: "flex", alignItems: "center", gap: 12,
             padding: "16px 18px",
             borderBottom: "1px solid var(--line)",
-            background: "linear-gradient(180deg, rgba(255,98,0,0.12), transparent)",
+            background: "linear-gradient(180deg, rgba(184,115,51,0.12), transparent)",
           }}>
             <div style={{
               width: 38, height: 38, borderRadius: "50%",
-              background: "var(--orange)", color: "#0A1428",
+              background: "var(--copper)", color: "#fff",
               display: "grid", placeItems: "center",
-              fontFamily: "var(--f-display)", fontSize: 18,
-            }}>C</div>
+              fontFamily: "var(--f-display)", fontSize: 14, fontWeight: 800,
+            }}>MV</div>
             <div style={{flex: 1, lineHeight: 1.2}}>
-              <div style={{fontWeight: 700, fontSize: 14}}>Cap · Service Assistant</div>
+              <div style={{fontWeight: 700, fontSize: 14}}>Mountain View Assistant</div>
               <div style={{fontSize: 11, color: "var(--text-mute)", fontFamily: "var(--f-mono)", letterSpacing: ".12em", textTransform: "uppercase"}}>
                 <span style={{display: "inline-block", width: 6, height: 6, background: "#22C55E", borderRadius: "50%", marginRight: 6, verticalAlign: 1}}></span>
                 Online · Replies instantly
@@ -313,8 +330,8 @@ function FabChat() {
               <div key={i} style={{
                 alignSelf: m.role === "user" ? "flex-end" : "flex-start",
                 maxWidth: "85%",
-                background: m.role === "user" ? "var(--orange)" : "var(--bg-card)",
-                color: m.role === "user" ? "#0A1428" : "var(--text)",
+                background: m.role === "user" ? "var(--copper)" : "var(--bg-card)",
+                color: m.role === "user" ? "#fff" : "var(--text)",
                 padding: "10px 14px",
                 borderRadius: 12,
                 borderTopLeftRadius: m.role === "user" ? 12 : 4,
@@ -325,7 +342,7 @@ function FabChat() {
             ))}
             {thinking && (
               <div style={{alignSelf: "flex-start", padding: "10px 14px", color: "var(--text-mute)", fontSize: 13}}>
-                <span className="dots">Cap is typing</span>
+                <span className="dots">Typing</span>
                 <span style={{
                   display: "inline-block", marginLeft: 6,
                   animation: "blink 1.2s infinite",
@@ -355,7 +372,7 @@ function FabChat() {
             />
             <button onClick={send} aria-label="Send" style={{
               width: 44, height: 44, borderRadius: 10,
-              background: "var(--orange)", color: "#0A1428",
+              background: "var(--copper)", color: "#fff",
               display: "grid", placeItems: "center",
             }}>
               <Icon.send width="18" height="18"/>
@@ -389,4 +406,4 @@ function useReveal(deps = []) {
   }, deps);
 }
 
-Object.assign(window, { Navbar, Footer, FabChat, Icon, useReveal });
+Object.assign(window, { Navbar, Footer, FabChat, Icon, useReveal, BrandLogo });

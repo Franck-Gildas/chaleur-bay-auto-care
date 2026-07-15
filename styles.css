@@ -69,9 +69,9 @@ main {
   max-width: 100%;
   overflow-x: clip;
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(8px);
+  transition: opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 html.page-ready main {
   opacity: 1;
@@ -79,8 +79,8 @@ html.page-ready main {
 }
 main.page-exit {
   opacity: 0 !important;
-  transform: translateY(-8px) !important;
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  transform: translateY(-6px) !important;
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 body {
   background: var(--bg);
@@ -502,11 +502,10 @@ section { position: relative; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* View Transitions API (supported browsers) */
-@view-transition { navigation: auto; }
+/* View Transitions API (manual via navigateTo) */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.35s;
+  animation-duration: 0.2s;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 ::view-transition-old(root) {

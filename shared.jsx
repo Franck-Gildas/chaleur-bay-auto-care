@@ -112,7 +112,7 @@ function navigateTo(href) {
   const main = document.querySelector("main");
   if (main) {
     main.classList.add("page-exit");
-    setTimeout(() => { window.location.href = href; }, 280);
+    setTimeout(() => { window.location.href = href; }, 180);
   } else {
     window.location.href = href;
   }
@@ -208,7 +208,11 @@ function Navbar({ active }) {
           <button
             className="theme-toggle"
             aria-label="Toggle color theme"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+            onClick={() => {
+              const next = theme === "dark" ? "light" : "dark";
+              setTheme(next);
+              applyTheme(next);
+            }}>
             {theme === "dark" ? <Icon.sun width="16" height="16"/> : <Icon.moon width="16" height="16"/>}
           </button>
           <a className="btn btn--primary nav__cta" href="contact.html#book"
@@ -503,14 +507,12 @@ function usePageMotion(deps = []) {
     if (!hash) window.scrollTo(0, 0);
     document.documentElement.classList.remove("page-ready");
     const id = requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        document.documentElement.classList.add("page-ready");
-        if (hash) {
-          setTimeout(() => {
-            scrollToAnchor(hash, { behavior: "smooth" });
-          }, 480);
-        }
-      });
+      document.documentElement.classList.add("page-ready");
+      if (hash) {
+        setTimeout(() => {
+          scrollToAnchor(hash, { behavior: "smooth" });
+        }, 220);
+      }
     });
     return () => cancelAnimationFrame(id);
   }, []);
